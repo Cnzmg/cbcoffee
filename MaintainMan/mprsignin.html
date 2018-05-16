@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>签到</title>
+    <script type="text/javascript" src="../js/config/config.js"></script>
+    <script src="../js/jquery.min.js"></script> <!-- jQuery Library -->
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=YrLXSmMEX8PpItoywaoeuXigcfKNuzoy"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/library/TrafficControl/1.4/src/TrafficControl_min.js"></script>
+</head>
+<body style="color:#fff;background:rgba(0,0,0,0.5);max-width:640px;margin:0 auto;height:100%;">
+    <div class="container-fluid">
+        
+    </div>
+  <script type="text/javascript">
+      var geolocation = new BMap.Geolocation(),lng,lat;
+      geolocation.getCurrentPosition(function(r){
+          lng=r.longitude;
+          lat=r.latitude;   //当前位置
+      });
+      $.ajax({
+          type:"GET",
+          url:"http://api.map.baidu.com/geosearch/v3/nearby?ak=YrLXSmMEX8PpItoywaoeuXigcfKNuzoy&geotable_id=182569&location="+lng+","+lat+"&radius=1&sortby=distance:-1",
+          dataType:"jsonp",
+          success:function(res){
+              $(".title").append(res.contents[0].title);
+              $(".address").append(res.contents[0].address);
+          }
+      });
+      function PostAtch(){
+        $.ajax({
+            url: httpJoin + 'maintainer_inspect_sign',
+            type: 'POST',
+            dataType: 'json',
+            data: {machineNumber: $("#machineNumber").val(),phone: $("#machinePhone").val(),pwd: $("#machinepwd").val()}
+          })
+          .done(function(reg) {
+            console.log("success");
+            alert(reg.statusCode.msg);
+          })
+      }
+  </script>
+</body>
+</html>

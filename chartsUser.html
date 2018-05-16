@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <meta name="format-detection" content="telephone=no">
+        <meta charset="UTF-8">
+
+        <meta name="description" content="Violate Responsive Admin Template">
+        <meta name="keywords" content="Super Admin, Admin, Template, Bootstrap">
+
+        <title>广东圆梦实业发展有限公司</title>
+
+        <!-- CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/animate.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/form.css" rel="stylesheet">
+        <link href="css/calendar.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/icons.css" rel="stylesheet">
+        <link href="css/generics.css" rel="stylesheet">
+        <link rel="icon" href="img/bitbug_favicon.ico" type="image/x-icon" />
+        <script type="text/javascript" src="js/config/config.js"></script>
+        <script type="text/javascript" src="js/lbs/echarts.min.js"></script>
+        <script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
+        <style type="text/css">
+            .active{background:#545454;}
+        </style>
+
+    </head>
+    <body id="skin-cloth">
+
+        <header id="header" class="media">
+            <a href="" id="menu-toggle"></a>
+            <a class="logo pull-left" href="index.html">咖啡蜗后台管理系统</a>
+
+            <div class="media-body">
+                <div class="media" id="top-menu">
+                    <div id="time" class="pull-right">
+                        <span id="hours"></span>
+                        :
+                        <span id="min"></span>
+                        :
+                        <span id="sec"></span>
+                    </div>
+
+                    <div class="media-body" style="line-height:39px;">
+                        <!-- <input type="text" class="main-search"> -->
+                        广东圆梦实业发展有限公司
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="clearfix"></div>
+
+        <section id="main" class="p-relative" role="main">
+
+            <!-- Sidebar -->
+            <aside id="sidebar">
+
+                <!-- Sidbar Widgets -->
+                <div class="side-widgets overflow">
+                    <!-- Profile Menu -->
+                    <div class="text-center s-widget m-b-25 dropdown" id="profile-menu">
+                        <a href="" data-toggle="dropdown">
+                            <img class="profile-pic animated" src="img/1516775224.jpg" alt="">
+                        </a>
+                        <ul class="dropdown-menu profile-menu">
+                        </ul>
+                        <h4 class="m-0" id="usAdministration">Admin</h4>
+                        <span id="Administration"></span>
+                    </div>
+
+                    <!-- Calendar -->
+                    <div class="s-widget m-b-25">
+                        <div id="sidebar-calendar"></div>
+                    </div>
+
+                </div>
+
+                <!-- Side Menu -->
+                <ul class="list-unstyled side-menu" id="J_menuatch">
+
+                </ul>
+
+            </aside>
+
+            <!-- Content -->
+            <section id="content" class="container">
+                <!-- <div style="margin:3px 20px;">
+                    <span class="block-title" style="font-size:12px;width:112px;text-align:center;margin-right:10px;">当日金额 <br /> 3300</span>
+                    <span class="block-title" style="font-size:12px;width:112px;text-align:center;margin-right:10px;">当日销量 <br /> 2</span>
+                    <span class="block-title" style="font-size:12px;width:112px;text-align:center;margin-right:10px;">本月金额 <br /> 104900</span>
+                    <span class="block-title" style="font-size:12px;width:112px;text-align:center;margin-right:10px;">本月销量 <br /> 69</span>
+                    <span class="block-title" style="font-size:12px;width:112px;text-align:center;margin-right:10px;">用户数 <br /> 11</span>
+                    <span class="block-title" style="font-size:12px;width:112px;text-align:center;margin-right:10px;">新增用户 <br /> 10</span>
+                    <span class="block-title" style="font-size:12px;width:112px;text-align:center;margin-right:10px;">付费用户 <br /> 5</span>
+                    <span class="block-title" style="font-size:12px;width:112px;text-align:center;margin-right:10px;">收入 <br /> 330</span>
+                </div> -->
+                <h1 class="tile-title">统计(手机端)</h1>
+                <div class="block-title active chuser" style="font-size:12px;width:112px;text-align:center;margin-right:10px;cursor:pointer;margin-top:10px;">用户统计</div>
+                <div class="block-title chrate" style="font-size:12px;width:112px;text-align:center;margin-right:10px;cursor:pointer;margin-top:10px;">付费转化</div>
+                <div id="ch">
+                    <div class="block-area">
+                        <div class="tile">
+                            <div style="padding:6px 20px;" class="boxCharts">
+                                <p class="block-title active" onclick="jzm.userCharts(1)" style="font-size:12px;width:112px;text-align:center;margin-right:10px;cursor:pointer;" data-num="1">收入金额</p>
+                                <p class="block-title notshop" onclick="jzm.userCharts(2)" style="font-size:12px;width:112px;text-align:center;margin-right:10px;cursor:pointer;" data-num="2">充值次数</p>
+                                <p class="block-title notshop" onclick="jzm.userCharts(3)" style="font-size:12px;width:112px;text-align:center;margin-right:10px;cursor:pointer;" data-num="3">充值人数</p><br />
+                                <span class="block-title active" style="font-size:12px;width:112px;text-align:center;margin-right:10px;cursor:pointer;">日期选择：</span>
+                                <span style="font-size:12px;text-align:center;margin-right:10px;cursor:pointer;">
+                                    <input type="text" id="startTime" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" style="background:none;border:1px solid #fff;line-height: 26px;" placeholder="起始日期" /> 到
+                                    <input type="text" id="endTime" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" style="background:none;border:1px solid #fff;line-height: 26px;" placeholder="终止日期"/>
+                                </span>
+                                <input type="hidden" id="typeId" name="typeId" />
+                                <span class="block-title" style="font-size:12px;width:112px;text-align:center;margin-right:10px;cursor:pointer;" onclick="jzm.userCharts(document.getElementById('typeId').value)">搜索</span>
+                                <br /><p class="opMoney block-title" style="margin-top:6px;"></p>
+                            </div>
+                            <div class="p-10">
+                                <div id="usCharts" style="height: 300px;color:#fff;"></div>
+                            </div>
+                        </div>
+                        <div class="tile">
+                            <!-- <h2 class="tile-title">消费用户地区</h2> -->
+
+                            <div class="p-10">
+                                <div id="bar-addrchart" class="main-chart" style="height: 250px"></div>
+                            </div>
+                        </div>
+                        <div class="tile">
+                            <!-- <h2 class="tile-title">消费用户地区</h2> -->
+
+                            <div class="p-10">
+                                <div id="bar-addrschart" class="main-chart" style="height: 250px"></div>
+                            </div>
+                        </div>
+
+                        <div class="tile">
+                            <div style="padding:6px 20px;">
+                                <span class="block-title active" style="font-size:12px;width:112px;text-align:center;margin-right:10px;cursor:pointer;">日期选择：</span>
+                                <span style="font-size:12px;text-align:center;margin-right:10px;cursor:pointer;">
+                                    <input type="text" id="newstartTime" style="background:none;border:1px solid #fff;line-height: 26px;" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" placeholder="起始日期" /> 到
+                                    <input type="text" id="newendTime" style="background:none;border:1px solid #fff;line-height: 26px;" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" placeholder="终止日期"/>
+                                </span>
+                                <span class="block-title" style="font-size:12px;width:112px;text-align:center;margin-right:10px;cursor:pointer;" onclick="jzm.userNewCharts()">搜索</span>
+                            </div>
+                            <div class="p-10">
+                                <div id="usNewCharts" style="height: 300px;color:#fff;"></div>
+                            </div>
+                        </div>
+
+                        <div class="tile">
+                            <!-- <h2 class="tile-title">消费用户地区</h2> -->
+
+                            <div class="p-10">
+                                <div id="bar-addrNewchart" class="main-chart" style="height: 250px"></div>
+                            </div>
+                        </div>
+
+                        <div class="tile">
+                            <!-- <h2 class="tile-title">消费用户地区</h2> -->
+
+                            <div class="p-10">
+                                <div id="bar-addrsNewchart" class="main-chart" style="height: 250px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="rate" style="display:none;">
+                    <div class="block-area">
+                        <div class="tile">
+                            <div style="padding:6px 20px;">
+                                <span class="block-title active" style="font-size:12px;width:112px;text-align:center;margin-right:10px;cursor:pointer;">日期选择：</span>
+                                <span style="font-size:12px;text-align:center;margin-right:10px;cursor:pointer;">
+                                    <input type="text" id="ratestartTime" style="background:none;border:1px solid #fff;line-height: 26px;" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" placeholder="起始日期" /> 到
+                                    <input type="text" id="rateendTime" style="background:none;border:1px solid #fff;line-height: 26px;" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" placeholder="终止日期"/>
+                                </span>
+                                <span class="block-title" style="font-size:12px;width:112px;text-align:center;margin-right:10px;cursor:pointer;" onclick="jzm.rateCharts()">搜索</span>
+                            </div>
+                            <div class="p-10">
+                                <div id="rateCharts" style="height: 300px;color:#fff;"></div>
+                            </div>
+                            <div class="p-10">
+                                <div id="probabilityCharts" style="height: 300px;color:#fff;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <hr class="whiter m-t-20 m-b-20" />
+
+                <br/><br/><br/>
+            </section>
+        </section>
+
+        <!-- Javascript Libraries -->
+        <!-- jQuery -->
+        <script src="js/jquery.min.js"></script> <!-- jQuery Library -->
+        <script src="js/jquery-ui.min.js"></script> <!-- jQuery UI -->
+        <script src="js/jquery.easing.1.3.js"></script> <!-- jQuery Easing - Requirred for Lightbox -->
+        <!-- Bootstrap -->
+        <script src="js/bootstrap.min.js"></script>
+        <!-- Charts -->
+        <script src="js/charts/jquery.flot.js"></script> <!-- Flot Main -->
+        <script src="js/charts/jquery.flot.time.js"></script> <!-- Flot sub -->
+        <script src="js/charts/jquery.flot.animator.min.js"></script> <!-- Flot sub -->
+        <script src="js/charts/jquery.flot.resize.min.js"></script> <!-- Flot sub - for repaint when resizing the screen -->
+        <script src="js/charts/jquery.flot.orderBar.js"></script> <!-- Flot Bar chart -->
+        <script src="js/charts/jquery.flot.pie.min.js"></script> <!-- Flot Pie chart -->
+        <script src="js/sparkline.min.js"></script> <!-- Sparkline - Tiny charts -->
+        <script src="js/easypiechart.js"></script> <!-- EasyPieChart - Animated Pie Charts -->
+        <!-- Map -->
+        <script src="js/maps/jvectormap.min.js"></script> <!-- jVectorMap main library -->
+        <script src="js/maps/usa.js"></script> <!-- USA Map for jVectorMap -->
+        <script src="js/maps/world.js"></script> <!-- World Map for jVectorMap -->
+        <!-- UX -->
+        <script src="js/scroll.min.js"></script> <!-- Custom Scrollbar -->
+        <!-- Other -->
+        <script src="js/calendar.min.js"></script> <!-- Calendar -->
+        <script src="js/feeds.min.js"></script> <!-- News Feeds -->
+        <!-- All JS functions -->
+        <script src="js/functions.js"></script>
+        <script type="text/javascript" src="js/lbs/chartsfn.js"></script> <!--charts function-->
+        <script type="text/javascript">
+        jzm.userCharts();
+        $(".chuser").click(function(event) {
+            $(this).addClass('active').siblings('div.chrate').removeClass('active');
+            $("#ch").show();
+            $("#rate").hide();
+        });
+        $(".chrate").click(function(event) {
+            $(this).addClass('active').siblings('div.chuser').removeClass('active');
+            $("#ch").hide();
+            $("#rate").show();
+            jzm.rateCharts();
+        });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <meta name="format-detection" content="telephone=no">
+        <meta charset="UTF-8">
+
+        <meta name="description" content="Violate Responsive Admin Template">
+        <meta name="keywords" content="Super Admin, Admin, Template, Bootstrap">
+
+        <title>广东圆梦实业发展有限公司</title>
+
+        <!-- CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/animate.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/form.css" rel="stylesheet">
+        <link href="css/calendar.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/icons.css" rel="stylesheet">
+        <link href="css/generics.css" rel="stylesheet">
+        <link rel="icon" href="img/bitbug_favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" type="text/css" href="page/paging.css" />
+        <script type="text/javascript" src="js/config/config.js"></script>
+    </head>
+    <body id="skin-cloth">
+
+        <header id="header" class="media">
+            <a href="" id="menu-toggle"></a>
+            <a class="logo pull-left" href="index.html">咖啡蜗后台管理系统</a>
+
+            <div class="media-body">
+                <div class="media" id="top-menu">
+                    <div id="time" class="pull-right">
+                        <span id="hours"></span>
+                        :
+                        <span id="min"></span>
+                        :
+                        <span id="sec"></span>
+                    </div>
+
+                    <div class="media-body" style="line-height:39px;">
+                        <!-- <input type="text" class="main-search"> -->
+                        广东圆梦实业发展有限公司
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="clearfix"></div>
+
+        <section id="main" class="p-relative" role="main">
+
+            <!-- Sidebar -->
+            <aside id="sidebar">
+
+                <!-- Sidbar Widgets -->
+                <div class="side-widgets overflow">
+                    <!-- Profile Menu -->
+                    <div class="text-center s-widget m-b-25 dropdown" id="profile-menu">
+                        <a href="" data-toggle="dropdown">
+                            <img class="profile-pic animated" src="img/1516775224.jpg" alt="">
+                        </a>
+                        <ul class="dropdown-menu profile-menu">
+                        </ul>
+                        <h4 class="m-0" id="usAdministration">Admin</h4>
+                        <span id="Administration"></span>
+                    </div>
+
+                    <!-- Calendar -->
+                    <div class="s-widget m-b-25">
+                        <div id="sidebar-calendar"></div>
+                    </div>
+
+                </div>
+
+                <!-- Side Menu -->
+                <ul class="list-unstyled side-menu" id="J_menuatch">
+
+                </ul>
+
+            </aside>
+
+            <!-- Content -->
+            <section id="content" class="container">
+
+                <!-- Table Striped -->
+                <div class="block-area" id="tableStriped">
+                    <h3 class="block-title" style="font-size:14px;">机器视频广告清单</h3>
+                    <div style="margin:0 20px;">
+                        <a class="block-title" style="font-size:12px;width:120px;text-align:center;" onclick="window.location.href='adRootDetailedBinding.html?uri=/manage/adRootDetailedList.html&v='+jzm.randomNum()" href="###" style="position: relative; z-index: 1;" target="_self">
+                            <i class="fa fa-plus"></i>
+                            <span>清单绑定</span>
+                        </a>
+                        <a class="block-title" style="font-size:12px;width:120px;text-align:center;" onclick="window.location.href='adRootDetailedUnBinding.html?uri=/manage/adRootDetailedList.html&v='+jzm.randomNum()" href="###" style="position: relative; z-index: 1;" target="_self">
+                            <span>清单解绑</span>
+                        </a>
+                    </div>
+                    <div style="margin:6px 20px;">
+                        <a class="block-title" style="font-size:12px;width:120px;text-align:center;" href="javascript:void(0)" onclick="jzm.AddDetaile();" style="position: relative; z-index: 1;" target="_self">
+                            <i class="fa fa-plus"></i>
+                            <span>添加清单</span>
+                        </a>
+                    </div>
+                    <div style="margin:3px 20px;">
+                        <span class="block-title" style="font-size:12px;width:120px;text-align:center;margin-right:10px;">清单ID/清单名称</span>
+
+                        <input type="text" id="name" style="width:200px;background:none;border:1px solid rgba(0,0,0,0.3);height:27px;" />
+
+                        <span class="block-title" style="font-size:12px;padding: 3px 12px;margin-left:45px;cursor:pointer;" onclick="jzm.advdetailedList('detailedList')">搜索</span>
+                    </div>
+
+
+                    <div class="table-responsive overflow">
+                        <style type="text/css">
+                            #tbodyhtml span{width:33.33%;display: inline-block;background: rgba(0,0,0,0.3);border-bottom: 1px solid #ddd;border-right:1px solid #ddd;padding: 5px 8px 6px;border-color: rgba(255,255,255,0.05) !important;}
+                            #tbodyhtml div:nth-of-type(1) span{width:33.33%;display: inline-block;background: rgba(0,0,0,0.5);border-bottom: 1px solid #ddd;border-right:1px solid #ddd;padding: 5px 8px 6px;border-color: rgba(255,255,255,0.05) !important;}
+                            #tbodyhtml p{width:14.28%;display: inline-block;background: rgba(0,0,0,0.8);border-bottom: 1px solid #ddd;border-right:1px solid #ddd;padding: 5px 8px 6px;border-color: rgba(255,255,255,0.05) !important;text-overflow:ellipsis;white-space: nowrap;margin-bottom: 0;overflow: hidden;margin-top: -4px;}
+                            #tbodyhtml .ledShow div:nth-of-type(1) p,#equForm .show1 p{width:14.28%;display: inline-block;background: rgba(0,0,0,1);border-bottom: 1px solid #ddd;border-right:1px solid #ddd;padding: 5px 8px 6px;border-color: rgba(255,255,255,0.05) !important;margin-bottom: 0 ;text-overflow:ellipsis;white-space: nowrap;}
+                            #equForm .show p{overflow: hidden;}
+                            #tbodyhtml .show{margin-left: 30px;margin-right: 30px;}
+                        </style>
+                        <div id="tbodyhtml" style="width:100%;">
+
+                        </div>
+
+                        <input type="hidden" id="showhide" />
+                        <input type="hidden" id="hideshow" />
+                    </div>
+                </div>
+            </section>
+            <br/><br/>
+        </section>
+        <div class="editBox" id="editBoxAdd" style="position: fixed; top: 50%; left: 50%; background-color: #5b1e26; z-index: 1500; margin-left: -100px;margin-top: -100px; box-shadow: rgb(138, 138, 138) 1px 1px 20px; padding: 10px 20px; box-sizing: border-box; width: 200px; height:200px;display:none;">
+            <div style="text-align:center;margin:20px 0 6px 0;">
+                请输入清单名称
+            </div>
+            <input type="text" id="detaName" value="" style="background:#41100f;border:none;width:100%;height:30px;font-size:14px;" />
+            <div class="form-group">
+                <div class="col-sm-12" style="text-align:center;margin-top:40px;">
+                    <button class="btn btn-primary" type="button" onclick="jzm.AddDetaile('add');return false;">提交</button>
+                    <button class="btn btn-primary" type="button" onclick="jzm.moduleBox();return false;">关闭</button>
+                </div>
+            </div>
+        </div>
+        <div class="showBox" style="width:100%;height:100%;z-index:9;background:rgba(0,0,0,0.5);position:absolute;top:0;left:0;display:none;"></div>
+        <div class="editBox" id="editBoxEnit" style="position: fixed; top: 50%; left: 50%; background-color: rgba(0,0,0,0.7); z-index: 1500; margin-left: -465px;margin-top: -200px; box-shadow: rgb(138, 138, 138) 1px 1px 20px; padding: 10px 20px; box-sizing: border-box; width: 930px; max-height:500px;overflow-y:auto;display:none;">
+            <div style="text-align:left;margin:20px 0 6px 0;">
+                编辑清单
+            </div>
+            <form id="equForm" method="post" role="form">
+                <div class="show1" id="showlog">
+
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12" style="text-align:center;margin-top:40px;">
+                        <input type="hidden" id="listId" name="listId" />
+                        <input type="hidden" id="productIdList" />
+                        <button class="btn btn-primary" type="button" onclick="jzm.detailedEnit();return false;">提交</button>
+                        <button class="btn btn-primary" type="button" onclick="jzm.moduleBox();return false;">关闭</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Javascript Libraries -->
+        <!-- jQuery -->
+        <script src="js/jquery.min.js"></script> <!-- jQuery Library -->
+        <!-- Bootstrap -->
+        <script src="js/bootstrap.min.js"></script>
+
+        <!-- UX -->
+        <script src="js/scroll.min.js"></script> <!-- Custom Scrollbar -->
+
+        <!-- Other -->
+        <script src="js/calendar.min.js"></script> <!-- Calendar -->
+        <script src="js/feeds.min.js"></script> <!-- News Feeds -->
+
+        <!-- All JS functions -->
+        <script src="js/functions.js"></script>
+
+        <script type="text/javascript" src="js/lbs/advertModels.js"></script>
+
+        <!-- page all -->
+        <script type="text/javascript" src="page/query.js"></script>
+        <script type="text/javascript" src="page/paging.js"></script>
+    </body>
+</html>

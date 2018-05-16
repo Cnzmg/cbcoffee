@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <meta name="format-detection" content="telephone=no">
+        <meta charset="UTF-8">
+
+        <meta name="description" content="Violate Responsive Admin Template">
+        <meta name="keywords" content="Super Admin, Admin, Template, Bootstrap">
+
+        <title>广东圆梦实业发展有限公司</title>
+
+        <!-- CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/animate.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/form.css" rel="stylesheet">
+        <link href="css/calendar.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/icons.css" rel="stylesheet">
+        <link href="css/generics.css" rel="stylesheet">
+        <link rel="icon" href="img/bitbug_favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" type="text/css" href="page/paging.css" />
+        <script type="text/javascript" src="js/config/config.js"></script>
+    </head>
+    <body id="skin-cloth">
+
+        <header id="header" class="media">
+            <a href="" id="menu-toggle"></a>
+            <a class="logo pull-left" href="index.html">咖啡蜗后台管理系统</a>
+
+            <div class="media-body">
+                <div class="media" id="top-menu">
+                    <div id="time" class="pull-right">
+                        <span id="hours"></span>
+                        :
+                        <span id="min"></span>
+                        :
+                        <span id="sec"></span>
+                    </div>
+
+                    <div class="media-body" style="line-height:39px;">
+                        <!-- <input type="text" class="main-search"> -->
+                        广东圆梦实业发展有限公司
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="clearfix"></div>
+
+        <section id="main" class="p-relative" role="main">
+
+            <!-- Sidebar -->
+            <aside id="sidebar">
+
+                <!-- Sidbar Widgets -->
+                <div class="side-widgets overflow">
+                    <!-- Profile Menu -->
+                    <div class="text-center s-widget m-b-25 dropdown" id="profile-menu">
+                        <a href="" data-toggle="dropdown">
+                            <img class="profile-pic animated" src="img/1516775224.jpg" alt="">
+                        </a>
+                        <ul class="dropdown-menu profile-menu">
+                        </ul>
+                        <h4 class="m-0" id="usAdministration">Admin</h4>
+                        <span id="Administration"></span>
+                    </div>
+
+                    <!-- Calendar -->
+                    <div class="s-widget m-b-25">
+                        <div id="sidebar-calendar"></div>
+                    </div>
+
+                </div>
+
+                <!-- Side Menu -->
+                <ul class="list-unstyled side-menu" id="J_menuatch">
+
+                </ul>
+
+            </aside>
+
+            <!-- Content -->
+            <section id="content" class="container">
+
+                <!-- Table Striped -->
+                <div class="block-area" id="tableStriped">
+                    <h3 class="block-title" style="font-size:14px;">维修人员绑定</h3>
+
+                    <div style="margin:3px 20px;" class="ui_action">
+                        <div class="block-title" style="font-size:12px;width:112px;text-align:center;margin-right:10px;">在线状态</div>
+
+                        <span class="block-title spanaction" data-unity="onlineStatus, ,manageRootMaintainer" style="font-size:12px;padding: 3px 12px;cursor:pointer;">不限</span>
+                        <span class="block-title" data-unity="onlineStatus,2,manageRootMaintainer" style="font-size:12px;padding: 3px 12px;cursor:pointer;">在线</span>
+                        <span class="block-title" data-unity="onlineStatus,1,manageRootMaintainer" style="font-size:12px;padding: 3px 12px;cursor:pointer;">离线</span>
+                    </div>
+
+                    <div style="margin:3px 20px;" class="ui_action">
+                        <span class="block-title" style="font-size:12px;width:112px;text-align:center;margin-right:10px;">故障状态</span>
+
+                        <span class="block-title spanaction" data-unity="failureStatus, ,manageRootMaintainer" style="font-size:12px;padding: 3px 12px;cursor:pointer;">不限</span>
+                        <span class="block-title" data-unity="failureStatus,2,manageRootMaintainer" style="font-size:12px;padding: 3px 12px;cursor:pointer;">正常</span>
+                        <span class="block-title" data-unity="failureStatus,1,manageRootMaintainer" style="font-size:12px;padding: 3px 12px;cursor:pointer;">故障</span>
+                    </div>
+
+                    <div style="margin:3px 20px;" class="ui_action">
+                        <span class="block-title" style="font-size:12px;width:112px;text-align:center;margin-right:10px;">维修人员</span>
+
+                        <span class="block-title spanaction" data-unity="materialStatus, ,manageRootMaintainer" style="font-size:12px;padding: 3px 12px;cursor:pointer;">不限</span>
+                        <span class="block-title" data-unity="materialStatus,1,manageRootMaintainer" style="font-size:12px;padding: 3px 12px;cursor:pointer;">无</span>
+                        <span class="block-title" data-unity="materialStatus,2,manageRootMaintainer" style="font-size:12px;padding: 3px 12px;cursor:pointer;">有</span>
+                    </div>
+
+                    <div style="margin:3px 20px;">
+                        <span class="block-title" style="font-size:12px;width:112px;text-align:center;margin-right:10px;">设备编码</span>
+
+                        <input type="text" id="userName" style="width:200px;background:none;border:1px solid rgba(0,0,0,0.3);height:27px;" />
+
+                        <span class="block-title" id="seach" style="font-size:12px;padding: 3px 12px;margin-left:45px;cursor:pointer" onclick="this.setAttribute('data-type','unity');jzm.manageRootMaintainer()">搜索</span>
+                        <input type="hidden" id="onlineStatus" name="onlineStatus" />
+                        <input type="hidden" id="failureStatus" name="failureStatus" />
+                        <input type="hidden" id="materialStatus" name="materialStatus" />
+                    </div>
+
+
+                    <div class="table-responsive overflow">
+                        <table class="tile table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>设备编码</th>
+                                    <th>在线状态</th>
+                                    <th>设备地址</th>
+                                    <th>机器SN号</th>
+                                    <th>故障状态</th>
+                                    <th>维修人员</th>
+                                    <th>维修人员电话</th>
+                                    <th>所属商户</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyhtml">
+
+                            </tbody>
+                        </table>
+                        <!-- page -->
+                        <div class="col-sm-6" id="page"></div>
+                        <div id="pageTool" class="col-sm-6"></div>
+                        <input type="hidden" id="pageNums" value="" />
+                    </div>
+                </div>
+            </section>
+            <br/><br/>
+
+            <div class="editBox" id="RejectInfo" style="position: absolute; top: 40%; left: 50%; background:rgba(35,35,37,1) ; z-index: 1500; width: 40%;margin-left: -20%;margin-top: -220px; box-shadow: rgb(138, 138, 138) 1px 1px 20px;box-sizing: border-box; display:none;">
+                <div class="col-sm-12" style="text-align:center;font-size:1.4rem;background:rgba(0,0,0,0.6);padding:10px 0;"><span class="col-sm-4">姓名</span><span class="col-sm-5">电话</span><span class="col-sm-3">操作</span></div>
+                <div id="showList"> <!--此处异常 overflow-y  待处理-->
+
+                </div>
+                <input type="hidden" id="machineNumber" />
+                <!-- page -->
+                <div id="op">
+                    <div id="UserpageTool"></div>
+                    <input type="hidden" id="UserpageNums" value="" />
+                </div>
+                <div style="font-size:1.8rem;color:#fff;position:absolute;top:-20px;right:-20px;cursor:pointer" onclick="jzm.moduleBox()">x</div>
+            </div>
+        </section>
+
+        <!-- Javascript Libraries -->
+        <!-- jQuery -->
+        <script src="js/jquery.min.js"></script> <!-- jQuery Library -->
+
+        <!-- Bootstrap -->
+        <script src="js/bootstrap.min.js"></script>
+
+        <!-- UX -->
+        <script src="js/scroll.min.js"></script> <!-- Custom Scrollbar -->
+
+        <!-- Other -->
+        <script src="js/calendar.min.js"></script> <!-- Calendar -->
+        <script src="js/feeds.min.js"></script> <!-- News Feeds -->
+        <script type="text/javascript" src="js/lbs/messageInfo.js"></script><!--massinfo-->
+        <!-- All JS functions -->
+        <script src="js/functions.js"></script>
+        <!-- page all -->
+        <script type="text/javascript" src="page/query.js"></script>
+        <script type="text/javascript" src="page/paging.js"></script>
+    </body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <meta name="format-detection" content="telephone=no">
+        <meta charset="UTF-8">
+
+        <meta name="description" content="Violate Responsive Admin Template">
+        <meta name="keywords" content="Super Admin, Admin, Template, Bootstrap">
+
+        <title>广东圆梦实业发展有限公司</title>
+
+        <!-- CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/animate.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/form.css" rel="stylesheet">
+        <link href="css/calendar.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/icons.css" rel="stylesheet">
+        <link href="css/generics.css" rel="stylesheet">
+        <link rel="icon" href="img/bitbug_favicon.ico" type="image/x-icon" />
+        <!-- select css -->
+        <link rel="stylesheet" type="text/css" href="js/lbs/selsect/select.zmr.css" />
+        <script type="text/javascript" src="js/config/config.js"></script>
+    </head>
+    <body id="skin-cloth">
+
+        <header id="header" class="media">
+            <a href="" id="menu-toggle"></a>
+            <a class="logo pull-left" href="index.html">咖啡蜗后台管理系统</a>
+
+            <div class="media-body">
+                <div class="media" id="top-menu">
+                    <div id="time" class="pull-right">
+                        <span id="hours"></span>
+                        :
+                        <span id="min"></span>
+                        :
+                        <span id="sec"></span>
+                    </div>
+
+                    <div class="media-body" style="line-height:39px;">
+                        <!-- <input type="text" class="main-search"> -->
+                        广东圆梦实业发展有限公司
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="clearfix"></div>
+
+        <section id="main" class="p-relative" role="main">
+
+            <!-- Sidebar -->
+            <aside id="sidebar">
+
+                <!-- Sidbar Widgets -->
+                <div class="side-widgets overflow">
+                    <!-- Profile Menu -->
+                    <div class="text-center s-widget m-b-25 dropdown" id="profile-menu">
+                        <a href="" data-toggle="dropdown">
+                            <img class="profile-pic animated" src="img/1516775224.jpg" alt="">
+                        </a>
+                        <ul class="dropdown-menu profile-menu">
+                        </ul>
+                        <h4 class="m-0" id="usAdministration">Admin</h4>
+                        <span id="Administration"></span>
+                    </div>
+
+                    <!-- Calendar -->
+                    <div class="s-widget m-b-25">
+                        <div id="sidebar-calendar"></div>
+                    </div>
+
+                </div>
+
+                <!-- Side Menu -->
+                <ul class="list-unstyled side-menu" id="J_menuatch">
+
+                </ul>
+
+            </aside>
+
+            <!-- Content -->
+            <section id="content" class="container">
+
+                <!-- Table Striped -->
+                <div class="block-area" id="tableStriped">
+                <div class="ibox-title">
+                    <h5>个人信息管理</h5>
+                </div>
+                    <div class="ibox-content" style="margin-top:100px;">
+                        <form id="AddUser" class="form-horizontal m-t" method="post" role="form">
+
+                          <div class="form-group">
+                              <label class="col-sm-2 control-label">真实姓名</label>
+                              <div class="col-sm-8">
+
+                                  <input class="form-control" id="realName" name="realName" type="text" value="">
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 control-label">客服电话</label>
+                              <div class="col-sm-8">
+                                  <input class="form-control" id="adminMobile" name="adminMobile" onkeyup="jzm.check({val:this.value,id:'#adminMobile'})" onafterpaste="jzm.check({val:this.value,id:'#adminMobile'})" type="text" value="">
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 control-label">更改绑定微信用户</label>
+                              <div class="col-sm-8">
+                                  <input type="text" id="searchName" class="form-control" style="width:300px;display:inline-block;" placeholder="可请输入用户名/ID搜索">
+                                  <span class="block-title" onclick="jzm.find_user_for_bind(1);" style="cursor:pointer;">搜索</span>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-sm-2 control-label"></label>
+                              <div class="col-sm-8">
+                                  <select id="userId" class="col-sm-12 clearfix" value="2" style="width: 300px;height:34px;background:none;border:1px solid rgba(255, 255, 255, 0.3);">
+
+                                  </select>
+                              </div>
+                          </div>
+                          <input type="hidden" name="userId" value="">
+                          <div class="form-group" style="margin-top:10px;">
+                              <label class="col-sm-2 control-label"></label>
+                              <div class="col-sm-8 hasOverPwd">
+                                <a href="###">需要更改密码？请单击这里！</a>
+                              </div>
+                          </div>
+                          <div class="pwd" style="display:none;">
+                              <div class="form-group">
+                                 <label class="col-sm-2 control-label">原密码</label>
+                                 <div class="col-sm-8">
+                                     <input class="form-control" id="oldPwd" name="oldPwd" type="password">
+                                 </div>
+                             </div>
+                             <div class="form-group">
+                                <label class="col-sm-2 control-label">新密码</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" id="adminPwd" name="adminPwd" type="password">
+                                </div>
+                            </div>
+                          </div>
+
+
+                            <div class="form-group" style="margin-top:40px;">
+                                <div class="col-sm-1 col-sm-offset-4">
+
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="block-title" style="padding: 6px 25px;cursor:pointer;" onclick="jzm.msginformation(2)">保存</span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+            <br/><br/>
+        </section>
+
+        <!-- Javascript Libraries -->
+        <!-- jQuery -->
+        <script src="js/jquery.min.js"></script> <!-- jQuery Library -->
+        <!-- Bootstrap -->
+        <script src="js/bootstrap.min.js"></script>
+        <!--  Form Related -->
+        <script src="js/icheck.js"></script>
+        <!-- UX -->
+        <script src="js/scroll.min.js"></script> <!-- Custom Scrollbar -->
+        <!-- Other -->
+        <script src="js/calendar.min.js"></script> <!-- Calendar -->
+        <script src="js/feeds.min.js"></script> <!-- News Feeds -->
+        <script src="js/lbs/messageInfo.js"></script>
+        <!-- select -->
+        <script type="text/javascript" src="js/lbs/selsect/select.zmr.js"></script>
+        <!-- All JS functions -->
+        <script src="js/functions.js"></script>
+        <script type="text/javascript">
+          jzm.msginformation(1);
+          $('.hasOverPwd').bind('click',function(){
+            if($('.pwd').hasClass('action')) {
+              $('.pwd').fadeOut(100).removeClass('action');
+            }else{
+              $('.pwd').fadeIn(100).attr('class','pwd action');
+            }
+          })
+        </script>
+    </body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <meta name="format-detection" content="telephone=no">
+        <meta charset="UTF-8">
+
+        <meta name="description" content="Violate Responsive Admin Template">
+        <meta name="keywords" content="Super Admin, Admin, Template, Bootstrap">
+
+        <title>广东圆梦实业发展有限公司</title>
+
+        <!-- CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/animate.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/form.css" rel="stylesheet">
+        <link href="css/calendar.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/icons.css" rel="stylesheet">
+        <link href="css/generics.css" rel="stylesheet">
+        <link rel="icon" href="img/bitbug_favicon.ico" type="image/x-icon" />
+        <!-- select css -->
+        <link rel="stylesheet" type="text/css" href="js/lbs/selsect/select.zmr.css" />
+        <script type="text/javascript" src="js/config/config.js"></script>
+    </head>
+    <body id="skin-cloth">
+
+        <header id="header" class="media">
+            <a href="" id="menu-toggle"></a>
+            <a class="logo pull-left" href="index.html">咖啡蜗后台管理系统</a>
+
+            <div class="media-body">
+                <div class="media" id="top-menu">
+                    <div id="time" class="pull-right">
+                        <span id="hours"></span>
+                        :
+                        <span id="min"></span>
+                        :
+                        <span id="sec"></span>
+                    </div>
+
+                    <div class="media-body" style="line-height:39px;">
+                        <!-- <input type="text" class="main-search"> -->
+                        广东圆梦实业发展有限公司
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="clearfix"></div>
+
+        <section id="main" class="p-relative" role="main">
+
+            <!-- Sidebar -->
+            <aside id="sidebar">
+
+                <!-- Sidbar Widgets -->
+                <div class="side-widgets overflow">
+                    <!-- Profile Menu -->
+                    <div class="text-center s-widget m-b-25 dropdown" id="profile-menu">
+                        <a href="" data-toggle="dropdown">
+                            <img class="profile-pic animated" src="img/1516775224.jpg" alt="">
+                        </a>
+                        <ul class="dropdown-menu profile-menu">
+                        </ul>
+                        <h4 class="m-0" id="usAdministration">Admin</h4>
+                        <span id="Administration"></span>
+                    </div>
+
+                    <!-- Calendar -->
+                    <div class="s-widget m-b-25">
+                        <div id="sidebar-calendar"></div>
+                    </div>
+
+                </div>
+
+                <!-- Side Menu -->
+                <ul class="list-unstyled side-menu" id="J_menuatch">
+
+                </ul>
+
+            </aside>
+
+            <!-- Content -->
+            <section id="content" class="container">
+
+                <!-- Table Striped -->
+                <div class="block-area" id="tableStriped">
+                <div class="ibox-title">
+                    <h5>编辑产品</h5>
+                </div>
+                    <div class="ibox-content" style="margin-top:100px;">
+                        <form class="form-horizontal m-t" method="post" role="form" id="AddProduct">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">产品名称</label>
+                                <input type="hidden" id="productId" name="productId" />
+                                <div class="col-sm-8">
+                                    <input class="form-control" id="productName" name="productName" type="text" value="" > <!-- onkeyup="J_Modified(this.value,'^[a-zA-Z]+$')" -->
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <label class="col-sm-2 control-label">产品价格</label>
+                                <div class="col-sm-8">
+
+                                    <input class="form-control" id="productPrice" type="text" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                                    <input type="hidden" name="productPrice" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">产品图片</label>
+                                <div class="col-sm-8">
+                                    <div class="col-sm-4">
+                                        <div style="background:rgba(0,0,0,0.3);">机器端</div>
+                                        <img class="radio-inline" id="productMachine_picurl_img" height="200px" src="">
+                                        <span class="btn btn-primary pbtn" style="margin:20px;" onclick="jzm.updateFile({type:3,id:['#productMachine_picurl_img','#productMachine_picurl_file','#productMachinePicurl'],format:'i',oldFile:'true'})">重新上传</span>
+                                        <input type="file" class="form-control" accept="image/jpeg,image/png" id="productMachine_picurl_file" name="productMachine_picurl_file" style="display:none;" value="">
+                                        <input type="hidden" class="form-control" id="productMachinePicurl" name="productMachinePicurl" style="display:none;" value="">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div style="background:rgba(0,0,0,0.3);">H5端</div>
+                                        <img class="radio-inline" id="productPicurl_img" height="200px" src="">
+                                        <span class="btn btn-primary pbtn" style="margin:20px;" onclick="jzm.updateFile({type:2,id:['#productPicurl_img','#productPicurl_file','#productPicurl'],format:'i',oldFile:'true'})">重新上传</span>
+                                        <input type="file" class="form-control" accept="image/jpeg,image/png" id="productPicurl_file" name="productPicurl_file" style="display:none;" value="">
+                                        <input type="hidden" class="form-control" id="productPicurl" name="productPicurl" style="display:none;" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">使用配方</label>
+                                <div class="col-sm-8">
+                                    <select id="formulaId" class="col-sm-12" value="2" style="height:34px;background:none;border:1px solid rgba(255, 255, 255, 0.3);">
+                                          <!-- <option value ="2" >请选择</option> -->
+                                    </select>
+                                    <input type="hidden" name="formulaId" value="-1">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">排序</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" id="productRank" name="productRank" type="text" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+                                    <span>数字越小越靠前，不能为负数，0为最小，不能重复</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">产品属性</label>
+                                <div class="col-xs-8">
+                                    <label class="radio-inline" style="width:80px;">
+                                        <input type="radio" name="operateType" id="operateType" value="0" checked="" style="opacity:1;">普通
+                                    </label>
+                                    <label class="radio-inline" style="width:80px;">
+                                        <input type="radio" name="operateType" id="operateType" value="1" style="opacity:1;">热卖
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="operateType" id="operateType" value="2"  style="opacity:1;">最新
+                                        <!-- <input type="hidden" name="operateType" id="operateType" value="0" /> -->
+                                    </label>
+                                    <p style="margin-top:6px;">商品属性，只能选择一种，不影响排序</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">是否上架</label>
+                                <div class="col-xs-8">
+                                    <label class="radio-inline" style="width:80px;">
+                                        <input type="radio" name="productStatus" id="productStatus" value="1" checked="" style="opacity:1;">上架
+                                    </label>
+                                    <label class="radio-inline" style="width:80px;">
+                                        <input type="radio" name="productStatus" id="productStatus1" value="0" style="opacity:1;">下架
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">口味选择</label>
+                                <div class="col-xs-8">
+                                    <label class="radio-inline tempera" style="width:90px;">
+                                        <input type="radio" name="productTemperature"  value="0">冷
+                                    </label>
+                                    <label class="radio-inline tempera" style="width:80px;margin-left:0;">
+                                        <input type="radio" class="hot" name="productTemperature"  value="1">热
+                                    </label>
+                                    <label class="radio-inline tempera" style="width:80px;margin-left:0;">
+                                        <input type="radio" name="productTemperature"  value="2">冷&热
+                                    </label>
+                                </div>
+                            </div>
+                            <div id="showProct" style="margin-top:20px;">
+
+                            </div>
+                            <input type="hidden" name="productCreateTime" id="productCreateTime" value="" />
+                            <!-- <input type="hidden" id="flavorIdArray" name="flavorIdArray[0]" value="" /> -->
+                            <div class="form-group" style="margin-top:40px;">
+                                <div class="col-sm-1 col-sm-offset-4">
+
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="block-title" style="padding: 6px 25px; cursor:pointer;" onclick="jzm.productListEnit(isData)">确定</span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+            <br/><br/>
+        </section>
+
+        <!-- Javascript Libraries -->
+        <!-- jQuery -->
+        <script src="js/jquery.min.js"></script> <!-- jQuery Library -->
+
+        <!-- Bootstrap -->
+        <script src="js/bootstrap.min.js"></script>
+
+        <!-- UX -->
+        <script src="js/scroll.min.js"></script> <!-- Custom Scrollbar -->
+        <!--  Form Related -->
+        <script src="js/icheck.js"></script> <!-- Custom Checkbox + Radio -->
+        <!-- Other -->
+        <script src="js/calendar.min.js"></script> <!-- Calendar -->
+        <script src="js/feeds.min.js"></script> <!-- News Feeds -->
+
+        <script type="text/javascript" src="js/config/genre.js"></script><!-- show user list -->
+        <!-- select -->
+        <script type="text/javascript" src="js/lbs/selsect/select.zmr.js"></script>
+        <!-- All JS functions -->
+        <script src="js/functions.js"></script>
+        <script type="text/javascript">
+            $("body").delegate("input.selprodep","click",function(event) {
+                if($("input.selprodep:checked").length > 3){alert("口味选择最多三个！");return false;};
+            });
+            jzm.productListEnit();
+        </script>
+    </body>
+</html>

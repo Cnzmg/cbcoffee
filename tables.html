@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <meta name="format-detection" content="telephone=no">
+        <meta charset="UTF-8">
+
+        <meta name="description" content="Violate Responsive Admin Template">
+        <meta name="keywords" content="Super Admin, Admin, Template, Bootstrap">
+
+        <title>广东圆梦实业发展有限公司</title>
+
+        <!-- CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/animate.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/form.css" rel="stylesheet">
+        <link href="css/calendar.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/icons.css" rel="stylesheet">
+        <link href="css/generics.css" rel="stylesheet">
+        <link rel="icon" href="img/bitbug_favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" type="text/css" href="page/paging.css" />
+        <script type="text/javascript" src="js/config/config.js"></script>
+    </head>
+    <body id="skin-cloth">
+
+        <header id="header" class="media">
+            <a href="" id="menu-toggle"></a>
+            <a class="logo pull-left" href="index.html">咖啡蜗后台管理系统</a>
+
+            <div class="media-body">
+                <div class="media" id="top-menu">
+                    <div id="time" class="pull-right">
+                        <span id="hours"></span>
+                        :
+                        <span id="min"></span>
+                        :
+                        <span id="sec"></span>
+                    </div>
+
+                    <div class="media-body" style="line-height:39px;">
+                        广东圆梦实业发展有限公司
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="clearfix"></div>
+        <section id="main" class="p-relative" role="main">
+            <!-- Sidebar -->
+            <aside id="sidebar">
+                <!-- Sidbar Widgets -->
+                <div class="side-widgets overflow">
+                    <!-- Profile Menu -->
+                    <div class="text-center s-widget m-b-25 dropdown" id="profile-menu">
+                        <a href="" data-toggle="dropdown">
+                            <img class="profile-pic animated" src="img/1516775224.jpg" alt="">
+                        </a>
+                        <ul class="dropdown-menu profile-menu">
+                        </ul>
+                        <h4 class="m-0" id="usAdministration">Admin</h4>
+                        <span id="Administration"></span>
+                    </div>
+                    <!-- Calendar -->
+                    <div class="s-widget m-b-25">
+                        <div id="sidebar-calendar"></div>
+                    </div>
+                </div>
+                <!-- Side Menu -->
+                <ul class="list-unstyled side-menu" id="J_menuatch">
+
+                </ul>
+
+            </aside>
+
+            <!-- Content -->
+            <section id="content" class="container">
+
+                <!-- Table Striped -->
+                <div class="block-area" id="tableStriped">
+                    <h3 class="block-title" style="font-size:14px;">角色列表</h3>
+                    <div style="margin:0 20px;">
+                        <a class="block-title" style="font-size:12px;width:112px;text-align:center;" onclick="window.location.href='userAddTables.html?uri=/manage/tables.html&v='+jzm.randomNum()" href="###" style="position: relative; z-index: 1;" target="_self">
+                            <i class="fa fa-plus"></i>
+                            <span>添加角色</span>
+                        </a>
+                    </div>
+                    <div style="margin:3px 20px;" class="ui_action">
+                        <div class="block-title" style="font-size:12px;width:112px;text-align:center;margin-right:10px;">状态</div>
+                        <span class="block-title spanaction" data-unity="adminStatus, ,ManageUser"  style="font-size:12px;padding: 3px 12px;">不限</span>
+                        <span class="block-title spannoaction" data-unity="adminStatus,1,ManageUser" style="font-size:12px;padding: 3px 12px;">正常</span>
+                        <span class="block-title spannoaction" data-unity="adminStatus,0,ManageUser" style="font-size:12px;padding: 3px 12px;">禁用</span>
+
+                        <div class="block-title" id="seach" style="font-size:12px;padding: 3px 12px;margin-left:45px;cursor:pointer;" onclick="this.setAttribute('data-type','unity');jzm.ManageUser()">搜索</div>
+                    </div>
+                    <div style="margin:3px 20px;">
+                        <span class="block-title" style="font-size:12px;width:112px;text-align:center;margin-right:10px;">用户名/姓名</span>
+
+                        <input type="text" id="userName" style="width:200px;background:none;border:1px solid rgba(0,0,0,0.3);height:27px;" />
+
+                    </div>
+                    <div style="margin:0 20px 20px;" class="ui_action">
+                        <div class="block-title" style="font-size:12px;width:112px;text-align:center;margin-right:10px;">身份</div>
+                        <span class="block-title spanaction" data-unity="roleId, ,ManageUser" style="font-size:12px;padding: 3px 12px;">不限</span>
+                        <span class="block-title spannoaction" data-unity="roleId,2,ManageUser" style="font-size:12px;padding: 3px 12px;">系统管理员</span>
+                        <span class="block-title spannoaction" data-unity="roleId,3,ManageUser" style="font-size:12px;padding: 3px 12px;">商户管理员</span>
+                    </div>
+                    <input type="hidden" id="adminStatus" value="" />
+                    <input type="hidden" id="roleId" value="" />
+                    <div class="table-responsive overflow">
+                        <table class="tile table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>姓名</th>
+                                    <th>帐号</th>
+                                    <th>角色</th>
+                                    <th>状态</th>
+                                    <th>分润点(%)</th>
+                                    <th>钱包</th>
+                                    <th>绑定的用户名/ID</th>
+                                    <th>注册时间</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyhtml">
+
+                            </tbody>
+                        </table>
+                        <!-- page -->
+                        <div class="col-sm-6" id="page"></div>
+                        <div id="pageTool" class="col-sm-6"></div>
+                        <input type="hidden" id="pageNums" value="" />
+                    </div>
+                </div>
+            </section>
+            <br/><br/>
+        </section>
+        <!-- Javascript Libraries -->
+        <!-- jQuery -->
+        <script src="js/jquery.min.js"></script> <!-- jQuery Library -->
+        <!-- Bootstrap -->
+        <script src="js/bootstrap.min.js"></script>
+        <!-- UX -->
+        <script src="js/scroll.min.js"></script> <!-- Custom Scrollbar -->
+        <!-- Other -->
+        <script src="js/calendar.min.js"></script> <!-- Calendar -->
+        <script src="js/feeds.min.js"></script> <!-- News Feeds -->
+        <script type="text/javascript" src="js/config/genre.js"></script><!-- show user list -->
+        <!-- All JS functions -->
+        <script src="js/functions.js"></script>
+        <!-- page all -->
+        <script type="text/javascript" src="page/query.js"></script>
+        <script type="text/javascript" src="page/paging.js"></script>
+
+    </body>
+</html>

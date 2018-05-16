@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <meta name="format-detection" content="telephone=no">
+        <meta charset="UTF-8">
+
+        <meta name="description" content="Violate Responsive Admin Template">
+        <meta name="keywords" content="Super Admin, Admin, Template, Bootstrap">
+
+        <title>广东圆梦实业发展有限公司</title>
+
+        <!-- CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/animate.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/form.css" rel="stylesheet">
+        <link href="css/calendar.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/icons.css" rel="stylesheet">
+        <link href="css/generics.css" rel="stylesheet">
+        <link rel="icon" href="img/bitbug_favicon.ico" type="image/x-icon" />
+        <!-- select css -->
+        <link rel="stylesheet" type="text/css" href="js/lbs/selsect/select.zmr.css" />
+        <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script type="text/javascript" src="js/config/config.js"></script>
+    </head>
+    <body id="skin-cloth">
+
+        <header id="header" class="media">
+            <a href="" id="menu-toggle"></a>
+            <a class="logo pull-left" href="index.html">咖啡蜗后台管理系统</a>
+
+            <div class="media-body">
+                <div class="media" id="top-menu">
+                    <div id="time" class="pull-right">
+                        <span id="hours"></span>
+                        :
+                        <span id="min"></span>
+                        :
+                        <span id="sec"></span>
+                    </div>
+
+                    <div class="media-body" style="line-height:39px;">
+                        <!-- <input type="text" class="main-search"> -->
+                        广东圆梦实业发展有限公司
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="clearfix"></div>
+
+        <section id="main" class="p-relative" role="main">
+
+            <!-- Sidebar -->
+            <aside id="sidebar">
+
+                <!-- Sidbar Widgets -->
+                <div class="side-widgets overflow">
+                    <!-- Profile Menu -->
+                    <div class="text-center s-widget m-b-25 dropdown" id="profile-menu">
+                        <a href="" data-toggle="dropdown">
+                            <img class="profile-pic animated" src="img/1516775224.jpg" alt="">
+                        </a>
+                        <ul class="dropdown-menu profile-menu">
+                        </ul>
+                        <h4 class="m-0" id="usAdministration">Admin</h4>
+                        <span id="Administration"></span>
+                    </div>
+
+                    <!-- Calendar -->
+                    <div class="s-widget m-b-25">
+                        <div id="sidebar-calendar"></div>
+                    </div>
+
+                </div>
+
+                <!-- Side Menu -->
+                <ul class="list-unstyled side-menu" id="J_menuatch">
+
+                </ul>
+
+            </aside>
+
+            <!-- Content -->
+            <section id="content" class="container">
+
+                <!-- Table Striped -->
+                <div class="block-area" id="tableStriped">
+                <div class="ibox-title">
+                    <h5>添加角色</h5>
+                </div>
+                    <div class="ibox-content" style="margin-top:100px;">
+                        <form class="form-horizontal m-t" method="post" role="form" id="AddUser">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">用户名</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" id="adminName" name="adminName" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9]/g,'')" onpaste="value=value.replace(/[^\a-\z\A-\Z0-9]/g,'')" oncontextmenu = "value=value.replace(/[^\a-\z\A-\Z0-9]/g,'')" maxlength="20" type="text" value="" > <!-- onkeyup="J_Modified(this.value,'^[a-zA-Z]+$')" -->
+                                    <span>请输入用户名，用户名为 10 到 20 个字符组成，大小写字母（不包括汉字，不区分大小写）</span>
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <label class="col-sm-2 control-label">密码</label>
+                                <div class="col-sm-8">
+
+                                    <input class="form-control" id="adminPwda" name="adminPwda" pattern="[A-z,0-9]{8,18}" size="20" title="密码长度不能少于6位" type="password">
+                                    <span>请填写密码，最小长度为 8 个字符</span>
+                                </div>
+                            </div>
+                           <div class="form-group">
+                                <label class="col-sm-2 control-label">确认密码</label>
+                                <div class="col-sm-8">
+
+                                    <input class="form-control" id="adminPwd" name="adminPwd" onblur="changepwd(this.value)" pattern="[A-z,0-9]{6,18}" size="20" title="密码长度不能少于6位" type="password">
+                                    <span>重复输入密码，确认正确输入</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">所属角色</label>
+                                <div class="col-sm-8">
+                                    <select id="roleId" name="roleId" class="col-sm-12 clearfix"  style="height:34px;background:none;border:1px solid rgba(255, 255, 255, 0.3);">
+                                          <option value ="2" >系统管理员</option>
+                                          <option value ="3">商户管理员</option>
+                                    </select>
+                                    <span style="display:block;">分配用户所属用户组后，该用户会自动拥有此用户组内的模块操作权限</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">真实姓名</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" id="realName" name="realName" type="text" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">客服电话</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" id="adminMobile" name="adminMobile" type="text" value="" onkeyup="jzm.check({val:this.value,id:'#adminMobile'})" onafterpaste="jzm.check({val:this.value,id:'#adminMobile'})">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">分润点</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" style="width:300px;display:inline-block;" id="royaltyRate" placeholder="请输入0到100的数字" type="text" value="" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" onafterpaste="this.value=this.value.replace(/[^0-9.]/g,'')">
+                                    <span>%</span>
+                                    <span style="display:block;">此数值表示该管理者的分润占比</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">绑定微信用户</label>
+                                <div class="col-sm-8">
+                                    <input type="text" id="searchName" class="form-control" style="width:300px;display:inline-block;" placeholder="可请输入用户名/ID搜索">
+                                    <span class="block-title" onclick="jzm.find_user_for_bind(1);" style="cursor:pointer;">搜索</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"></label>
+                                <div class="col-sm-8">
+                                    <select id="userId" class="col-sm-12 clearfix" value="2" style="width: 300px;height:34px;background:none;border:1px solid rgba(255, 255, 255, 0.3);">
+
+                                    </select>
+                                </div>
+                            </div>
+                            <input type="hidden" name="userId" value="">
+                            <input type="hidden" name="royaltyRate" value="">
+                            <div class="form-group" style="margin-top:40px;">
+                                <div class="col-sm-1 col-sm-offset-4">
+
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="block-title" style="padding: 6px 25px;cursor:pointer;" onclick="jzm.AddadminMan()">确定注册</span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+            <br/><br/>
+        </section>
+
+        <!-- Javascript Libraries -->
+        <!-- jQuery -->
+        <script src="js/jquery.min.js"></script> <!-- jQuery Library -->
+
+        <!-- Bootstrap -->
+        <script src="js/bootstrap.min.js"></script>
+
+        <!-- UX -->
+        <script src="js/scroll.min.js"></script> <!-- Custom Scrollbar -->
+
+        <!-- Other -->
+        <script src="js/calendar.min.js"></script> <!-- Calendar -->
+        <script src="js/feeds.min.js"></script> <!-- News Feeds -->
+
+        <script type="text/javascript" src="js/config/genre.js"></script><!-- show user list -->
+        <!-- select -->
+        <script type="text/javascript" src="js/lbs/selsect/select.zmr.js"></script>
+        <!-- All JS functions -->
+        <script src="js/functions.js"></script>
+        <script type="text/javascript">
+            function changepwd(change){
+                var pwd = $("#adminPwda").val();
+                if (pwd != change){
+                        $("#adminPwd").siblings('span').text("两次密码输入不一致！");
+                    }
+                else{
+                        $("#adminPwd").siblings('span').text("重复输入密码，确认正确输入");
+                    };
+            };
+            $('#roleId').multiselect({setMaxOptionNum:10,setWidth:'300px',multiple:false,id:'#roleId'});
+        </script>
+    </body>
+</html>

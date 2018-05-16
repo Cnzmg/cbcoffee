@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <meta name="format-detection" content="telephone=no">
+        <meta charset="UTF-8">
+
+        <meta name="description" content="Violate Responsive Admin Template">
+        <meta name="keywords" content="Super Admin, Admin, Template, Bootstrap">
+
+        <title>广东圆梦实业发展有限公司</title>
+
+        <!-- CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/animate.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/form.css" rel="stylesheet">
+        <link href="css/calendar.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/icons.css" rel="stylesheet">
+        <link href="css/generics.css" rel="stylesheet">
+        <link rel="icon" href="img/bitbug_favicon.ico" type="image/x-icon" />
+        <script type="text/javascript" src="js/config/config.js"></script>
+    </head>
+    <body id="skin-cloth">
+
+        <header id="header" class="media">
+            <a href="" id="menu-toggle"></a>
+            <a class="logo pull-left" href="index.html">咖啡蜗后台管理系统</a>
+
+            <div class="media-body">
+                <div class="media" id="top-menu">
+                    <div id="time" class="pull-right">
+                        <span id="hours"></span>
+                        :
+                        <span id="min"></span>
+                        :
+                        <span id="sec"></span>
+                    </div>
+
+                    <div class="media-body" style="line-height:39px;">
+                        <!-- <input type="text" class="main-search"> -->
+                        广东圆梦实业发展有限公司
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="clearfix"></div>
+
+        <section id="main" class="p-relative" role="main">
+
+            <!-- Sidebar -->
+            <aside id="sidebar">
+
+                <!-- Sidbar Widgets -->
+                <div class="side-widgets overflow">
+                    <!-- Profile Menu -->
+                    <div class="text-center s-widget m-b-25 dropdown" id="profile-menu">
+                        <a href="" data-toggle="dropdown">
+                            <img class="profile-pic animated" src="img/1516775224.jpg" alt="">
+                        </a>
+                        <ul class="dropdown-menu profile-menu">
+                        </ul>
+                        <h4 class="m-0" id="usAdministration">Admin</h4>
+                        <span id="Administration"></span>
+                    </div>
+
+                    <!-- Calendar -->
+                    <div class="s-widget m-b-25">
+                        <div id="sidebar-calendar"></div>
+                    </div>
+
+                </div>
+
+                <!-- Side Menu -->
+                <ul class="list-unstyled side-menu" id="J_menuatch">
+
+                </ul>
+
+            </aside>
+
+            <!-- Content -->
+            <section id="content" class="container">
+
+                <!-- Table Striped -->
+                <div class="block-area" id="tableStriped">
+                <div class="ibox-title">
+                    <h5>用户编辑</h5>
+                </div>
+                    <div class="ibox-content" style="margin-top:100px;">
+                        <form id="uList" class="form-horizontal m-t" method="post" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">昵称</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" id="nickName" type="text" value="" disabled="disabled">
+                                    <input type="hidden" name="nickName" />
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <label class="col-sm-2 control-label">ID</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" id="userId" type="text" disabled="disabled">
+                                </div>
+                            </div>
+                           <div class="form-group">
+                                <label class="col-sm-2 control-label">钱包余额</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" id="balance" type="text">
+                                    <input type="hidden" name="balance" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">积分</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" id="integral" type="text" value="">
+                                    <input type="hidden" name="integral" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">会员等级</label>
+                                <div class="col-sm-8">
+                                    <!-- <input class="form-control" id="memberLevelName"  type="text" value="" >
+                                    <input type="hidden" id="memberLevel" name="memberLevel" /> -->
+                                    <select class="form-control" name="memberLevel" id="memberLevel" style="height:34px;background:none;border:1px solid rgba(255, 255, 255, 0.3);width:100%;">
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">用户类型</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" id="userType" name="userType" style="height:34px;background:none;border:1px solid rgba(255, 255, 255, 0.3);width:100%;">
+                                      <option value="1">普通用户</option>
+                                      <option value="2">测试人员</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="margin-top:40px;">
+                                <div class="col-sm-1 col-sm-offset-4">
+
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="block-title" style="padding: 6px 25px;cursor:pointer;" onclick="jzm.manageClientUser('u')">保存</span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+            <br/><br/>
+        </section>
+        <!-- Javascript Libraries -->
+        <!-- jQuery -->
+        <script src="js/jquery.min.js"></script> <!-- jQuery Library -->
+        <!-- Bootstrap -->
+        <script src="js/bootstrap.min.js"></script>
+        <!-- UX -->
+        <script src="js/scroll.min.js"></script> <!-- Custom Scrollbar -->
+        <!-- Other -->
+        <script src="js/calendar.min.js"></script> <!-- Calendar -->
+        <script src="js/feeds.min.js"></script> <!-- News Feeds -->
+        <!-- adv -->
+        <script type="text/javascript" src="js/lbs/advertModels.js"></script>
+        <!-- All JS functions -->
+        <script src="js/functions.js"></script>
+        <script type="text/javascript">
+          jzm.manageClientUser();
+        </script>
+    </body>
+</html>
