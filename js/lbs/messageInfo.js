@@ -382,9 +382,40 @@ jzm.msginformation = function (type){
 
 //客如云账单转换后台账单
 jzm.krybill = function(){
-	var forDom = new FormData();
-	forDom.append('file',document.querySelector("#filexls").files[0]);
-	jzm.paraMessage('loadAjaxdata',{url:'excel_to_order',xmldata:'&'+forDom,callbackfn:function(reg){
-		console.log(reg);
-	},type:"POST",trcny:true});
+	$("#filexls").off().change(function(){
+		$('#pager').remove();
+		var h = '<div id="pager" style="position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.8);top:0;left:0;z-index:999;text-align:center;padding-top:15%;"><div class="up_msg">文件已经准备好请点击确认上传</div><label style="display:block;width:65px;height:30px;background:#146375;line-height:30px;margin:30px auto;cursor:pointer;" for="filexls">重新上传</label></div>';
+		$("#filexls").before(h);
+	});
+	$("#krybill").off().on('click',function(){
+		$("#pager").html('<div>正在处理。。。</div>');
+		var forDom = new FormData();
+		forDom.append('file',document.querySelector("#filexls").files[0]);
+		$.ajax({
+	            url: httpJoin + "excel_to_order?id=" + jzm.uncompileStr(item.uname) + "&token=" + jzm.uncompileStr(item.utoken) + "&url=" +location.pathname.split('?')[0],
+	            type: "POST",
+	            data: forDom,
+	            timeout:1200000,
+	            async:true,
+	            xhr: function(){ //获取ajaxSettings中的xhr对象，为它的upload属性绑定progress事件的处理函数
+	                myXhr = $.ajaxSettings.xhr();
+	                if(myXhr.upload){   //检查upload属性是否存在
+	                    myXhr.upload.addEventListener('progress',jzm.progressHandlingFunction, false);//绑定progress事件的回调函数
+	                }
+	                return myXhr;
+	            },
+	            success: function(reg){
+	                RegCode(statusCode).test(reg.statusCode.status) ? void function(){
+	                  console.log(reg);
+	                }() : jzm.Error(reg);
+	            },
+	            error:function(xhr,status){
+	                if(status == 'timeout') {alert('请求超时！');}else{alert(xhr.statusText)};
+	            },
+	            contentType: false, //必须false才会自动加上正确的Content-Type
+	            processData: false  //必须false才会避开jQuery对 formdata 的默认处理
+	        });
+		});
+	
 }
+__load.location.pathname.split('?')[0] == '/manage/krybill.html' ? jzm.krybill() : null;
