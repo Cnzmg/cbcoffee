@@ -12,7 +12,7 @@ var localURL = "/manage/"; // uri/  改版cdn 线上不加速 http://39.108.88.1
 // var httpJoin = "http://mapi.cbcoffee.cn/";  //接口地址
 // var httpUpload = "http://39.108.88.107:8080/";  //线上上传接口地址
 // var localURL = "http://admin.cbcoffee.cn/manage/"; // cdn 线上不加速 http://39.108.88.107:8081/coffeeManagement/
-var __load = window,jzm = {},errorCode = '400|997|999|1005|2002|2014',statusCode = '6666|2003|2005|2008|2010|2015|2019|2017|2021|2023|2025|2049|2047|2048|2051|2052|2027|2031|2032|2029|2035|2038|2036|2019|2037|2039|2064|2040|2049|2048|2047|2064|2063|2043|2062|2042|2003|2045|2044|2046|2050|2056|2054|2055|2065|2060|2057|2058|2059|600|2066|2067|2070',isNullCode = '4444',RegCode = function(e){return new RegExp(e)},Stringuser,i = 0,isData = '\/S*/i', /*/通用的数据类型，错误状态吗，对象属性/*/
+var __load = window,jzm = {},errorCode = '400|997|999|1005|2002|2014',statusCode = '6666|2003|2005|2008|2010|2015|2019|2017|2021|2023|2025|2034|2049|2047|2048|2051|2052|2027|2031|2032|2029|2035|2038|2036|2019|2037|2039|2064|2040|2049|2048|2047|2064|2063|2043|2062|2042|2003|2045|2044|2046|2050|2056|2054|2055|2065|2060|2057|2058|2059|600|2066|2067|2070',isNullCode = '4444',RegCode = function(e){return new RegExp(e)},Stringuser,i = 0,isData = '\/S*/i', /*/通用的数据类型，错误状态吗，对象属性/*/
              sissionHref = {uri:['tables','u_Journal','productList','manageflavorList','formulaList','detailedList','equipmentList','checkIn','equipmentLongUpdate','advertisementH5List','advertisementRootList','adRootDetailedList','chartsShopSale','systemUserList','systemUserLvList','couponList','redeemGrant','integralList','integralExchangeList','orderList','RepairPersonnelList','RepairRootBudingList','feedbackList','RepairTaianList','financialManagement','safeDepositBox'],fn:['ManageUser','JournalList','productList','mangFlavor','formulaList','detailedList','findMachineList','checkInMaintainer','manageMachineVersionList','findAdvertisementList','findMachineAdvertisementList','advdetailedList','shopRootSaleList','findClientUserList','manageMemberLevel','findCouponList','faGoRedeem','findIntegralLogList','manageIntegralShop','findOrderList','manageMaintainer','manageRootMaintainer','feedbackList','manageDistributor','manageDividendList','manageSafeBox']};  /*/通用列表方法/*/
 jzm.paraMessage = function(msg,data){return new jzm[msg](data);};  //工厂函数
 jzm.randomNum = function(e){  //随机数字符
@@ -31,9 +31,11 @@ jzm.getQueryString = function(name){
 }
 jzm.Error = function (err){  //错误信息
   console.log(err);
-  alert(err.statusCode.msg);
-  localStorage.clear();
-  window.location.href = "./login.html?err_uri=" + encodeURI(window.location.href.split('?')[0] + '&err_code=' + err.statusCode.status + '&err_msg=' + err.statusCode.status);
+  alert("err_code:" + err.statusCode.status +", err_msg:" + err.statusCode.msg);
+  if(err.statusCode.status == 1005 || err.statusCode.status == 2002){
+  	localStorage.clear();
+  	window.location.href = "./login.html?err_uri=" + encodeURI(window.location.href.split('?')[0] + '&err_code=' + err.statusCode.status + '&err_msg=' + err.statusCode.status);
+  }
 };
 jzm.compileStr = function(code){//对字符串进行加密
     var c = String.fromCharCode(code.charCodeAt(0)+code.length);
@@ -204,7 +206,7 @@ jzm.search = function(e){ //检索分页重置
     jzm.implement(e.pageCount * 20);
 };
 jzm.UIaction = function(){  //列表检索关键字
-  $('.ui_action span').off().on('click',function(event){
+  $('.ui_action').off().delegate('span','click',function(event){
     event.stopPropagation(); /*/阻止事件冒泡/*/
     $(this).removeClass('spannoaction').addClass('spanaction').siblings('span').removeClass('spanaction').addClass('spannoaction');
     $('#'+$(this).attr('data-unity').split(',')[0]).val($(this).attr('data-unity').split(',')[1]);
@@ -287,6 +289,7 @@ jzm.createImages = function(e){ //获取视频缩略图
     var video = $('#video').find('video')[0],
     canvas = document.createElement("canvas"),
     canvasFill = canvas.getContext('2d');
+//  video.crossOrigin = "anonymous"; //启用资源跨域
     canvas.width = video.videoWidth * 0.25;
     canvas.height = video.videoHeight * 0.25;
     console.log(canvas.height);

@@ -11,7 +11,7 @@ jzm.findMachineList = function(page)  /*/设备列表/*/{
       xl = JSON.parse(localStorage.getItem('stat')).sort;
       search += "&orderLine="+ el +"&sort="+ xl;
     };
-    if(!page){ //查询设备、离线、缺料、故障总数
+    if(!page){ //查询设备、离线、缺料、故障总数              //重复次数问题 
       jzm.paraMessage('loadAjaxdata',{url:"find_machine_number",xmldata:'',callbackfn:function(reg){
         $("#machineCount").html("设备总数<br />" + reg.machineCount);
         $("#offLineNum").html("离线总数<br />" + reg.offLineNum);
@@ -132,12 +132,15 @@ jzm.remoteOperation = function(typoe,operid) /*/机器远程操作、查看/*/{
     },type:"POST",trcny:true});
   }else{
     jzm.paraMessage('loadAjaxdata',{url:"remote_operation",xmldata:"&type=1&machineNumber=" + jzm.getQueryString("machineNumber"),callbackfn:function(reg){
-      var str = "";
+      // console.log(reg);
+      var str = "",machineConfig_Arr=[];
       RegCode(statusCode).test(reg.statusCode.status) ? void function(){
         var m = document.getElementsByTagName("input");
-        console.log();
+        for(var key in reg.machineConfig){
+            machineConfig_Arr.push(reg.machineConfig[key]);
+        };
         for(var _key = 0; _key < m.length; _key++){
-            m[_key].value = Object.values(reg.machineConfig)[_key];
+            m[_key].value =  machineConfig_Arr[_key];
         };
         $("#boilerTemperature").text(reg.machineStatus.boilerTemperature);
         $("#machineStatus").text(reg.machineStatus.machineStatus);

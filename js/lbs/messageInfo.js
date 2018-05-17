@@ -304,7 +304,7 @@ jzm.manageDividendList = function(page)     /*/每单分润记录列表/*/{
       for(var i = 0; i < reg.dList.length; i ++){
           str += '<tr>'+
                       '<td>'+ reg.dList[i].dId +'</td>'+
-                      '<td><a href="###">'+ reg.dList[i].orderId +'</a></td>'+
+                      '<td><a href="javascript:void(0)">'+ reg.dList[i].orderId +'</a></td>'+
                       '<td>'+ reg.dList[i].recId +'</td>'+
                       '<td>'+ reg.dList[i].recName +'</td>'+
                       '<td>'+ reg.dList[i].recType +'</td>'+
@@ -330,7 +330,7 @@ jzm.manageSafeBox = function(page)     /*/保险箱列表/*/{
       for(var i = 0; i < reg.sbList.length; i ++){
           str += '<tr>'+
                       '<td>'+ reg.sbList[i].sBId +'</td>'+
-                      '<td><a href="###">'+ reg.sbList[i].adminId +'</a></td>'+
+                      '<td><a href="javascript:void(0)">'+ reg.sbList[i].adminId +'</a></td>'+
                       '<td>'+ reg.sbList[i].name +'</td>'+
                       '<td>'+ reg.sbList[i].type +'</td>'+
                       '<td>'+ reg.sbList[i].sBMoney +'</td>'+
@@ -384,11 +384,13 @@ jzm.msginformation = function (type){
 jzm.krybill = function(){
 	$("#filexls").off().change(function(){
 		$('#pager').remove();
-		var h = '<div id="pager" style="position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.8);top:0;left:0;z-index:999;text-align:center;padding-top:15%;"><div class="up_msg">文件已经准备好请点击确认上传</div><label style="display:block;width:65px;height:30px;background:#146375;line-height:30px;margin:30px auto;cursor:pointer;" for="filexls">重新上传</label></div>';
+		var h = '<div id="pager" style="position:absolute;width:100%;height:100%;background:rgba(0,0,0,0.8);top:0;left:0;z-index:999;text-align:center;padding-top:15%;"><div class="up_msg">文件已经准备好请点击确认提交</div><label style="display:block;width:65px;height:30px;background:#146375;line-height:30px;margin:30px 56px;cursor:pointer;" for="filexls">重新上传</label></div>';
 		$("#filexls").before(h);
+		$("#pager").parent().after('<span class="block-title showpager" style="padding: 7px 10px;cursor: pointer;background: red;margin-left: -15px;position:absolute;z-index:999;    height: 30px;line-height: 17px;top: 95px;" id="krybill">确定提交</span>');
 	});
-	$("#krybill").off().on('click',function(){
-		$("#pager").html('<div>正在处理。。。</div>');
+	$("body").off().delegate('#krybill','click',function(){
+		$("#pager").html('<div style="text-align:center;">正在处理中...<br />请稍后</div>');
+		$('.showpager').remove();
 		var forDom = new FormData();
 		forDom.append('file',document.querySelector("#filexls").files[0]);
 		$.ajax({
@@ -406,7 +408,8 @@ jzm.krybill = function(){
 	            },
 	            success: function(reg){
 	                RegCode(statusCode).test(reg.statusCode.status) ? void function(){
-	                  console.log(reg);
+	                	alert(reg.statusCode.msg);
+	                  window.location.reload();
 	                }() : jzm.Error(reg);
 	            },
 	            error:function(xhr,status){

@@ -232,7 +232,7 @@ jzm.JournalList = function (page)  /*/日志列表/*/{
 };
 //系统管理者
 jzm.productList = function(page) /*/产品列表/*/{
-    location.hash ? page = location.hash.split('=')[1] : null;
+    location.hash && $("#productName").val() != '' ? page = location.hash.split('=')[1] : null;
     jzm.paraMessage('loadAjaxdata',{url:"find_product_list",xmldata:"&page=" + (page ? page : page = 1) + "&name=" + $("#productName").val(),callbackfn:function(reg){
         var str = "";
         RegCode(statusCode).test(reg.statusCode.status) ? void function(){
@@ -304,9 +304,6 @@ jzm.productListEnit = function(e)  /*/产品编辑/*/{
         $("input[name='productPrice']").val($("#productPrice").val() * 100);
         if(!$("input[name='productTemperature']").is(":checked")){alert("请选择口味冷/热!");return false};
         $("#formulaId option[data-select='true']").length > 0 ? $("input[name='formulaId']").val($("#formulaId option[data-select='true']").val()) : $("input[name='formulaId']").val();
-        if ($("#productTemperature").is(":checked") && $("#productTemperature1").is(":checked")){
-
-        }
         jzm.paraMessage('loadAjaxdata',{url:"manage_product",xmldata:"&type=5&"+$("#AddProduct").serialize(),callbackfn:function(reg){
             RegCode(statusCode).test(reg.statusCode.status) ? window.location.href = jzm.getQueryString('uri') + location.hash : jzm.Error(reg);
           },type:"POST",trcny:true});
@@ -442,7 +439,7 @@ jzm.enitBox = function(id)  /*/提交修改口味名称/*/{
     };
 };
 
-jzm.formulaList = function(list,page)   /*/配方列表/*/{
+jzm.formulaList = function(page)   /*/配方列表/*/{
     jzm.paraMessage('loadAjaxdata',{url:"find_formula_list",xmldata:"&page=" + (page ? page : page =1 ) + "&name=" + $('#formulaLi').val(),callbackfn:function(reg){
       var str = "";
       RegCode(statusCode).test(reg.statusCode.status) ? void function(){

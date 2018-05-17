@@ -123,8 +123,8 @@ jzm.EnitmanageMachineAdvertisement = function(show)  /*/编辑视频广告/*/{
         $("#madTitle").val(reg.machineAdvertisementInfo.madTitle);
         $("#madOrder").val(reg.machineAdvertisementInfo.madOrder);
         $("#madUrl").val(url);
-        $("#madUrl_video").attr('src',url);
-        jzm.createImages({file:'',node:'#madUrl_img',type:url});
+        $("#madUrl_video").attr('src',url.replace('download','admin'));
+        jzm.createImages({file:'',node:'#madUrl_img',type:url.replace('download','admin')});
       }() : jzm.Error(reg);
     },type:"POST",trcny:true});
   };
@@ -342,7 +342,7 @@ jzm.findClientUserList = function(page)  /*/用户列表/*/{
                       '<td>'+ parseFloat((reg.clientUserList[i].sumPaymentMoney != null ? reg.clientUserList[i].sumPaymentMoney : 0) / 100).toFixed(2) +'</td>'+
                       '<td>'+
                           '<a href="systemUserEnit.html?uri=/manage/systemUserList.html&v='+ jzm.randomNum() +'&uid='+ reg.clientUserList[i].userId +'">编辑  |</a>'+
-                          '<a href="###" onclick="jzm.manageclientuser('+ reg.clientUserList[i].userId +')">'+(reg.clientUserList[i].userStatus =="冻结" ? "激活" : "冻结")+'</a>'+
+                          '<a href="javascript:void(0)" onclick="jzm.manageclientuser('+ reg.clientUserList[i].userId +')">'+(reg.clientUserList[i].userStatus =="冻结" ? "激活" : "冻结")+'</a>'+
                       '</td>'+
                   '</tr>';
           };

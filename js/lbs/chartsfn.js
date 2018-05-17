@@ -939,7 +939,7 @@ jzm.shopTaolList = function(sear){
     var staTime = document.getElementById("ratestartTime").value;
     var entTime = document.getElementById("rateendTime").value;
     if (sear){
-        searchUser += "&name=" + document.getElementById("shopUserName").value;
+        searchUser += "&checkName=" + document.getElementById("shopUserName").value;
         };
     if(!staTime){
         var d = new Date();                                         //当前日期
