@@ -31,6 +31,7 @@ jzm.findOrderList = function(page)     /*/订单列表/*/{
                         '<td>'+ reg.orderShowList[i].sumMoney +'</td>'+
                         '<td>'+ reg.orderShowList[i].paymentMoney +'</td>'+
                         '<td>'+ reg.orderShowList[i].paymentType +'</td>'+
+                        '<td>'+ reg.orderShowList[i].productName +'</td>'+
                         '<td>'+ reg.orderShowList[i].consumptionType +'</td>'+
                         '<td>'+ reg.orderShowList[i].couponInfo +'</td>'+
                         '<td>'+ reg.orderShowList[i].orderType +'</td>'+
@@ -88,11 +89,14 @@ jzm.manageMaintainer = function(page){
                         '<td>'+ (reg.maintainerList[i].royaltyRate * 10000) / 100 +' %</td>'+
                         '<td>'+ reg.maintainerList[i].wallet +'</td>'+
                         '<td>'+ reg.maintainerList[i].userName +'</td>'+
-                        '<td>'+
-                            '<a href="javascript:void(0);" onclick="jzm.showaddwx('+reg.maintainerList[i].maintainerId+')">编辑  |</a>'+
-                            '<a href="javascript:void(0);" onclick="jzm.delmanage('+reg.maintainerList[i].maintainerId+')">删除</a>'+
-                        '</td>'+
-                    '</tr>';
+                        '<td>';
+                        jzm.uncompileStr(JSON.parse(localStorage.getItem('lnk')).shopLink) == 2 && reg.maintainerList[i].adminName == 'admin' ? (
+                        	str +=	'<a href="javascript:void(0);" onclick="jzm.showaddwx('+reg.maintainerList[i].maintainerId+')">编辑  |</a><a href="javascript:void(0);" onclick="jzm.delmanage('+reg.maintainerList[i].maintainerId+')">删除</a>'
+                        ): null;
+                        jzm.uncompileStr(JSON.parse(localStorage.getItem('lnk')).shopLink) == 3 && reg.maintainerList[i].adminName != 'admin' ? (
+                        	str +=	'<a href="javascript:void(0);" onclick="jzm.showaddwx('+reg.maintainerList[i].maintainerId+')">编辑  |</a><a href="javascript:void(0);" onclick="jzm.delmanage('+reg.maintainerList[i].maintainerId+')">删除</a>'
+                        ): null;
+            str	+= '</td></tr>';
               };
           $("#pageNums").val(reg.pageCount * 20);
           $('#tbodyhtml').html(str);
@@ -152,9 +156,13 @@ jzm.manageRootMaintainer = function(page){
                     //所属商户名称
                     '<td>'+ (reg.machineShowList[i].adminName == null ? "无" : reg.machineShowList[i].adminName) +'</td>' +
                     '<td>';
-                    ( reg.machineShowList[i].maintainerPhone == "无" ?  str += '<a href="javascript:void(0);" onclick="jzm.manageRootListMaintainer(1,'+ reg.machineShowList[i].machineNumber +')">绑定</a>' : str += '<a href="javascript:void(0);" onclick="jzm.manageRootListMaintainer(1,'+ reg.machineShowList[i].machineNumber +')">重新绑定</a>')
-                str += '</td>'+
-                '</tr>';
+                	jzm.uncompileStr(JSON.parse(localStorage.getItem('lnk')).shopLink) == 2 && (reg.machineShowList[i].adminName == null || reg.machineShowList[i].adminName == 'admin') ? (
+	                	reg.machineShowList[i].maintainerPhone == "无" ?  str += '<a href="javascript:void(0);" onclick="jzm.manageRootListMaintainer(1,'+ reg.machineShowList[i].machineNumber +')">绑定</a>' : str += '<a href="javascript:void(0);" onclick="jzm.manageRootListMaintainer(1,'+ reg.machineShowList[i].machineNumber +')">重新绑定</a>'
+	                ): null;
+	                jzm.uncompileStr(JSON.parse(localStorage.getItem('lnk')).shopLink) == 3 && (reg.machineShowList[i].adminName == null || reg.machineShowList[i].adminName != 'admin') ? (
+	                	reg.machineShowList[i].maintainerPhone == "无" ?  str += '<a href="javascript:void(0);" onclick="jzm.manageRootListMaintainer(1,'+ reg.machineShowList[i].machineNumber +')">绑定</a>' : str += '<a href="javascript:void(0);" onclick="jzm.manageRootListMaintainer(1,'+ reg.machineShowList[i].machineNumber +')">重新绑定</a>'
+	                ): null;
+                str += '</td></tr>';
           };
           $("#pageNums").val(reg.pageCount * 20);
           $('#tbodyhtml').html(str);
