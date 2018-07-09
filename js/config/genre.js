@@ -79,14 +79,14 @@ jzm.deleteman = function(id)   /*/删除帐号/*/{
 jzm.AddadminMan = function()  /*/添加用户/*/{
    var len = parseFloat($("#royaltyRate").val() * 10000) / (100 *10000).toFixed(2);
    $("input[name='royaltyRate']").val(len);
-   var m = document.getElementsByTagName("input");
-   for(var i = 0; i < m.length; i++){
-        if(!m[i].value){
-            if(i==6){continue};
-            alert("请将信息填写完整！");
-            return false;
-          }
-        };
+// var m = document.getElementsByTagName("input");
+// for(var i = 0; i < m.length; i++){
+//      if(!m[i].value){
+//          if(i==6){continue};
+//          alert("请将信息填写完整！");
+//          return false;
+//        }
+//      };
     if ($("#adminName").val().length < 10){
           alert("用户名长度不能少于10个字符");
           return false;
@@ -117,21 +117,17 @@ jzm.AddadminMan = function()  /*/添加用户/*/{
 };
 jzm.EnitadminMan = function(w) /*/编辑用户/*/{
     if (w){
-      if ($("#adminName").val().length < 10){
-              alert("用户名长度不能少于10个字符");
-              return false;
-          };
       if ($("#adminPwda").val() != $("#adminPwd").val()){
               $("#adminPwd").siblings('span').text("两次密码输入不一致！");
               return false;
           }
       else{
             $("#adminPwd").siblings('span').text("重复输入密码，确认正确输入");
-            if ($("#adminPwd").val() != "" && $("#adminPwd").val().length < 8)
-                {
-                    alert("密码长度不能少于8个字符");
-                    return false;
-                };
+//          if ($("#adminPwd").val() != "" && $("#adminPwd").val().length < 8)
+//              {
+//                  alert("密码长度不能少于8个字符");
+//                  return false;
+//              };
           };
         var len = parseFloat($("#royaltyRate").val() * 10000) / (100 * 10000).toFixed(2);
         $("input[name='royaltyRate']").val(len);
@@ -150,7 +146,6 @@ jzm.EnitadminMan = function(w) /*/编辑用户/*/{
             jzm.paraMessage('loadAjaxdata',{url:"manage_user",xmldata:"&type=1&toAdminId=" + jzm.getQueryString("adminId"),callbackfn:function(reg){
               RegCode(statusCode).test(reg.statusCode.status) ? void function(){
                 $("#adminName").val(reg.adminUser.adminName); // 用户名
-                $("input[name='adminName']").val(reg.adminUser.adminName); // 用户名
                 if (reg.adminUser.roleId == 1)
                     {
                         $("#roleId").html('<option value="1">超级管理员</option>');
@@ -158,10 +153,8 @@ jzm.EnitadminMan = function(w) /*/编辑用户/*/{
                 $("input[name='roleId']").val(reg.adminUser.roleId);  //角色权限ID
 
                 $("#loginTime").val(reg.adminUser.loginTime != null ? jzm.getDateTime(reg.adminUser.loginTime) : ""); // 上次登录时间
-                $("input[name='loginTime']").val(reg.adminUser.loginTime != null ? jzm.getDateTime(reg.adminUser.loginTime) : ""); // 上次登录时间
 
                 $("#loginIp").val(reg.adminUser.loginIp); // 上次登录ip
-                $("input[name='loginIp']").val(reg.adminUser.loginIp); // 上次登录ip
 
                 $("#realName").val(reg.adminUser.realName); // 真实姓名
                 $("#adminMobile").val(reg.adminUser.adminMobile); // 联系方式
@@ -176,7 +169,7 @@ jzm.EnitadminMan = function(w) /*/编辑用户/*/{
                 $("#adminPwd").val(reg.adminUser.adminPwd);
                 $("#adminPwda").val(reg.adminUser.adminPwd);
                 $('#roleId').multiselect({
-                  setMaxOptionNum:10,
+                  setMaxStrLength:100,
                   setWidth:'300px',
                   multiple:false,
                   selectedHtmlValue:(reg.adminUser.roleId == 1 ? "超级管理员" : (reg.adminUser.roleId == 2 ? "系统管理员" : "商户管理员"))
@@ -185,7 +178,7 @@ jzm.EnitadminMan = function(w) /*/编辑用户/*/{
                 $("input[name='royaltyRate']").val(reg.adminUser.royaltyRate);
                 $("input[name='userId']").val(reg.adminUser.userId);
                 $('#userId').multiselect({
-                  setMaxOptionNum:10,
+                  setMaxStrLength:100,
                   setWidth:'300px',
                   multiple:false,
                   selectedHtmlValue:reg.adminUser.nickName
@@ -195,8 +188,8 @@ jzm.EnitadminMan = function(w) /*/编辑用户/*/{
         };
 };
 jzm.JournalList = function (page)  /*/日志列表/*/{
-    jzm.paraMessage('loadAjaxdata',{url:"find_log_list",xmldata:"&page=" + (page ? page : page = 1) + "&roleId=" + $("#roleId").val() + "&name=" + $("#userName").val(),callbackfn:function(reg){
-        var str = "";
+    jzm.paraMessage('loadAjaxdata',{url:"find_log_list",xmldata:"&page=" + (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1)) + "&roleId=" + $("#roleId").val() + "&name=" + $("#userName").val(),callbackfn:function(reg){
+        var str = ""; 
         RegCode(statusCode).test(reg.statusCode.status) ? void function(){
           for(var i = 0; i < reg.logInfoList.length; i++){
                   if (reg.logInfoList[i].roleId == 1){
@@ -290,7 +283,7 @@ jzm.productListAdd = function(e)  /*/产品添加/*/{
               };
             $("#formulaId").html(str);
             $('#formulaId').multiselect({
-              setMaxOptionNum:10,
+              setMaxStrLength:100,
               setWidth:'100%',
               multiple:false,
               selectedHtmlValue:'请选择配方'
@@ -305,7 +298,10 @@ jzm.productListEnit = function(e)  /*/产品编辑/*/{
         if(!$("input[name='productTemperature']").is(":checked")){alert("请选择口味冷/热!");return false};
         $("#formulaId option[data-select='true']").length > 0 ? $("input[name='formulaId']").val($("#formulaId option[data-select='true']").val()) : $("input[name='formulaId']").val();
         jzm.paraMessage('loadAjaxdata',{url:"manage_product",xmldata:"&type=5&"+$("#AddProduct").serialize(),callbackfn:function(reg){
-            RegCode(statusCode).test(reg.statusCode.status) ? window.location.href = jzm.getQueryString('uri') + location.hash : jzm.Error(reg);
+            RegCode(statusCode).test(reg.statusCode.status) ? void function(){
+            	jzm.delOldFile('false');
+            	window.location.href = jzm.getQueryString('uri') + location.hash;
+            }(): jzm.Error(reg);
           },type:"POST",trcny:true});
         }
     else{
@@ -358,7 +354,7 @@ jzm.productListEnit = function(e)  /*/产品编辑/*/{
                   };
                 $("#formulaId").html(str);
                 $('#formulaId').multiselect({
-                  setMaxOptionNum:10,
+                  setMaxStrLength:100,
                   setWidth:'100%',
                   multiple:false,
                   selectedHtmlValue:name
@@ -373,6 +369,7 @@ jzm.productListEnit = function(e)  /*/产品编辑/*/{
                         $("#productStatus1").attr("checked",true);
                         $("#productStatus").removeAttr('checked');
                     };
+                jzm.delOldFile({f:["&type=2&oldName="+$("#productPicurl").val().substring($("#productPicurl").val().lastIndexOf('\/') + 1, $("#productPicurl").val().length),"&type=3&oldName=" + $("#productMachinePicurl").val().substring($("#productMachinePicurl").val().lastIndexOf('\/') + 1, $("#productMachinePicurl").val().length)],id:['productPicurl','productMachinePicurl']});
                 },type:"POST",trcny:false});
         };
 

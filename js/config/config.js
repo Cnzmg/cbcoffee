@@ -5,12 +5,14 @@
 * @Last Modified time: 2018-03-01 19:47:31
 */
 //测试版地址
-//var httpJoin = "http://test.cbcoffee.cn:8080/";  //接口地址
-//var httpUpload = "http://test.cbcoffee.cn:8085/";  //上传接口地址
+var httpJoin = "http://test.cbcoffee.cn:8080/";  //接口地址
+var httpUpload = "http://test.cbcoffee.cn:8085/";  //上传接口地址
 var localURL = "/manage/"; // uri/  改版cdn 线上不加速 http://39.108.88.107:8081/manage/   test hbuilder ftp2.0
+var delFileUrl = 'http://www.cbcoffee.cn';
+//var delFileUrl = 'http://www.cbcoffee.cn';
 //线上地址
-var httpJoin = "http://mapi.cbcoffee.cn/";  //接口地址
-var httpUpload = "http://39.108.88.107:8080/";  //线上上传接口地址
+//var httpJoin = "http://mapi.cbcoffee.cn/";  //接口地址
+//var httpUpload = "http://39.108.88.107:8080/";  //线上上传接口地址
 // var localURL = "http://admin.cbcoffee.cn/manage/"; // cdn 线上不加速 http://39.108.88.107:8081/coffeeManagement/
 var __load = window,jzm = {},errorCode = '400|997|999|1005|2002|2014',statusCode = '6666|2003|2005|2008|2010|2015|2019|2017|2021|2023|2025|2034|2049|2047|2048|2051|2052|2027|2031|2032|2029|2035|2038|2036|2019|2037|2039|2064|2040|2049|2048|2047|2064|2063|2043|2062|2042|2003|2045|2044|2046|2050|2056|2054|2055|2065|2060|2057|2058|2059|600|2066|2067|2070',isNullCode = '4444',RegCode = function(e){return new RegExp(e)},Stringuser,i = 0,isData = '\/S*/i', /*/通用的数据类型，错误状态吗，对象属性/*/
              sissionHref = {uri:['tables','u_Journal','productList','manageflavorList','formulaList','detailedList','equipmentList','checkIn','equipmentLongUpdate','advertisementH5List','advertisementRootList','adRootDetailedList','chartsShopSale','systemUserList','systemUserLvList','couponList','redeemGrant','integralList','integralExchangeList','orderList','RepairPersonnelList','RepairRootBudingList','feedbackList','RepairTaianList','financialManagement','safeDepositBox'],fn:['ManageUser','JournalList','productList','mangFlavor','formulaList','detailedList','findMachineList','checkInMaintainer','manageMachineVersionList','findAdvertisementList','findMachineAdvertisementList','advdetailedList','shopRootSaleList','findClientUserList','manageMemberLevel','findCouponList','faGoRedeem','findIntegralLogList','manageIntegralShop','findOrderList','manageMaintainer','manageRootMaintainer','feedbackList','manageDistributor','manageDividendList','manageSafeBox']};  /*/通用列表方法/*/
@@ -179,7 +181,7 @@ jzm.implement = function(e){  //初始化列表
     $('#pageTool').Paging({
         pagesize: 20,
         count: e,
-        current:location.hash.split('=')[1],
+        current:location.hash.match('page') ? location.hash.substring(location.hash.lastIndexOf('=') + 1, location.hash.length) : 1,
         callback: function(page){jzm.paraMessage(me,page);}
       });
   }() : me = null;//角色
@@ -194,7 +196,7 @@ jzm.find_user_for_bind = function(type){    //查询微信的用户
               first = reg.list[0].nickName+','+reg.list[0].userId;
           };
           $("#userId").html(str);
-          $('#userId').multiselect({setMaxOptionNum:10,setWidth:'300px',multiple:false,selectedHtmlValue:first.split(',')[0]});
+          $('#userId').multiselect({setMaxStrLength:100,setWidth:'300px',multiple:false,selectedHtmlValue:first.split(',')[0]});
           $("input[name='userId']").val(first.split(',')[1]);
         })() : (RegCode(isNullCode).test(reg.statusCode.status) ? $("#userId").html('<option value="-1">无</option>') : jzm.Error(reg));
   },type:"POST",trcny:true});
@@ -233,7 +235,7 @@ jzm.updateFile = function(e){ //ip[] updateFile 上传文件
         formData.append('token',jzm.uncompileStr(item.utoken));
         formData.append('file',data);
         formData.append('type',e.type);
-        if(e.oldFile) {formData.append('oldName',oldFile.substring(oldFile.lastIndexOf('\/') + 1,oldFile.length));}; //旧文件
+        //if(e.oldFile) {formData.append('oldName',oldFile.substring(oldFile.lastIndexOf('\/') + 1,oldFile.length));}; //旧文件
         if(e.format == 'apk') {  //机器版本APK
           if($("#mUpdateVersion").val()){formData.append('mUpdateVersion',$("#mUpdateVersion").val())}else{$("#mUpdateVersion").css("borderColor","red");$("#pager").remove();return false;};
         };
@@ -307,4 +309,26 @@ jzm.check = function(e){  //校验输入
   }else{
     $(e.id).css('border','2px solid red');
   }
+}
+//文件去重，编辑操作提交的时候删掉旧文件
+jzm.delOldFile = function(e){
+	e.f ? localStorage.setItem('temporary',JSON.stringify({val:e})) : void function(){
+		var gettemporary = JSON.parse(localStorage.getItem('temporary')).val;
+		for (var i = 0; i < gettemporary.f.length; i ++) {
+			var xmldata = "id="+ jzm.uncompileStr(item.uname) +"&token="+ jzm.uncompileStr(item.utoken) +"&url="+ jzm.getQueryString('uri') + gettemporary.f[i];
+			if(gettemporary.f[i].substring(gettemporary.f[i].lastIndexOf('\=') + 1, gettemporary.f[i].length) != $("#"+gettemporary.id[i]).val().substring($("#"+gettemporary.id[i]).val().lastIndexOf('\/') + 1,$("#"+gettemporary.id[i]).val().length)){
+				$.ajax({
+			      url: httpUpload + 'delete_old_file',
+			      type: 'POST',
+			      dataType: 'json',
+			      async:true,
+			      data: xmldata
+			  })
+			  .done(function(reg){
+//			    alert("code:" + reg.statusCode.status + "msg:" + reg.statusCode.msg);
+				localStorage.removeItem('temporary');
+			  })
+			}
+		}
+	}();
 }

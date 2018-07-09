@@ -49,7 +49,10 @@ jzm.AddAdvment = function()  /*/添加网页广告/*/{
 jzm.EnitAdvment = function(show)  /*/编辑网页广告/*/{
     if(show){
       jzm.paraMessage('loadAjaxdata',{url:"manage_advertisement",xmldata:"&type=4&"+ $("#advInfo").serialize() +"&adId="+ jzm.getQueryString("advsement"),callbackfn:function(reg){
-        RegCode(statusCode).test(reg.statusCode.status) ? window.location.href = jzm.getQueryString('uri') : jzm.Error(reg);
+        RegCode(statusCode).test(reg.statusCode.status) ? void function(){
+        	jzm.delOldFile('false');
+        	window.location.href = jzm.getQueryString('uri');
+        }() : jzm.Error(reg);
       },type:"POST",trcny:true});
   }else{
       jzm.paraMessage('loadAjaxdata',{url:"manage_advertisement",xmldata:"&type=1&adId=" + jzm.getQueryString("advsement"),callbackfn:function(reg){
@@ -59,6 +62,7 @@ jzm.EnitAdvment = function(show)  /*/编辑网页广告/*/{
           $("#adOrder").val(reg.advertisementInfo.adOrder);
           $("#adShowUrl").val(reg.advertisementInfo.adShowUrl);
           $("#adShowUrl_img").attr("src",reg.advertisementInfo.adShowUrl);
+          jzm.delOldFile({f:["&type=5&oldName="+$("#adShowUrl").val().substring($("#adShowUrl").val().lastIndexOf('\/') + 1, $("#adShowUrl").val().length)],id:['adShowUrl']});
         }() : jzm.Error(reg);
       },type:"POST",trcny:true});
     };
@@ -114,7 +118,10 @@ jzm.EnitmanageMachineAdvertisement = function(show)  /*/编辑视频广告/*/{
   if(show){
     if($("#madUrl").val() == $("#key").val()){ $("#key").removeAttr('name');};
     jzm.paraMessage('loadAjaxdata',{url:"manage_machine_advertisement",xmldata:"&type=4&"+$("#macInfo").serialize()+"&madId="+ jzm.getQueryString("Advsement"),callbackfn:function(reg){
-      RegCode(statusCode).test(reg.statusCode.status) ? window.location.href = jzm.getQueryString('uri') : jzm.Error(reg);
+      RegCode(statusCode).test(reg.statusCode.status) ? void function(){
+      	jzm.delOldFile('false');
+      	window.location.href = jzm.getQueryString('uri');
+      }() : jzm.Error(reg);
     },type:"POST",trcny:true});
   }else{
     jzm.paraMessage('loadAjaxdata',{url:"manage_machine_advertisement",xmldata:"&type=1&madId=" + jzm.getQueryString("Advsement"),callbackfn:function(reg){
@@ -125,6 +132,7 @@ jzm.EnitmanageMachineAdvertisement = function(show)  /*/编辑视频广告/*/{
         $("#madUrl").val(url);
         $("#madUrl_video").attr('src',url.replace('download','admin'));
         jzm.createImages({file:'',node:'#madUrl_img',type:url.replace('download','admin')});
+        jzm.delOldFile({f:["&type=9&oldName="+$("#madUrl").val().substring($("#madUrl").val().lastIndexOf('\/') + 1, $("#madUrl").val().length)],id:['madUrl']});
       }() : jzm.Error(reg);
     },type:"POST",trcny:true});
   };
@@ -339,7 +347,7 @@ jzm.findClientUserList = function(page)  /*/用户列表/*/{
                       '<td>'+ reg.clientUserList[i].memberLevelName +'</td>'+
                       '<td>'+ reg.clientUserList[i].userStatus +'</td>'+
                       '<td>'+ jzm.getDateTime(reg.clientUserList[i].registerTime) +'</td>'+
-                      '<td>'+ parseFloat((reg.clientUserList[i].sumPaymentMoney != null ? reg.clientUserList[i].sumPaymentMoney : 0) / 100).toFixed(2) +'</td>'+
+                      '<td>'+ parseFloat(reg.clientUserList[i].sumPaymentMoney).toFixed(2) +'   元</td>'+
                       '<td>'+
                           '<a href="systemUserEnit.html?uri=/manage/systemUserList.html&v='+ jzm.randomNum() +'&uid='+ reg.clientUserList[i].userId +'">编辑  |</a>'+
                           '<a href="javascript:void(0)" onclick="jzm.manageclientuser('+ reg.clientUserList[i].userId +')">'+(reg.clientUserList[i].userStatus =="冻结" ? "激活" : "冻结")+'</a>'+

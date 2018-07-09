@@ -144,6 +144,7 @@ jzm.seachManageIntegralEnit = function() { //编辑前 查询兑换码与优惠�
             $("#shopType1").attr("checked",true);
             $("#shopProductid").val(reg.integralShop.shopProductid);
           };
+      jzm.delOldFile({f:["&type=7&oldName="+$("#shopUrl").val().substring($("#shopUrl").val().lastIndexOf('\/') + 1, $("#shopUrl").val().length)],id:['shopUrl']});
     }() : jzm.Error(reg);
   },type:"POST",trcny:true});
 };
@@ -154,6 +155,9 @@ jzm.EmitManageIntegral = function(){
     };
   $("input[name='shopIntegral']").val($("#shopIntegral").val() * 100);
   jzm.paraMessage('loadAjaxdata',{url:"manage_integral_shop",xmldata:"&type=5&" + $("#dateForm").serialize() + shopProductId + "&shopId=" + jzm.getQueryString("shopId"),callbackfn:function(reg){
-    RegCode(statusCode).test(reg.statusCode.status) ? window.location.href = './integralExchangeList.html' : jzm.Error(reg);
+    RegCode(statusCode).test(reg.statusCode.status) ? void function(){
+    	jzm.delOldFile('false');
+    	window.location.href = './integralExchangeList.html';
+    }() : jzm.Error(reg);
   },type:"POST",trcny:true});
 };

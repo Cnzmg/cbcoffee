@@ -127,12 +127,10 @@
                             <label class="col-sm-1 control-label" style="line-height:34px;text-align:center;">兑换图片</label>
                             <div class="col-sm-11">
                                 <div class="col-sm-4">
-                                    <img class="radio-inline" id="shopUrl_img" height="200px" alt="图片" src="">
-                                    <label for="shopUrl_file">
-                                        <span class="btn btn-primary" style="margin:20px;">重新选择</span>
-                                        <input type="file" class="form-control" id="shopUrl_file" name="shopUrl_file" style="display:none;" value="">
-                                        <input type="hidden" class="form-control" id="shopUrl" name="shopUrl" style="display:none;" value="">
-                                    </label>
+                                    <img class="radio-inline" id="shopUrl_img" height="200px" src="" alt="兑换图片">
+                                    <span class="btn btn-primary pbtn" style="margin:20px;" onclick="jzm.updateFile({type:7,id:['#shopUrl_img','#shopUrl_file','#shopUrl'],format:'i'})">选择文件</span>
+                                    <input type="file" class="form-control" accept="image/jpeg,image/png" id="shopUrl_file" name="shopUrl_file" style="display:none;" value="">
+                                    <input type="hidden" class="form-control" id="shopUrl" name="shopUrl" style="display:none;" value="">
                                 </div>
                             </div>
                         </div>

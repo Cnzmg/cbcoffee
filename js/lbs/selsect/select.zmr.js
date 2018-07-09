@@ -10,15 +10,16 @@
             selectedProperty: 'data-select',
             multiple: true,
             setWidth: '300px',
-            setMaxOptionNum: 8,
+            setMaxOptionNum: 10,
             optionsHoverStyle: 'newOptions_hover',
             id:'',
             change: function(){},
-            mutiConfEvent:function(){}
+            mutiConfEvent:function(){},
+            setMaxStrLength:8
         };
 
         var options = $.extend(defaults,options);
-
+		
         this.each(function(){
             var _tDom = this,_t = $(_tDom);
             var _thisHtmlValue,_thisValue,newSelect,newSelectTitle,selectedOption = '',newOptions = '',selected = '',sArea,newOptionsHeight,titleText = '';
@@ -31,9 +32,10 @@
             //遍历原来select中option标签
             _t.find('option').each(function(i){
                 var _this = $(this);
-                _thisHtmlValue = _this.html().substr(0,options.setMaxOptionNum);
+                _thisHtmlValue = _this.html().substr(0,options.setMaxStrLength);
+                
                 _thisValue = _this.val();
-
+				
                 if(_t.attr('data-default') == _thisValue){
                     _this.attr(options.selectedProperty,true);
                 }
@@ -52,7 +54,7 @@
                     }
 
                 }else{
-
+					
                     if(_this.attr(options.selectedProperty)){
                         selectedOption = 'data-select="true"';
                         // $(id).val() = $("option[data-select='true']").val();
@@ -78,7 +80,7 @@
             sArea = (options.multiple)?'<li class="sArea"><button onclick="javascript:return false;" value="确定">确定</button></li>':'';
 
             newOptionsHeight = options.setMaxOptionNum * 30;
-
+			
             newOptions = '<ul class="newOptions" style="width:'+options.setWidth+';max-height:' + newOptionsHeight + 'px;overflow-y:auto;">'+newOptions+sArea+'</ul>';
 
             newSelect = '<div class="newSelect" style="width:'+options.setWidth+';">'+newSelectTitle+newOptions+'</div>';           // 创建新的select
