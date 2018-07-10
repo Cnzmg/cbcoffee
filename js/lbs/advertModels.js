@@ -139,7 +139,7 @@ jzm.EnitmanageMachineAdvertisement = function(show)  /*/编辑视频广告/*/{
 };
 // ********************************视频广告清单列表***************************************************
 jzm.advdetailedList = function(deta,page)     /*/视频广告清单列表/*/{
-    jzm.paraMessage('loadAjaxdata',{url:"manage_advertisement_list_list",xmldata:"&type=1&page=" + (page ? page : page = 1) + "&name=" + $("#name").val(),callbackfn:function(reg){
+    jzm.paraMessage('loadAjaxdata',{url:"manage_advertisement_list_list",xmldata:"&type=1&page=" + (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1)) + "&name=" + $("#name").val(),callbackfn:function(reg){
       var str = "";
       RegCode(statusCode).test(reg.statusCode.status) ? void function(){
         str += '<div>'+
@@ -188,7 +188,7 @@ jzm.msgDetailedList = function(id,page,pnum)  /*/视频广告清单详情/*/{
       $(".show").remove();
       $("#pageTool .ui-paging-container:not(:first)").remove();
     };
-    jzm.paraMessage('loadAjaxdata',{url:"manage_advertisement_list_list",xmldata:"&type=2&page=" + (page ? page : page = 1 ) +"&listId=" + id,callbackfn:function(reg){
+    jzm.paraMessage('loadAjaxdata',{url:"manage_advertisement_list_list",xmldata:"&type=2&page=" + (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1) ) +"&listId=" + id,callbackfn:function(reg){
       var str = "";
       RegCode(statusCode).test(reg.statusCode.status) ? void function(){
         str += '<div class="show">'+
@@ -335,7 +335,7 @@ jzm.findClientUserList = function(page)  /*/用户列表/*/{
       xl = JSON.parse(localStorage.getItem('stat')).sort;
       search += "&orderLine="+ el +"&sort="+ xl;
     };
-    jzm.paraMessage('loadAjaxdata',{url:"find_client_user_list",xmldata:"&type=2&page="+ (page ? page : page = 1) + search + "&memberLevel=" + $("#memberLevel").val() + "&name=" + $("#userName").val() +"&userType=" + $("#userType").val(),callbackfn:function(reg){
+    jzm.paraMessage('loadAjaxdata',{url:"find_client_user_list",xmldata:"&type=2&page="+ (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1)) + search + "&memberLevel=" + $("#memberLevel").val() + "&name=" + $("#userName").val() +"&userType=" + $("#userType").val(),callbackfn:function(reg){
       var str = "";
       RegCode(statusCode).test(reg.statusCode.status) ? void function(){
         for(var i = 0; i < reg.clientUserList.length; i ++){

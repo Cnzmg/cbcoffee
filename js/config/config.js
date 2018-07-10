@@ -183,7 +183,7 @@ jzm.implement = function(e){  //初始化列表
         count: e,
         current:location.hash.match('page') ? location.hash.substring(location.hash.lastIndexOf('=') + 1, location.hash.length) : 1,
         callback: function(page){jzm.paraMessage(me,page);}
-      });
+     });
   }() : me = null;//角色
   jzm.UIaction();
 };

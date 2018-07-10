@@ -19,7 +19,7 @@ jzm.findMachineList = function(page)  /*/设备列表/*/{
         $("#faultNum").html("故障总数<br />" + reg.faultNum);
       },type:"POST",trcny:true});
     };
-    var searchUser = "&page=" + (page ? page : page = 1) + search +"&onlineStatus=" + $("#onlineStatus").val() + "&failureStatus=" + $("#failureStatus").val() + "&materialStatus=" + $("#materialStatus").val() + "&name=" + $("#userName").val();
+    var searchUser = "&page=" + (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1)) + search +"&onlineStatus=" + $("#onlineStatus").val() + "&failureStatus=" + $("#failureStatus").val() + "&materialStatus=" + $("#materialStatus").val() + "&name=" + $("#userName").val();
     jzm.paraMessage('loadAjaxdata',{url:"find_machine_list",xmldata:searchUser,callbackfn:function(reg){
       var str = "";
       RegCode(statusCode).test(reg.statusCode.status) ? void function(){
@@ -171,7 +171,7 @@ jzm.remoteOperation = function(typoe,operid) /*/机器远程操作、查看/*/{
   };
 };
 jzm.manageMachineVersionList = function(page)     /*/app应用版本更新  信息列表/*/{
-  jzm.paraMessage('loadAjaxdata',{url:"manage_machine_version",xmldata:"&type=1&page=" + (page ? page : page = 1),callbackfn:function(reg){
+  jzm.paraMessage('loadAjaxdata',{url:"manage_machine_version",xmldata:"&type=1&page=" + (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1)),callbackfn:function(reg){
     var str = "";
     RegCode(statusCode).test(reg.statusCode.status) ? void function(){
       for(var i = 0; i < reg.machineUpdateList.length; i++)
@@ -201,7 +201,7 @@ jzm.manageMachineVersion = function()     /*/app应用版本更新/*/{
   },type:"POST",trcny:true});
 };
 jzm.checkInMaintainer = function(page) /*/巡视签到/*/{
-  jzm.paraMessage('loadAjaxdata',{url:"find_machine_inspect_log_list",xmldata:"&page=" + (page ? page : page = 1) + "&name=" + $("#cheakin").val() + "&machineNumber=" + $("#machineNumber").val(),callbackfn:function(reg){
+  jzm.paraMessage('loadAjaxdata',{url:"find_machine_inspect_log_list",xmldata:"&page=" + (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1)) + "&name=" + $("#cheakin").val() + "&machineNumber=" + $("#machineNumber").val(),callbackfn:function(reg){
     var str = "";
     RegCode(statusCode).test(reg.statusCode.status) ? void function(){
       for(var i = 0; i < reg.machineInspectSignList.length; i ++)

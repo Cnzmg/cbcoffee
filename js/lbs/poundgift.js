@@ -5,7 +5,7 @@
 * @Last Modified time: 2018-03-02 18:38:22
 */
 jzm.findIntegralLogList = function(page)      /*/积分明细/*/{
-    jzm.paraMessage('loadAjaxdata',{url:"find_integral_log_list",xmldata:"&name=" + $("#integName").val() + "&integralType=" + $("#integralType").val() +"&page=" + ( page ? page : page = 1),callbackfn:function(reg){
+    jzm.paraMessage('loadAjaxdata',{url:"find_integral_log_list",xmldata:"&name=" + $("#integName").val() + "&integralType=" + $("#integralType").val() +"&page=" + ( page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1)),callbackfn:function(reg){
       var str = "";
       RegCode(statusCode).test(reg.statusCode.status) ? void function(){
         $("#income").html("收入总数<br />" + reg.income);$("#total").html("收入/支出的总差<br />" + reg.total);$("#expend").html("支出总数<br />" + reg.expend);
@@ -56,7 +56,7 @@ jzm.findIntegralLogList = function(page)      /*/积分明细/*/{
     },type:"POST",trcny:false});
 };
 jzm.manageIntegralShop = function(page)      /*/积分兑换/*/{
-  jzm.paraMessage('loadAjaxdata',{url:"manage_integral_shop",xmldata:"&type=1&page=" + (page ? page : page = 1 ),callbackfn:function(reg){
+  jzm.paraMessage('loadAjaxdata',{url:"manage_integral_shop",xmldata:"&type=1&page=" + (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1) ),callbackfn:function(reg){
     var str = "";
     RegCode(statusCode).test(reg.statusCode.status) ? void function(){
       for(var i = 0; i < reg.integralShopList.length; i++){

@@ -990,7 +990,7 @@ jzm.shopRootTaolList = function(sear,page){
       }else{
             searchUser += "&startTime=" + $("#ratestartTime").val() + "&endTime=" + $("#rateendTime").val();
         };
-    jzm.paraMessage('loadAjaxdata',{url:"statistics_machinelist",xmldata:"&page=" + (page ? page : page = 1 ) + "&adminID=" +jzm.getQueryString("shopid") + searchUser,callbackfn:function(reg){
+    jzm.paraMessage('loadAjaxdata',{url:"statistics_machinelist",xmldata:"&page=" + (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1) ) + "&adminID=" +jzm.getQueryString("shopid") + searchUser,callbackfn:function(reg){
       RegCode(statusCode).test(reg.statusCode.status) ? void function(){
         var str = "";
         for(var i = 0; i < reg.package.MachineCountList.length; i++){
@@ -1188,7 +1188,7 @@ jzm.shopRootSaleList = function(page){
     else{
             searchUser += "&startTime=" + $("#ratestartTime").val() + "&endTime=" + $("#rateendTime").val();
         };
-    jzm.paraMessage('loadAjaxdata',{url:"statistics_machineorder",xmldata:"&PageNum=" + (page ? page : page = 1) + searchUser + "&checkMachineNum=" +jzm.getQueryString("machineNumber"),callbackfn:function(reg){
+    jzm.paraMessage('loadAjaxdata',{url:"statistics_machineorder",xmldata:"&PageNum=" + (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1)) + searchUser + "&checkMachineNum=" +jzm.getQueryString("machineNumber"),callbackfn:function(reg){
       var str = "";
       if (reg.statusCode.status == 6666){
           for(var i = 0; i < reg.package.MachineOrderList.length; i++)

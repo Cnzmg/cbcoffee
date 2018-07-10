@@ -1,5 +1,5 @@
 jzm.ManageUser = function(page) /*/用户列表/*/{
-    jzm.loadAjaxdata({url:"find_user_list",xmldata:"&adminStatus=" + $('#adminStatus').val() + "&roleId=" + $('#roleId').val() + "&name=" + $('#userName').val() + "&page=" + (page ? page : page = 1),callbackfn:function(reg){
+    jzm.loadAjaxdata({url:"find_user_list",xmldata:"&adminStatus=" + $('#adminStatus').val() + "&roleId=" + $('#roleId').val() + "&name=" + $('#userName').val() + "&page=" + (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1)),callbackfn:function(reg){
       var str = "";
       RegCode(statusCode).test(reg.statusCode.status) ? (function(){
         for(var i = 0; i < reg.adminUserList.length; i++)
@@ -226,7 +226,7 @@ jzm.JournalList = function (page)  /*/日志列表/*/{
 //系统管理者
 jzm.productList = function(page) /*/产品列表/*/{
     location.hash && $("#productName").val() != '' ? page = location.hash.split('=')[1] : null;
-    jzm.paraMessage('loadAjaxdata',{url:"find_product_list",xmldata:"&page=" + (page ? page : page = 1) + "&name=" + $("#productName").val(),callbackfn:function(reg){
+    jzm.paraMessage('loadAjaxdata',{url:"find_product_list",xmldata:"&page=" + (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1)) + "&name=" + $("#productName").val(),callbackfn:function(reg){
         var str = "";
         RegCode(statusCode).test(reg.statusCode.status) ? void function(){
           for(var i = 0; i < reg.productShowList.length; i++){
@@ -546,7 +546,7 @@ jzm.Enitformula = function (e)       /*/配方编辑/*/{
 };
 // ********************************清单列表***************************************************
 jzm.detailedList = function(page)     /*/清单列表/*/{
-    jzm.paraMessage('loadAjaxdata',{url:"manage_prodcut_list_list",xmldata:"&type=1&page=" + (page ? page : page = 1) + "&name=" + $("#name").val(),callbackfn:function(reg){
+    jzm.paraMessage('loadAjaxdata',{url:"manage_prodcut_list_list",xmldata:"&type=1&page=" + (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1)) + "&name=" + $("#name").val(),callbackfn:function(reg){
         var str = "";
         RegCode(statusCode).test(reg.statusCode.status) ? void function(){
           str += '<div>'+
@@ -597,7 +597,7 @@ jzm.msgDetailedList = function(id,page,pnum)  /*/清单详情/*/{
             $(".show").remove();
             $("#pageTool .ui-paging-container:not(:first)").remove();
         };
-    jzm.paraMessage('loadAjaxdata',{url:"manage_prodcut_list_list",xmldata:"&type=2&page=" + (page ? page : page = 1) +"&listId=" + id,callbackfn:function(reg){
+    jzm.paraMessage('loadAjaxdata',{url:"manage_prodcut_list_list",xmldata:"&type=2&page=" + (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1)) +"&listId=" + id,callbackfn:function(reg){
         var str = "";
         RegCode(statusCode).test(reg.statusCode.status) ? void function(){
           str += '<div class="show">'+

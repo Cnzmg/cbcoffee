@@ -20,7 +20,7 @@ jzm.findOrderList = function(page)     /*/订单列表/*/{
        // if(!$("#endTime").val()){$("#startTime").val(jzm.getDateTime(new Date().setDate(new Date().getDate() - 6)).split(' ')[0]);$("#endTime").val(jzm.getDateTime(new Date()).split(' ')[0])};
        search = "&name=" + $("#name").val() + "&startTime=" + $("#startTime").val() + "&endTime=" + $("#endTime").val() + "&orderType=" +$("#orderType").val() +"&orderStatus="+$("#orderStatus").val()+"&consumptionType="+$("#consumptionType").val();
 
-    jzm.paraMessage('loadAjaxdata',{url:"find_order_list",xmldata:"&type=1&page=" + (page ? page : page = 1) + search,callbackfn:function(reg){
+    jzm.paraMessage('loadAjaxdata',{url:"find_order_list",xmldata:"&type=1&page=" + (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1)) + search,callbackfn:function(reg){
       var str = "";
       RegCode(statusCode).test(reg.statusCode.status) ? void function(){
         for(var i = 0; i < reg.orderShowList.length; i ++){
@@ -77,7 +77,7 @@ jzm.ChangeState = function(id){
 // 维修管理模块
 //维修人员列表
 jzm.manageMaintainer = function(page){
-    jzm.paraMessage('loadAjaxdata',{url:"manage_maintainer",xmldata:"&page=" + (page ? page : page = 1) + "&type=1&name=" + $("#userName").val(),callbackfn:function(reg){
+    jzm.paraMessage('loadAjaxdata',{url:"manage_maintainer",xmldata:"&page=" + (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1)) + "&type=1&name=" + $("#userName").val(),callbackfn:function(reg){
         var str = "";
         RegCode(statusCode).test(reg.statusCode.status) ? void function(){
           for(var i = 0; i < reg.maintainerList.length; i ++){
@@ -140,7 +140,7 @@ jzm.AddEnitmanageMaintainer = function(){
 };
 //维修人员绑定设备列表
 jzm.manageRootMaintainer = function(page){
-  var xml = "&page=" + (page ? page : page = 1) + "&name=" + $("#userName").val() + "&onlineStatus=" + $("#onlineStatus").val() + "&failureStatus=" + $("#failureStatus").val() + "&maintainerStatus=" + $("#materialStatus").val();
+  var xml = "&page=" + (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1)) + "&name=" + $("#userName").val() + "&onlineStatus=" + $("#onlineStatus").val() + "&failureStatus=" + $("#failureStatus").val() + "&maintainerStatus=" + $("#materialStatus").val();
   jzm.paraMessage('loadAjaxdata',{url:"find_maintainer_for_machine",xmldata:xml,callbackfn:function(reg){
     var str = "";
     RegCode(statusCode).test(reg.statusCode.status) ? void function(){
@@ -178,7 +178,7 @@ jzm.manageRootMaintainer = function(page){
 jzm.manageRootListMaintainer = function(page,id){
     $("#machineNumber").val(id);
     $("#RejectInfo").show();
-    jzm.paraMessage('loadAjaxdata',{url:"manage_maintainer",xmldata:"&type=1&page="+(page ? page : page = 1),callbackfn:function(reg){
+    jzm.paraMessage('loadAjaxdata',{url:"manage_maintainer",xmldata:"&type=1&page="+(page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1)),callbackfn:function(reg){
       var str = "";
       RegCode(statusCode).test(reg.statusCode.status) ? void function(){
         for(var i = 0; i < reg.maintainerList.length; i ++){
@@ -218,7 +218,7 @@ jzm.delmanage = function(id){
 }
 //反馈信息
 jzm.feedbackList = function(page){
-  jzm.paraMessage('loadAjaxdata',{url:"find_fault_feedback_list",xmldata:"&page=" + (page ? page : page = 1) +"&name=" +$("#name").val() +"&machineNumber=" +$("#machineNumber").val(),callbackfn:function(reg){
+  jzm.paraMessage('loadAjaxdata',{url:"find_fault_feedback_list",xmldata:"&page=" + (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1)) +"&name=" +$("#name").val() +"&machineNumber=" +$("#machineNumber").val(),callbackfn:function(reg){
     var str = "";
     RegCode(statusCode).test(reg.statusCode.status) ? void function(){
       for(var i = 0; i < reg.faultFeedbackShowList.length; i ++){
@@ -244,7 +244,7 @@ jzm.feedbackList = function(page){
 
 //渠道商信息
 jzm.manageDistributor = function(page){
-  jzm.paraMessage('loadAjaxdata',{url:"manage_distributor",xmldata:"&page=" + (page ? page : page = 1) + "&type=1&name=" + $("#userName").val(),callbackfn:function(reg){
+  jzm.paraMessage('loadAjaxdata',{url:"manage_distributor",xmldata:"&page=" + (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1)) + "&type=1&name=" + $("#userName").val(),callbackfn:function(reg){
     var str = "";
     RegCode(statusCode).test(reg.statusCode.status) ? void function(){
       for(var i = 0; i < reg.dList.length; i ++){
@@ -306,7 +306,7 @@ jzm.AddEnitmanageDistributor = function(){
 /*财务管理模块*/
 jzm.manageDividendList = function(page)     /*/每单分润记录列表/*/{
   if(!$("#endTime").val()){$("#endTime").val(jzm.getDateTime(new Date()).split(' ')[0])};
-  jzm.paraMessage('loadAjaxdata',{url:"manage_dividend_list",xmldata:"&page=" + (page ? page : page = 1) + "&type=1&name=" + $("#name").val() + "&startTime=" + $("#startTime").val() + "&endTime=" + $("#endTime").val(),callbackfn:function(reg){
+  jzm.paraMessage('loadAjaxdata',{url:"manage_dividend_list",xmldata:"&page=" + (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1)) + "&type=1&name=" + $("#name").val() + "&startTime=" + $("#startTime").val() + "&endTime=" + $("#endTime").val(),callbackfn:function(reg){
     var str = "";
     RegCode(statusCode).test(reg.statusCode.status) ? void function(){
       for(var i = 0; i < reg.dList.length; i ++){
@@ -332,7 +332,7 @@ jzm.manageDividendList = function(page)     /*/每单分润记录列表/*/{
     },type:"POST",trcny:false});
 };
 jzm.manageSafeBox = function(page)     /*/保险箱列表/*/{
-  jzm.paraMessage('loadAjaxdata',{url:"manage_safe_box",xmldata:"&type=1&page=" + (page ? page : page = 1) + "&name=" + $("#name").val(),callbackfn:function(reg){
+  jzm.paraMessage('loadAjaxdata',{url:"manage_safe_box",xmldata:"&type=1&page=" + (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1)) + "&name=" + $("#name").val(),callbackfn:function(reg){
     var str = "";
     RegCode(statusCode).test(reg.statusCode.status) ? void function(){
       for(var i = 0; i < reg.sbList.length; i ++){

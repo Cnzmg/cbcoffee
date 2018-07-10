@@ -7,7 +7,7 @@
 
 // **************************礼券************************************
 jzm.findCouponList = function(page)/*/优惠券列表/*/{
-  jzm.paraMessage('loadAjaxdata',{url:"find_coupon_list",xmldata:"&page=" + (page ? page : page = 1 ) + "&name=" + $("#name").val(),callbackfn:function(reg){
+  jzm.paraMessage('loadAjaxdata',{url:"find_coupon_list",xmldata:"&page=" + (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1) ) + "&name=" + $("#name").val(),callbackfn:function(reg){
     RegCode(statusCode).test(reg.statusCode.status) ? void function(){
       var str = "";
       for(var i = 0; i < reg.couponInfoList.length; i ++){
@@ -81,7 +81,7 @@ jzm.AddManageCoupon = function()     /*/添加优惠券/*/{
 };
 jzm.faShowCoupon = function(s,page)     /*/ 发放优惠券前查询/*/{
     $("#conponName").val(decodeURI(jzm.getQueryString('name')));
-    jzm.paraMessage('loadAjaxdata',{url:"manage_coupon",xmldata:"&type=4&page=" + (page ? page : page = 1) + "&name=" + $("#userName").val(),callbackfn:function(reg){
+    jzm.paraMessage('loadAjaxdata',{url:"manage_coupon",xmldata:"&type=4&page=" + (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1)) + "&name=" + $("#userName").val(),callbackfn:function(reg){
       var str = "";
       RegCode(statusCode).test(reg.statusCode.status) ? void function(){
         for(var i = 0; i < reg.clientUserList.length; i++){
@@ -123,7 +123,7 @@ jzm.faGoConpon = function(){//发放优惠券
       },type:"POST",trcny:true});
 };
 jzm.faGoRedeem = function(page)       /*/发放兑换码/*/{
-  jzm.paraMessage('loadAjaxdata',{url:"manage_c_redeem",xmldata:"&type=4&page=" + (page ? page : page = 1) +"&name=" + $("#name").val(),callbackfn:function(reg){
+  jzm.paraMessage('loadAjaxdata',{url:"manage_c_redeem",xmldata:"&type=4&page=" + (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1)) +"&name=" + $("#name").val(),callbackfn:function(reg){
     var str = "";
     RegCode(statusCode).test(reg.statusCode.status) ? void function(){
       for(var i = 0; i < reg.clientUserList.length; i++)

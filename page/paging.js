@@ -49,7 +49,7 @@
 			}, settings);
 			this.target = $(this.settings.target);
 			this.container = $('<div id="' + this.id + '" class="ui-paging-container"/>');
-			this.target.append(this.container);
+			this.target.html(this.container);
 			this.render(this.settings);
 			this.format();
 			this.bindEvent();
@@ -61,23 +61,23 @@
 			this.pagecount = Math.ceil(this.count / this.pagesize);
 			this.format();
 		},
-		bindEvent: function() {
+		bindEvent: function() { //绑定事件
 			var _this = this;
 			this.container.on('click', 'li.js-page-action,li.ui-pager', function(e) {
 				if ($(this).hasClass('ui-pager-disabled') || $(this).hasClass('focus')) {
 					return false;
 				}
 				if ($(this).hasClass('js-page-action')) {
-					if ($(this).hasClass('js-page-first')) {
+					if ($(this).hasClass('js-page-first')) {  //首页
 						_this.current = 1;
 					}
-					if ($(this).hasClass('js-page-prev')) {
-						_this.current = Math.max(1, _this.current - 1);
+					if ($(this).hasClass('js-page-prev')) {	//上一页
+						_this.current = Math.max(1, parseInt(_this.current) - 1);
 					}
-					if ($(this).hasClass('js-page-next')) {
-						_this.current = Math.min(_this.pagecount, _this.current + 1);
+					if ($(this).hasClass('js-page-next')) {  //下一页
+						_this.current = Math.min(_this.pagecount,parseInt(_this.current) + 1);
 					}
-					if ($(this).hasClass('js-page-last')) {
+					if ($(this).hasClass('js-page-last')) {   //尾页
 						_this.current = _this.pagecount;
 					}
 				} else if ($(this).data('page')) {
@@ -127,7 +127,7 @@
 					html += '<li>' + this.settings.ellipseTpl + '</li>';
 					html += '<li data-page="' + (this.current - 1) + '" class="ui-pager">' + (this.current - 1) + '</li>';
 					html += '<li data-page="' + this.current + '" class="ui-pager">' + this.current + '</li>';
-					html += '<li data-page="' + (this.current + 1) + '" class="ui-pager">' + (this.current + 1) + '</li>';
+					html += '<li data-page="' + (parseInt(this.current) + 1) + '" class="ui-pager">' + (parseInt(this.current) + 1) + '</li>';
 					html += '<li class="ui-paging-ellipse" class="ui-pager">' + this.settings.ellipseTpl + '</li>';
 				} else {
 					html += '<li class="ui-paging-ellipse" >' + this.settings.ellipseTpl + '</li>';
