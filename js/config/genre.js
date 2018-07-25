@@ -320,15 +320,15 @@ jzm.productListEnit = function(e)  /*/产品编辑/*/{
                 $("#productCreateTime").val(jzm.getDateTime(reg.productInfo.productCreateTime));
                 // productTemperature
                 $("input[name='productTemperature']").prop('checked',false);  //清除之前的选中
-                if (reg.productInfo.productTemperature == 0){  //冷热状态
+                if (reg.productInfo.productTemperature == 0){  //冷热状态     冷
                         $("input[name='productTemperature']").eq(0).prop("checked",true);
+                        $("input[name='productTemperature']").not('.cold').parents('label.tempera').hide(); //初始化对应
                     }
-                else if (reg.productInfo.productTemperature == 1){
+                else if (reg.productInfo.productTemperature == 1){   //热
                         $("input[name='productTemperature']").eq(1).prop("checked",true);
-                        $("input[name='productTemperature']").eq(0).prop("disabled",true);
-                        $("input[name='productTemperature']").eq(2).prop("disabled",true);
+                        $("input[name='productTemperature']").not('.hot').parents('label.tempera').hide(); //初始化对应
                     }
-                else if(reg.productInfo.productTemperature == 2){
+                else if(reg.productInfo.productTemperature == 2){   //冷&热
                         $("input[name='productTemperature']").eq(2).prop("checked",true);
                     };
                 if(reg.productInfo.operateType == 1){
@@ -377,13 +377,13 @@ jzm.productListEnit = function(e)  /*/产品编辑/*/{
 
 jzm.formulaIds = function(val,arr)    /*/查询产品口味信息/*/{
     var checkedAction = ''; //checked
-    $("input[name='productTemperature']").not('.hot').parents('label.tempera').hide(); //初始化对应
+      $("input[name='productTemperature']").not('.hot').parents('label.tempera').hide(); //初始化对应
     jzm.paraMessage('loadAjaxdata',{url:"find_optional_flavorInfo_by_formulaId",xmldata:"&formulaId="+ val,callbackfn:function(reg){
           var str = "";
           RegCode(statusCode).test(reg.statusCode.status) ? void function(){
             for(var i = 0; i < reg.flavorInfoList.length; i++){
                   if(i < 3){checkedAction = "checked";}else{checkedAction = "";};  //不可选超过三个口味时
-                  reg.flavorInfoList[i].flavorTemperature == 1 ? $("input[name='productTemperature']").parents('label.tempera').show() : null;//可选择的冷热信息
+                  reg.flavorInfoList[i].flavorTemperature == 1 ? $("input[name='productTemperature']").parents('label.tempera').show() : null;//可选择的冷热信息   //只要存在1 即可冷可热   0只能热
                   str += '<div class="form-group">'+
                       '<label class="col-sm-2 control-label"></label>'+
                       '<div class="col-xs-8">'+

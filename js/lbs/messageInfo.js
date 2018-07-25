@@ -37,12 +37,11 @@ jzm.findOrderList = function(page)     /*/订单列表/*/{
                         '<td>'+ reg.orderShowList[i].orderType +'</td>'+
                         '<td class="'+ ( reg.orderShowList[i].orderStatus == '已兑换' || reg.orderShowList[i].orderStatus ==  '已完成' ? 'msg_green' : ( reg.orderShowList[i].orderStatus == '制作中' ? 'msg_yellow' :  ( reg.orderShowList[i].orderStatus == '已退款' ? 'msg_999' : ( reg.orderShowList[i].orderStatus == '未兑换' ? 'msg_hot' : null ) )) ) +'">'+ reg.orderShowList[i].orderStatus +'</td>'+
                         '<td>'+ reg.orderShowList[i].paymentTime +'</td>';
-                if(reg.orderShowList[i].orderStatus != "已取消" && reg.orderShowList[i].orderStatus != "已退款" && reg.orderShowList[i].orderStatus != "未支付")
-                    {
-                       var zz = reg.orderShowList[i].orderStatus != "制作中" ? "" : '<a href="javascript:void(0);" onclick=jzm.ChangeState("'+ reg.orderShowList[i].orderId +'")>|  更改状态</a>';
-                        str +=  '<td>'+
-                                (jzm.uncompileStr(JSON.parse(localStorage.getItem("lnk")).shopLink) != 3 ? '<a href="javascript:void(0);" onclick=jzm.refundMoney("'+ reg.orderShowList[i].orderId +'")>退款</a>' : "") + zz +
-                                '</td>';
+                var od = reg.orderShowList[i].orderStatus != "制作中" ? (
+                	reg.orderShowList[i].paymentType == "兑换码支付" && reg.orderShowList[i].orderStatus == "未兑换" ? '<a href="javascript:void(0);" onclick=jzm.ChangeState("'+ reg.orderShowList[i].orderId +'",2)>|  更改状态</a>' : ""   //校验状态
+                ) : '<a href="javascript:void(0);" onclick=jzm.ChangeState("'+ reg.orderShowList[i].orderId +'",1)>|  更改状态</a>';   //校验状态
+                if(reg.orderShowList[i].orderStatus != "已取消" && reg.orderShowList[i].orderStatus != "已退款" && reg.orderShowList[i].orderStatus != "未支付"){
+                        str +=  '<td>'+ (jzm.uncompileStr(JSON.parse(localStorage.getItem("lnk")).shopLink) != 3 ? '<a href="javascript:void(0);" onclick=jzm.refundMoney("'+ reg.orderShowList[i].orderId +'")>退款</a>' : "") + od +'</td>';
                     };
             str +=  '</tr>';
           };
@@ -66,10 +65,10 @@ jzm.refundMoney = function(id){
     };
 };
 //更改制作中订单状态
-jzm.ChangeState = function(id){
-    var OL = confirm("请确认该订单是否已经完成？");
+jzm.ChangeState = function(id,type){
+    var OL = confirm("注：请确认是否修改该订单状态？");
     if(OL == true){
-      jzm.paraMessage('loadAjaxdata',{url:"order_complete",xmldata:"&orderId=" + id,callbackfn:function(reg){
+      jzm.paraMessage('loadAjaxdata',{url:"order_complete",xmldata:"&orderId=" + id +"&type=" + type,callbackfn:function(reg){
         RegCode(statusCode).test(reg.statusCode.status) ? jzm.findOrderList() : jzm.Error(reg);
       },type:"POST",trcny:false});
     };

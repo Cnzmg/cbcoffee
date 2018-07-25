@@ -1,5 +1,5 @@
 /*
- * license: http://www.uin8.com/index.html
+ * license: http://www.uin8.com/
  * User: zMr chen
  * Date: 2014-06-11
  * Time: 16:27:55

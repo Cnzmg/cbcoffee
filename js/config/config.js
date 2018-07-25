@@ -113,6 +113,13 @@ Date.prototype.format = function() {  //原型
       s += day; // 获取日。
       return (s); // 返回日期。
   };
+jzm.mGetDate = function (){  
+     var date = new Date();
+     var year = date.getFullYear();
+     var month = date.getMonth()+1;
+     var d = new Date(year, month, 0);
+     return d.getDate();
+}
 Function.prototype.before = function(fn){
   var __self = this;   //this指向当前
   return function(){
@@ -263,6 +270,8 @@ jzm.updateFile = function(e){ //ip[] updateFile 上传文件
                 }() : jzm.Error(reg);
             },
             error:function(xhr,status){
+            	console.log(JSON.stringify(xhr)+'-*******-'+ status);
+            	alert("err_status:" + status + "err_msg: 上传失败！");
                 if(status == 'timeout') alert('请求超时！');
             },
             contentType: false, //必须false才会自动加上正确的Content-Type

@@ -88,16 +88,6 @@
 
             <!-- Content -->
             <section id="content" class="container">
-                <!-- <div style="margin:3px 20px;">
-                    <span class="block-title" style="font-size:12px;width:112px;text-align:center;margin-right:10px;">当日金额 <br /> 3300</span>
-                    <span class="block-title" style="font-size:12px;width:112px;text-align:center;margin-right:10px;">当日销量 <br /> 2</span>
-                    <span class="block-title" style="font-size:12px;width:112px;text-align:center;margin-right:10px;">本月金额 <br /> 104900</span>
-                    <span class="block-title" style="font-size:12px;width:112px;text-align:center;margin-right:10px;">本月销量 <br /> 69</span>
-                    <span class="block-title" style="font-size:12px;width:112px;text-align:center;margin-right:10px;">用户数 <br /> 11</span>
-                    <span class="block-title" style="font-size:12px;width:112px;text-align:center;margin-right:10px;">新增用户 <br /> 10</span>
-                    <span class="block-title" style="font-size:12px;width:112px;text-align:center;margin-right:10px;">付费用户 <br /> 5</span>
-                    <span class="block-title" style="font-size:12px;width:112px;text-align:center;margin-right:10px;">收入 <br /> 330</span>
-                </div> -->
                 <h1 class="tile-title">统计(手机端)</h1>
                 <div class="block-title active chuser" style="font-size:12px;width:112px;text-align:center;margin-right:10px;cursor:pointer;margin-top:10px;">用户统计</div>
                 <div class="block-title chrate" style="font-size:12px;width:112px;text-align:center;margin-right:10px;cursor:pointer;margin-top:10px;">付费转化</div>
@@ -115,22 +105,26 @@
                                 </span>
                                 <input type="hidden" id="typeId" name="typeId" />
                                 <span class="block-title" style="font-size:12px;width:112px;text-align:center;margin-right:10px;cursor:pointer;" onclick="jzm.userCharts(document.getElementById('typeId').value)">搜索</span>
-                                <br /><p class="opMoney block-title" style="margin-top:6px;"></p>
+                                <br />
+                                <div class="newtime" style="margin-top: 10px;">
+                                	<p class="block-title active" onclick="jzm.userCharts($('#typeId').val(),0)" style="font-size:12px;width:112px;text-align:center;margin-right:10px;cursor:pointer;" data-num="2">默认</p>
+	                                <p class="block-title notshop" onclick="jzm.userCharts($('#typeId').val(),1)" style="font-size:12px;width:112px;text-align:center;margin-right:10px;cursor:pointer;" data-num="2">本月</p>
+	                                <p class="block-title notshop" onclick="jzm.userCharts($('#typeId').val(),2)" style="font-size:12px;width:112px;text-align:center;margin-right:10px;cursor:pointer;" data-num="2">15天</p>
+	                                <p class="block-title notshop" onclick="jzm.userCharts($('#typeId').val(),3)" style="font-size:12px;width:112px;text-align:center;margin-right:10px;cursor:pointer;" data-num="2">今天</p>
+                                </div>
+                                <br />
+                                <p class="opMoney block-title" style="margin-top:6px;"></p>
                             </div>
                             <div class="p-10">
                                 <div id="usCharts" style="height: 300px;color:#fff;"></div>
                             </div>
                         </div>
                         <div class="tile">
-                            <!-- <h2 class="tile-title">消费用户地区</h2> -->
-
                             <div class="p-10">
                                 <div id="bar-addrchart" class="main-chart" style="height: 250px"></div>
                             </div>
                         </div>
                         <div class="tile">
-                            <!-- <h2 class="tile-title">消费用户地区</h2> -->
-
                             <div class="p-10">
                                 <div id="bar-addrschart" class="main-chart" style="height: 250px"></div>
                             </div>
@@ -151,16 +145,12 @@
                         </div>
 
                         <div class="tile">
-                            <!-- <h2 class="tile-title">消费用户地区</h2> -->
-
                             <div class="p-10">
                                 <div id="bar-addrNewchart" class="main-chart" style="height: 250px"></div>
                             </div>
                         </div>
 
                         <div class="tile">
-                            <!-- <h2 class="tile-title">消费用户地区</h2> -->
-
                             <div class="p-10">
                                 <div id="bar-addrsNewchart" class="main-chart" style="height: 250px"></div>
                             </div>

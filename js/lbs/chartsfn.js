@@ -1,12 +1,29 @@
 //用户统计  收入数据-充值次数-充值人数
-jzm.userCharts = function(id){
-    var yName,cName,tName;
+jzm.userCharts = function(id,time){
+    var yName,cName,tName,calendar,timeLoad = []/*/x轴 数据/*/;
     if(!id){id=1;yName = '￥{value}';cName = '金额';tName = '收入金额';$(".opMoney").show();}
     else if(id == 1){$(".boxCharts").children('p').eq(0).addClass('active').siblings('p').removeClass('active');yName = '￥{value}';cName = '金额';tName = '收入金额';$(".opMoney").show();}
     else if(id == 2){$(".boxCharts").children('p').eq(1).addClass('active').siblings('p').removeClass('active');yName = '{value}';cName = '次数';tName = '充值次数';$(".opMoney").hide();}
     else if(id == 3){$(".boxCharts").children('p').eq(2).addClass('active').siblings('p').removeClass('active');yName = '{value}';cName = '人数';tName = '充值人数';$(".opMoney").hide();};
+    if(time == 0){
+    	$(".newtime").children('p').eq(0).addClass('active').siblings('p').removeClass('active');
+    	timeLoad = dateLog(7);
+    	$("#startTime").val(timeLoad[0]);$("#endTime").val(jzm.getDateTime(new Date()).split(' ')[0]);
+    }else if(time == 1){
+    	$(".newtime").children('p').eq(1).addClass('active').siblings('p').removeClass('active');
+    	timeLoad = dateLog(jzm.mGetDate());
+    	$("#startTime").val(timeLoad[0]);$("#endTime").val(jzm.getDateTime(new Date()).split(' ')[0]);
+    }else if(time == 2){
+    	$(".newtime").children('p').eq(2).addClass('active').siblings('p').removeClass('active');
+    	timeLoad = dateLog(15);
+    	$("#startTime").val(timeLoad[0]);$("#endTime").val(jzm.getDateTime(new Date()).split(' ')[0]);
+    }else if(time == 3){
+    	$(".newtime").children('p').eq(3).addClass('active').siblings('p').removeClass('active');
+    	timeLoad = dateLog(1);
+    	$("#startTime").val(timeLoad[0]);$("#endTime").val(jzm.getDateTime(new Date()).split(' ')[0]);
+    }
     var usChart = echarts.init(document.getElementById('usCharts'));// 基于准备好的dom，初始化echarts实例
-    var timeLoad = [], /*/x轴 数据/*/dateNum = [],/*/对应x轴数据描点/*/
+    var dateNum = [],/*/对应x轴数据描点/*/
     endTime = jzm.getDateTime(new Date()).split(' ')[0],        //结束日期
     d = new Date(),                                       //当前日期
     dtime = d.setDate(d.getDate() - 6),                     //当前日期前7天
@@ -17,9 +34,8 @@ jzm.userCharts = function(id){
         timeLoad = jzm.getAllDate($("#startTime").val(),$("#endTime").val());            //搜索日期区间
         startTime = $("#startTime").val();
         endTime = $("#endTime").val();
-        }
-    else{
-            timeLoad = dateLog();                              //默认七天搜索
+    }else{
+            timeLoad = dateLog(7);                              //默认七天搜索
             $("#startTime").val(jzm.getDateTime(new Date().setDate(new Date().getDate() - 6)).split(' ')[0]);$("#endTime").val(jzm.getDateTime(new Date()).split(' ')[0]);
         };
     $.ajax({
@@ -124,10 +140,10 @@ jzm.userCharts = function(id){
             }
 
     });
-    function dateLog()  /*/x轴时间节点方法/*/{
+    function dateLog(calendar)  /*/x轴时间节点方法/*/{
         var dy = new Date();
-        var dys = dy.setDate(dy.getDate() - 7);
-        for(var i = 7; i > 0; i--){
+        var dys = dy.setDate(dy.getDate() - calendar);
+        for(var i = calendar; i > 0; i--){
             timeLoad.push(jzm.getDateTime(dy.setDate(dy.getDate() + 1)).split(' ')[0]);
           };
           return timeLoad;
