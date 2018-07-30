@@ -65,13 +65,33 @@ jzm.refundMoney = function(id){
     };
 };
 //更改制作中订单状态
-jzm.ChangeState = function(id,type){
-    var OL = confirm("注：请确认是否修改该订单状态？");
-    if(OL == true){
-      jzm.paraMessage('loadAjaxdata',{url:"order_complete",xmldata:"&orderId=" + id +"&type=" + type,callbackfn:function(reg){
-        RegCode(statusCode).test(reg.statusCode.status) ? jzm.findOrderList() : jzm.Error(reg);
-      },type:"POST",trcny:false});
-    };
+jzm.ChangeState = function(id,_$this){
+	var html = '<div id="modulebox" style="background:rgba(0,0,0,0.5);position:fixed;top:0;left:0;width:100%;height:'+ window.screen.availHeight +'px;z-index:999;"></div><div id="select-btn-true" style="color:#000;position:fixed;top:35%;left:45%;z-index:1000;padding:50px;background:#fff;border-radius: 5px !important;">请确认更改状态为<br /><span><i></i>已完成</span><span><i></i>已取消</span></div>';
+	$('html body').append(html);
+	$('#modulebox').bind('click',function(){
+		$(this).remove();
+		$('body div#select-btn-true').remove();
+	})
+	$("div#select-btn-true span").bind('click',function(){
+		$('body div#select-btn-true .btn').remove();
+		$('body div#select-btn-true').append('<div class="btn" onclick="jzm.btn()" style="display:block;background:#4a4a4a;margin-top:20px;">确认</div>');
+		_$this = $(this).index();
+		$(this).children('i').css({
+			"background":"red"
+		});
+		$(this).siblings('span').children('i').css({
+			"background":"none"
+		});
+	});
+	jzm.btn = function(){
+		jzm.paraMessage('loadAjaxdata',{url:"order_complete",xmldata:"&orderId=" + id +"&type=" + _$this,callbackfn:function(reg){
+		   RegCode(statusCode).test(reg.statusCode.status) ? void function(){
+		   	jzm.findOrderList();
+		   	$("#modulebox").remove();
+		   	$("#select-btn-true").remove();
+		   }() : jzm.Error(reg);
+		},type:"POST",trcny:false});
+	};
 };
 // 维修管理模块
 //维修人员列表
