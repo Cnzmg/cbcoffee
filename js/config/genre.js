@@ -561,7 +561,7 @@ jzm.detailedList = function(page)     /*/清单列表/*/{
                           '<span>'+
                               '<a href="javascript:void(0);" onclick="jzm.msgDetailedList('+ reg.productListList[i].listId +')">清单详情  |</a>'+
                               '<a href="javascript:void(0)" onclick="jzm.detailedEnit('+ reg.productListList[i].listId +')">编辑  |</a>';
-                  if(i != 0 && i != 1)
+                  if(i != 0 && i != 1 && i != 2)
                       {
                           str += '<a href="javascript:void(0);" onclick="jzm.deleDetailed('+ reg.productListList[i].listId +')">     删除</a>';
                       };
