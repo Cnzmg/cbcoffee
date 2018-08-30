@@ -12,10 +12,11 @@
             setWidth: '300px',
             setMaxOptionNum: 10,
             optionsHoverStyle: 'newOptions_hover',
-            id:'',
+            __type:[],  //设备type
             change: function(){},
             mutiConfEvent:function(){},
-            setMaxStrLength:8
+            setMaxStrLength:8, //字符长度
+            callbackfn:function(){} //自定义回调函数
         };
 
         var options = $.extend(defaults,options);
@@ -57,7 +58,6 @@
 					
                     if(_this.attr(options.selectedProperty)){
                         selectedOption = 'data-select="true"';
-                        // $(id).val() = $("option[data-select='true']").val();
                         titleText = _this.html();
                     }else{
                         selectedOption = '';
@@ -66,9 +66,7 @@
                     }
 
                 }
-
-
-                    newOptions += "<li data-value='"+_thisValue+"' "+ selectedOption +" >"+ _thisHtmlValue + selected +"</li>";                             // 创建新的options
+                    newOptions += "<li data-value='"+_thisValue+"' "+ selectedOption +"  class='"+ (options.__type.length > 0 ? (options.__type[$(this).index()] == 1 ? 'machine-big-tip' : 'machine-small-tip') : "") +"'>"+ _thisHtmlValue + selected +"</li>";                             // 创建新的options
 
 
             });
@@ -127,18 +125,22 @@
                 var thisIndex = _thisNewSelect.find('.newOptions li').index(thisLi);
                 //判断是否多选
                 if(!options.multiple){  //单选
-                    _thisNewSelect.find('.newSelectTitle span').html(thisLi.html());
+                    _thisNewSelect.find('.newSelectTitle span').html(thisLi.html()).attr({class:thisLi.context.classList[0],"data-machine":thisLi.context.dataset.value});
                     _thisNewSelect.find('.newSelectTitle').trigger(options.titleEventType);
-
+					
                     if(!thisLi.attr(options.selectedProperty)){
                         _thisNewSelect.find('.newOptions li').removeAttr(options.selectedProperty);
                         _t.find('option['+options.selectedProperty+'="true"]').removeAttr(options.selectedProperty);
                         add.call(_t.find('option').eq(thisIndex));
                         options.change.call(_t.find('option['+options.selectedProperty+'="true"]'));
                     }
-                  jzm.getQueryString('hstimer') ? void function(){      //自定义执行 -- 业务函数
-                      jzm.formulaIds($("li[data-select='true']").attr('data-value'));
-                  }() : null;
+                    if(typeof options.callbackfn === "function" && options.callbackfn != null){
+                    	options.callbackfn.call();
+                    }
+                    
+//                jzm.getQueryString('hstimer') ? void function(){      //自定义执行 -- 业务函数
+//                    jzm.formulaIds($("li[data-select='true']").attr('data-value'));
+//                }() : null;
                 }else{
                     //多选
                     if(!thisLi.attr(options.selectedProperty)){
@@ -176,7 +178,10 @@
                             divValue += $(this).html()+',';
                             $(this).append(_pi);
                         });
-                        _thisNewSelect.find('.newSelectTitle span').html(divValue);
+                        _thisNewSelect.find('.newSelectTitle span').html(divValue).attr({class:'last-machinenumber'});
+                        if(typeof options.callbackfn === "function" && options.callbackfn != null){
+	                    	options.callbackfn.call();
+	                    }
                     }else{
                         _thisNewSelect.find('.newSelectTitle span').html(options.selectedHtmlValue);
                     }

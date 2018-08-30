@@ -88,8 +88,14 @@
                 <div class="ibox-title">
                     <h5>添加配方</h5>
                 </div>
-                    <div class="ibox-content" style="margin-top:60px;">
-                        <form class="form-horizontal m-t" method="post" role="form" id="AddProduct">
+                <div style="margin:10px 20px;" class="ui_action">
+                    <div class="block-title" style="font-size:12px;width:87px;text-align:center;margin-right:10px;">机器类型</div>
+                    <span class="block-title spanaction machine-big-tip" data-unity="machineType,1,machine_btn" style="font-size:12px;padding: 3px 12px;">大机器</span>
+                    <span class="block-title machine-small-tip" data-unity="machineType,2,machine_btn" style="font-size:12px;padding: 3px 12px;">小机器</span>
+                    <input type="hidden" value="" id="machineType" />
+                </div>
+                    <div class="ibox-content" style="margin-top:20px;">
+                        <form class="form-horizontal m-t formulaMakeList" method="post" role="form" id="AddProduct">
                             <div class="table-responsive overflow">
                                 <table class="tile table table-bordered table-striped">
                                     <thead>
@@ -99,7 +105,11 @@
                                             <th>水量(ml)</th>
                                             <th>料量(g)</th>
                                             <th>搅拌速度(rad/min)</th>
+                                            <th>出料转速</th>
                                             <th>出料顺序</th>
+                                            <th>口味名称</th>
+                                            <th>冷/热</th>
+                                            <th>是否可调节</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -109,6 +119,7 @@
                                             <td><input id="waterVolume" placeholder=" 0<x<=300"  name="formulaMakeList[0].waterVolume" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
                                             <td><input id="gradientWeight" placeholder=" 0<x<=100"  name="formulaMakeList[0].gradientWeight" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
                                             <td><input id="mixSpeed" placeholder=" 0<x<=127" name="formulaMakeList[0].mixSpeed" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
+                                            <td><input id="recipeOutSpeed" placeholder=" 0<x<=127"  name="formulaMakeList[0].recipeOutSpeed" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
                                             <td>
                                                 <select name="formulaMakeList[0].recipeOutOrder" id="recipeOutOrder" value="0" style="background:none;border:1px solid #ccc;width:80%;">
                                                     <option value="0">不出料</option>
@@ -121,6 +132,15 @@
                                                     <option value="7">第七次出料</option>
                                                 </select>
                                             </td>
+                                            <td><input id="flavorName" placeholder="口味名称"  name="formulaMakeList[0].flavorName" type="text" style="background:none;border:1px solid #ccc;width:80%;"/></td>
+                                            <td>
+                                            	<label ><input id="flavorCanChange" name="formulaMakeList[0].flavorCanChange" value="1" type="radio"/> 冷</label >
+                                            	<label ><input id="flavorCanChange" name="formulaMakeList[0].flavorCanChange" value="0" type="radio"/> 热</label >
+                                            </td>
+                                            <td>
+                                            	<label ><input id="flavorTemperature" name="formulaMakeList[0].flavorTemperature" value="0" type="radio"/> 是</label >
+                                            	<label ><input id="flavorTemperature" name="formulaMakeList[0].flavorTemperature" value="1" type="radio"/> 否</label >
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>奶粉1<input type="hidden" id="canisterId" name="formulaMakeList[1].canisterId"  value="2" /></td>
@@ -128,6 +148,7 @@
                                             <td><input id="waterVolume"  placeholder=" 0<x<=300" name="formulaMakeList[1].waterVolume" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
                                             <td><input id="gradientWeight" placeholder=" 0<x<=100"  name="formulaMakeList[1].gradientWeight" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
                                             <td><input id="mixSpeed" placeholder=" 0<x<=127"  name="formulaMakeList[1].mixSpeed" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
+                                            <td><input id="recipeOutSpeed" placeholder=" 0<x<=127"  name="formulaMakeList[1].recipeOutSpeed" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
                                             <td>
                                                 <select name="formulaMakeList[1].recipeOutOrder" id="recipeOutOrder" value="0" style="background:none;border:1px solid #ccc;width:80%;">
                                                     <option value="0">不出料</option>
@@ -140,6 +161,15 @@
                                                     <option value="7">第七次出料</option>
                                                 </select>
                                             </td>
+                                            <td><input id="flavorName" placeholder="口味名称"  name="formulaMakeList[1].flavorName" type="text" style="background:none;border:1px solid #ccc;width:80%;"/></td>
+                                            <td>
+                                            	<label ><input id="flavorCanChange" name="formulaMakeList[1].flavorCanChange" value="1" type="radio"/> 冷</label >
+                                            	<label ><input id="flavorCanChange" name="formulaMakeList[1].flavorCanChange" value="0" type="radio"/> 热</label >
+                                            </td>
+                                            <td>
+                                            	<label ><input id="flavorTemperature" name="formulaMakeList[1].flavorTemperature" value="0" type="radio"/> 是</label >
+                                            	<label ><input id="flavorTemperature" name="formulaMakeList[1].flavorTemperature" value="1" type="radio"/> 否</label >
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>糖<input type="hidden" id="canisterId" name="formulaMakeList[2].canisterId"  value="3" /></td>
@@ -147,6 +177,7 @@
                                             <td><input id="waterVolume" placeholder=" 0<x<=300"  name="formulaMakeList[2].waterVolume" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
                                             <td><input id="gradientWeight"  placeholder=" 0<x<=100" name="formulaMakeList[2].gradientWeight" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
                                             <td><input id="mixSpeed" placeholder=" 0<x<=127"  name="formulaMakeList[2].mixSpeed" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
+                                            <td><input id="recipeOutSpeed" placeholder=" 0<x<=127"  name="formulaMakeList[2].recipeOutSpeed" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
                                             <td>
                                                 <select name="formulaMakeList[2].recipeOutOrder" id="recipeOutOrder" value="0"style="background:none;border:1px solid #ccc;width:80%;">
                                                     <option value="0">不出料</option>
@@ -159,6 +190,15 @@
                                                     <option value="7">第七次出料</option>
                                                 </select>
                                             </td>
+                                            <td><input id="flavorName" placeholder="口味名称"  name="formulaMakeList[2].flavorName" type="text" style="background:none;border:1px solid #ccc;width:80%;"/></td>
+                                            <td>
+                                            	<label ><input id="flavorCanChange" name="formulaMakeList[2].flavorCanChange" value="1" type="radio"/> 冷</label >
+                                            	<label ><input id="flavorCanChange" name="formulaMakeList[2].flavorCanChange" value="0" type="radio"/> 热</label >
+                                            </td>
+                                            <td>
+                                            	<label ><input id="flavorTemperature" name="formulaMakeList[2].flavorTemperature" value="0" type="radio"/> 是</label >
+                                            	<label ><input id="flavorTemperature" name="formulaMakeList[2].flavorTemperature" value="1" type="radio"/> 否</label >
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>奶粉2<input type="hidden" id="canisterId" name="formulaMakeList[3].canisterId"  value="4" /></td>
@@ -166,6 +206,7 @@
                                             <td><input id="waterVolume"  placeholder=" 0<x<=300" name="formulaMakeList[3].waterVolume" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
                                             <td><input id="gradientWeight" placeholder=" 0<x<=100"  name="formulaMakeList[3].gradientWeight" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
                                             <td><input id="mixSpeed" placeholder=" 0<x<=127"  name="formulaMakeList[3].mixSpeed" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
+                                            <td><input id="recipeOutSpeed" placeholder=" 0<x<=127"  name="formulaMakeList[3].recipeOutSpeed" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
                                             <td>
                                                 <select name="formulaMakeList[3].recipeOutOrder" id="recipeOutOrder" value="0" style="background:none;border:1px solid #ccc;width:80%;">
                                                     <option value="0">不出料</option>
@@ -178,6 +219,15 @@
                                                     <option value="7">第七次出料</option>
                                                 </select>
                                             </td>
+                                            <td><input id="flavorName" placeholder="口味名称"  name="formulaMakeList[3].flavorName" type="text" style="background:none;border:1px solid #ccc;width:80%;"/></td>
+                                            <td>
+                                            	<label ><input id="flavorCanChange" name="formulaMakeList[3].flavorCanChange" value="1" type="radio"/> 冷</label >
+                                            	<label ><input id="flavorCanChange" name="formulaMakeList[3].flavorCanChange" value="0" type="radio"/> 热</label >
+                                            </td>
+                                            <td>
+                                            	<label ><input id="flavorTemperature" name="formulaMakeList[3].flavorTemperature" value="0" type="radio"/> 是</label >
+                                            	<label ><input id="flavorTemperature" name="formulaMakeList[3].flavorTemperature" value="1" type="radio"/> 否</label >
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>巧克力<input type="hidden" id="canisterId" name="formulaMakeList[4].canisterId"  value="5" /></td>
@@ -185,6 +235,7 @@
                                             <td><input id="waterVolume" placeholder=" 0<x<=300" name="formulaMakeList[4].waterVolume" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
                                             <td><input id="gradientWeight" placeholder=" 0<x<=100" name="formulaMakeList[4].gradientWeight" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
                                             <td><input id="mixSpeed" placeholder=" 0<x<=127" name="formulaMakeList[4].mixSpeed" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
+                                            <td><input id="recipeOutSpeed" placeholder=" 0<x<=127"  name="formulaMakeList[4].recipeOutSpeed" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
                                             <td>
                                                 <select name="formulaMakeList[4].recipeOutOrder" id="recipeOutOrder" value="0" style="background:none;border:1px solid #ccc;width:80%;">
                                                     <option value="0">不出料</option>
@@ -197,6 +248,15 @@
                                                     <option value="7">第七次出料</option>
                                                 </select>
                                             </td>
+                                            <td><input id="flavorName" placeholder="口味名称"  name="formulaMakeList[4].flavorName" type="text" style="background:none;border:1px solid #ccc;width:80%;"/></td>
+                                            <td>
+                                            	<label ><input id="flavorCanChange" name="formulaMakeList[4].flavorCanChange" value="1" type="radio"/> 冷</label >
+                                            	<label ><input id="flavorCanChange" name="formulaMakeList[4].flavorCanChange" value="0" type="radio"/> 热</label >
+                                            </td>
+                                            <td>
+                                            	<label ><input id="flavorTemperature" name="formulaMakeList[4].flavorTemperature" value="0" type="radio"/> 是</label >
+                                            	<label ><input id="flavorTemperature" name="formulaMakeList[4].flavorTemperature" value="1" type="radio"/> 否</label >
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>茶<input type="hidden" id="canisterId" name="formulaMakeList[5].canisterId"  value="6" /></td>
@@ -204,6 +264,7 @@
                                             <td><input id="waterVolume" placeholder=" 0<x<=300"  name="formulaMakeList[5].waterVolume" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
                                             <td><input id="gradientWeight"  placeholder=" 0<x<=100" name="formulaMakeList[5].gradientWeight" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
                                             <td><input id="mixSpeed" placeholder=" 0<x<=127" name="formulaMakeList[5].mixSpeed" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
+                                            <td><input id="recipeOutSpeed" placeholder=" 0<x<=127"  name="formulaMakeList[3].recipeOutSpeed" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
                                             <td>
                                                 <select name="formulaMakeList[5].recipeOutOrder" id="recipeOutOrder" value="0"style="background:none;border:1px solid #ccc;width:80%;">
                                                     <option value="0">不出料</option>
@@ -216,6 +277,15 @@
                                                     <option value="7">第七次出料</option>
                                                 </select>
                                             </td>
+                                            <td><input id="flavorName" placeholder="口味名称"  name="formulaMakeList[5].flavorName" type="text" style="background:none;border:1px solid #ccc;width:80%;"/></td>
+                                            <td>
+                                            	<label ><input id="flavorCanChange" name="formulaMakeList[5].flavorCanChange" value="1" type="radio"/> 冷</label >
+                                            	<label ><input id="flavorCanChange" name="formulaMakeList[5].flavorCanChange" value="0" type="radio"/> 热</label >
+                                            </td>
+                                            <td>
+                                            	<label ><input id="flavorTemperature" name="formulaMakeList[5].flavorTemperature" value="0" type="radio"/> 是</label >
+                                            	<label ><input id="flavorTemperature" name="formulaMakeList[5].flavorTemperature" value="1" type="radio"/> 否</label >
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>咖啡<input type="hidden" id="canisterId" name="formulaMakeList[6].canisterId"  value="170" /></td>
@@ -223,6 +293,7 @@
                                             <td><input id="waterVolume" placeholder=" 0<x<=300" name="formulaMakeList[6].waterVolume" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
                                             <td><input id="gradientWeight" placeholder=" 0<x<=100"  name="formulaMakeList[6].gradientWeight" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
                                             <td></td>
+                                            <td><input id="recipeOutSpeed" placeholder=" 0<x<=127"  name="formulaMakeList[6].recipeOutSpeed" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
                                             <td>
                                                 <select name="formulaMakeList[6].recipeOutOrder" id="recipeOutOrder" value="0" style="background:none;border:1px solid #ccc;width:80%;">
                                                     <option value="0">不出料</option>
@@ -235,11 +306,49 @@
                                                     <option value="7">第七次出料</option>
                                                 </select>
                                             </td>
+                                            <td><input id="flavorName" placeholder="口味名称"  name="formulaMakeList[6].flavorName" type="text" style="background:none;border:1px solid #ccc;width:80%;"/></td>
+                                            <td>
+                                            	<label ><input id="flavorCanChange" name="formulaMakeList[6].flavorCanChange" value="1" type="radio"/> 冷</label >
+                                            	<label ><input id="flavorCanChange" name="formulaMakeList[6].flavorCanChange" value="0" type="radio"/> 热</label >
+                                            </td>
+                                            <td>
+                                            	<label ><input id="flavorTemperature" name="formulaMakeList[6].flavorTemperature" value="0" type="radio"/> 是</label >
+                                            	<label ><input id="flavorTemperature" name="formulaMakeList[6].flavorTemperature" value="1" type="radio"/> 否</label >
+                                            </td>
                                         </tr>
+                                        
                                     </tbody>
                                 </table>
+                                <!--small macth action-->
+                                <table class="tile table table-bordered table-striped offFormulaMakeList" style="display: none;">
+                                	<thead>
+                                        <tr>
+                                            <th>咖啡流量(ML)</th>
+                                            <th>咖啡温度(℃)</th>
+                                            <th>咖啡分量(g)</th>
+                                            <th>打奶时间(s)</th>
+                                            <th>水泵压力高/低</th>
+                                            <th>美式热水流量(ML)</th>
+                                        </tr>
+                                    </thead>
+                                	<tbody>
+                                		<!--small mstch action-->
+	                                    <tr>
+	                                        <td><input id="coffeeFlow" placeholder="20< x <=250" name="formulaMakeList[6].delayTime" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
+	                                        <td><input id="coffeeTemporature" placeholder=" 75< x <=95" name="formulaMakeList[6].waterVolume" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
+	                                        <td><input id="coffeeWeight" placeholder=" 7< x <=12"  name="formulaMakeList[6].gradientWeight" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
+	                                        <td><input id="playMilkTime" placeholder=" 15< x <=60"  name="formulaMakeList[6].recipeOutSpeed" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
+	                                        <td>
+	                                        	<label ><input id="pumPressure" name="pumPressure" checked="checked" value="-1" type="radio"/> 无</label >
+                                            	<label ><input id="pumPressure" name="pumPressure" value="1" type="radio"/> 高</label >
+                                            	<label ><input id="pumPressure" name="pumPressure" value="0" type="radio"/> 低</label >
+                                            </td>
+	                                        <td><input id="AmericanHotWaterWeight" placeholder="0< x <=200"  name="formulaMakeList[6].flavorName" type="text" style="background:none;border:1px solid #ccc;width:80%;"/></td>
+	                                    </tr>
+                                	</tbody>
+                                </table>
                                 配方名称：<input type="text"  id="formulaName" name="formulaName" style="background: none;border: 1px solid #ccc;" />
-                                <input type="hidden" id="formulaId" name="formulaId" value="1" />
+                                <input type="hidden" id="formulaId" name="formulaId" />
                             </div>
                             <div class="form-group" style="margin-top:40px;">
                                 <div class="col-sm-1 col-sm-offset-4">
@@ -247,6 +356,48 @@
                                 </div>
                                 <div class="col-sm-1">
                                     <span class="block-title" style="padding: 6px 25px;cursor:pointer;" onclick="jzm.Addformula()">确定</span>
+                                </div>
+                            </div>
+                        </form>
+                        
+                        
+                        <form  class="form-horizontal m-t offFormulaMakeList" method="post" role="form" id="formulaMakeList" style="display: none;">
+                        	<!--small macth action-->
+                                <table class="tile table table-bordered table-striped">
+                                	<thead>
+                                        <tr>
+                                            <th>咖啡流量(ML)</th>
+                                            <th>咖啡温度(℃)</th>
+                                            <th>咖啡分量(g)</th>
+                                            <th>打奶时间(s)</th>
+                                            <th>水泵压力高/低</th>
+                                            <th>美式热水流量(ML)</th>
+                                        </tr>
+                                    </thead>
+                                	<tbody>
+                                		<!--small mstch action-->
+	                                    <tr>
+	                                        <td><input id="coffeeFlow" placeholder="20< x <=250" name="officeFormulaMakeList[0].coffeeFlow" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
+	                                        <td><input id="coffeeTemporature" placeholder=" 75< x <=95" name="officeFormulaMakeList[0].coffeeTemporature" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
+	                                        <td><input id="coffeeWeight" placeholder=" 7< x <=12"  name="officeFormulaMakeList[0].coffeeWeight" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
+	                                        <td><input id="playMilkTime" placeholder=" 15< x <=60"  name="officeFormulaMakeList[0].playMilkTime" type="text" style="background:none;border:1px solid #ccc;width:80%;"onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/></td>
+	                                        <td>
+	                                        	<label ><input id="pumpPressure" name="officeFormulaMakeList[0].pumpPressure" checked="checked" value="-1" type="radio"/> 无</label >
+                                            	<label ><input id="pumpPressure" name="officeFormulaMakeList[0].pumpPressure" value="1" type="radio"/> 高</label >
+                                            	<label ><input id="pumpPressure" name="officeFormulaMakeList[0].pumpPressure" value="0" type="radio"/> 低</label >
+                                            </td>
+	                                        <td><input id="americanHotWaterWeight" placeholder="0< x <=200"  name="officeFormulaMakeList[0].americanHotWaterWeight" type="text" style="background:none;border:1px solid #ccc;width:80%;"/></td>
+	                                    </tr>
+                                	</tbody>
+                                </table>
+                                配方名称：<input type="text"  id="formulaName" name="formulaName" style="background: none;border: 1px solid #ccc;" />
+                            
+                            <div class="form-group" style="margin-top:40px;">
+                                <div class="col-sm-1 col-sm-offset-4">
+
+                                </div>
+                                <div class="col-sm-1">
+                                    <span class="block-title" style="padding: 6px 25px;cursor:pointer;" onclick="jzm.Addformula('formulaMakeList')">确定</span>
                                 </div>
                             </div>
                         </form>
@@ -265,7 +416,8 @@
 
         <!-- UX -->
         <script src="js/scroll.min.js"></script> <!-- Custom Scrollbar -->
-
+		<!--  Form Related -->
+        <script src="js/icheck.js"></script> <!-- Custom Checkbox + Radio -->
         <!-- Other -->
         <script src="js/calendar.min.js"></script> <!-- Calendar -->
 

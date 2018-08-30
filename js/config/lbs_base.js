@@ -28,6 +28,7 @@ jzm.findMachineList = function(page)  /*/设备列表/*/{
                             '<td>'+ reg.machineShowList[i].machineNumber +'</td>'+
                             '<td>'+ reg.machineShowList[i].adminName +'</td>'+
                             '<td>'+ reg.machineShowList[i].machineAddrDesc +'</td>'+
+                            '<td class="'+ (reg.machineShowList[i].machineType == 1 ? "machine-big-tip" : "machine-small-tip") +'">'+ (reg.machineShowList[i].machineType == 1 ? "大型柜式机" : "小型桌面机") +'</td>'+
                             '<td>'+ reg.machineShowList[i].machineSn +'</td>'+
                             '<td class="'+ (reg.machineShowList[i].onlineStatus == '在线' ? 'msg_green' : (reg.machineShowList[i].onlineStatus == '无' ? '' : 'msg_hot')) +'">'+ reg.machineShowList[i].onlineStatus +'</td>'+
                             '<td class="'+ (reg.machineShowList[i].failureStatus == '正常' ? 'msg_green' : (reg.machineShowList[i].failureStatus == '无' ? '' : 'msg_hot')) +'">'+ reg.machineShowList[i].failureStatus +'</td>'+
@@ -75,6 +76,7 @@ jzm.searchequEnit = function(log)    /*/编辑前查询设备信息  //日志查
           $("input[name='district']").val(reg.machineInfo.district);  //区
           $("input[name='machineAddrDesc']").val(reg.machineInfo.machineAddrDesc);  //详细地址
           $("#shoemap").val(reg.machineInfo.machineLongitude +","+ reg.machineInfo.machineLatitude);  //经纬度
+          $("#machineScenePicUrl_img").attr('src',reg.machineInfo.machineScenePicUrl_img);
         }() : jzm.Error(reg);
       },type:"POST",trcny:false});
     }else{

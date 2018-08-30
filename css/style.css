@@ -2325,3 +2325,25 @@ progress::-webkit-progress-value {
 	color:#999;
 	text-shadow: none;
 }
+/********product style action**************/
+.machine-big-tip,.machine-small-tip{
+	position: relative;
+}
+.machine-big-tip:after{
+	content: 'B';
+	padding: 0px 5px;
+	box-sizing: border-box;
+	background: #f44336;
+	border-radius: 50%;
+	color: #fff;
+	margin-left: 6px;
+}
+.machine-small-tip:after{
+	content: 'S';
+	padding: 0px 5px;
+	box-sizing: border-box;
+	background: #2196f3;
+	border-radius: 50%;
+	color: #fff;
+	margin-left: 6px;
+}

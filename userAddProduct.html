@@ -22,7 +22,7 @@
         <link rel="icon" href="img/bitbug_favicon.ico" type="image/x-icon" />
         <!-- select css -->
         <link rel="stylesheet" type="text/css" href="js/lbs/selsect/select.zmr.css" />
-        <script type="text/javascript" src="js/config/config.js"></script>
+        <script type="text/javascript" src="js/config/config.js?t=20180813"></script>
     </head>
     <body id="skin-cloth">
 
@@ -93,6 +93,14 @@
                     <div class="ibox-content" style="margin-top:100px;">
                         <form class="form-horizontal m-t" method="post" role="form" id="AddProduct">
                             <div class="form-group">
+                                <label class="col-sm-2 control-label">使用配方</label>
+                                <div class="col-sm-8">
+                                    <select id="formulaId" class="col-sm-12" value="" style="height:34px;background:none;border:1px solid rgba(255, 255, 255, 0.3);">
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label">产品名称</label>
                                 <div class="col-sm-8">
                                     <input class="form-control" id="productName" name="productName" type="text" value="" > <!-- onkeyup="J_Modified(this.value,'^[a-zA-Z]+$')" -->
@@ -125,14 +133,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">使用配方</label>
+                            <div class="form-group machine-small" style="display: none;">
+                                <label class="col-sm-2 control-label machine-small-tip">产品图片</label>
                                 <div class="col-sm-8">
-                                    <select id="formulaId" class="col-sm-12" value="" style="height:34px;background:none;border:1px solid rgba(255, 255, 255, 0.3);">
-
-                                    </select>
+                                    <div class="col-sm-4">
+                                        <img class="radio-inline" id="productMachineDetailPicurl_img" height="200px" src="">
+                                        <span class="btn btn-primary pbtn" style="margin:20px;" onclick="jzm.updateFile({type:3,id:['#productMachineDetailPicurl_img','#productMachineDetailPicurl_file','#productMachineDetailPicurl'],format:'i'})">选择文件</span>
+                                        <input type="file" class="form-control" accept="image/jpeg,image/png" id="productMachineDetailPicurl_file" name="productMachine_picurl_file" style="display:none;" value="">
+                                        <input type="hidden" class="form-control" id="productMachineDetailPicurl" name="productMachineDetailPicurl" style="display:none;" value="">
+                                    </div>
                                 </div>
-                                <input type="hidden" name="formulaId" value="-1">
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">排序</label>

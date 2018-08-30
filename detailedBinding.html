@@ -20,6 +20,7 @@
         <link href="css/icons.css" rel="stylesheet">
         <link href="css/generics.css" rel="stylesheet">
         <link rel="icon" href="img/bitbug_favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" type="text/css" href="js/lbs/selsect/select.zmr.css" />
         <script type="text/javascript" src="js/config/config.js"></script>
     </head>
     <body id="skin-cloth">
@@ -87,49 +88,38 @@
                 <div class="block-area" id="tableStriped">
                     <form id="dateForm" method="post" role="form">
                         <h3 class="block-title" style="font-size:14px;">清单绑定</h3>
-
-                        <div class="form-group" style="height:auto;overflow:hidden;">
-                            <label class="col-sm-12 control-label" style="line-height:34px;padding-left:4%;">请输入指定商户名称</label>
-                        </div>
-                        <div class="form-group"style="height:auto;overflow:hidden;">
-                            <label class="col-sm-1 control-label" style="line-height:34px;text-align:right;">指定商户</label>
-                            <div class="col-sm-11">
-                                <input type="text" id="usshanghu" placeholder="..." style="background:none;height:34px;border:1px solid rgba(255, 255, 255, 0.3);" />
-                                <a class="block-title" style="cursor:pointer;" onclick="jzm.detailedBindingShop()">搜索</a>
-                            </div>
-                        </div>
-
-                        <div class="form-group"style="height:auto;overflow:hidden;">
-                            <label class="col-sm-1 control-label" style="text-align:right;">选择商户名称:</label>
-                            <div class="col-sm-11" id="showhu"></div>
-                        </div>
-
-
-
-                        <div class="form-group" style="height:auto;overflow:hidden;">
-                            <label class="col-sm-12 control-label" style="line-height:34px;padding-left:4%;">请输入需要绑定的设备编码(如果不设置设备编码则为商家下所有设备)</label>
-                        </div>
-                        <div class="form-group" style="height:auto;overflow:hidden;">
-                            <label class="col-sm-1 control-label" style="line-height:34px;text-align:right;">设备编码</label>
-                            <div class="col-sm-11" id="machineNumber" style="max-height:400px;overflow-y:auto;width: 420px;">
-
-                            </div>
-                        </div>
-
-
-                        <div class="form-group"style="height:auto;overflow:hidden;">
-                            <label class="col-sm-1 control-label" style="line-height:34px;text-align:right;">指定清单</label>
-                            <div class="col-sm-11">
-                                <input type="text" id="usshanghuDeta" placeholder="..." style="background:none;height:34px;border:1px solid rgba(255, 255, 255, 0.3);" />
-                                <a class="block-title" style="cursor:pointer;" onclick="jzm.detailedBindingDeta()">搜索</a>
-                            </div>
-                        </div>
-
-                        <div class="form-group"style="height:auto;overflow:hidden;">
-                            <label class="col-sm-1 control-label" style="text-align:right;">选择清单:</label>
-                            <div class="col-sm-11" id="showhuDeta"></div>
-                        </div>
-
+						<div class="col-lg-12">
+							<div class="form-group">
+	                            <label class="col-sm-1 control-label" style="line-height:34px;text-align:right;">选择清单</label>
+	                            <div class="col-sm-11">
+	                                <select name="detailed-list" class="col-sm-4" style="height:34px;background:none;border:1px solid rgba(255, 255, 255, 0.3);">
+	                                	
+	                                </select>
+	                            </div>
+	                        </div>
+						</div>
+						<div class="col-lg-12">
+							<div class="form-group">
+	                            <label class="col-sm-1 control-label" style="line-height:34px;text-align:right;">选择商户</label>
+	                            <div class="col-sm-11 shop">
+	                                <select name="detailed-shop" class="col-sm-4" style="height:34px;background:none;border:1px solid rgba(255, 255, 255, 0.3);">
+	                                	
+	                                </select>
+	                            </div>
+	                        </div>
+						</div>
+						
+						<div class="col-lg-12">
+							<div class="form-group">
+	                            <label class="col-sm-1 control-label" style="line-height:34px;text-align:right;">选择设备编码</label>
+	                            <div class="col-sm-11">
+	                                <select name="machineNumber" class="col-sm-4" style="width:30%;height:34px;background:none;border:1px solid rgba(255, 255, 255, 0.3);">
+	                                	<option value="请选择商户后查看"></option>
+	                                </select>
+	                            </div>
+	                        </div>
+						</div>
+	
                         <div>
                             <a class="block-title" style="font-size:12px;text-align:center;margin-right:10px;width:112px;margin-top:30px;" href="javascript:void(0)" onclick="jzm.detailedBinding()">确定</a>
                         </div>
@@ -156,8 +146,12 @@
 
         <!-- allr lbs -->
         <script type="text/javascript" src="js/lbs/lbsspecies.js"></script>
-
+		<script type="text/javascript" src="js/lbs/selsect/select.zmr.js"></script>
         <!-- All JS functions -->
         <script src="js/functions.js"></script>
+        <script type="text/javascript">
+    		jzm.detailedBindingDeta();
+    		jzm.detailedBindingShop();
+    	</script>
     </body>
 </html>

@@ -13,7 +13,7 @@ jzm.findOrderList = function(page)     /*/订单列表/*/{
       xl = JSON.parse(localStorage.getItem('stat')).sort;
       search += "&orderLine="+ el +"&sort="+ xl;
     };
-    if(jzm.getQueryString("machineNumber"))    //机器直连 带机器编号
+    if(!$("#name").val() && jzm.getQueryString("machineNumber"))    //机器直连 带机器编号
         {
             $("#name").val(jzm.getQueryString("machineNumber"));
         };
@@ -29,9 +29,13 @@ jzm.findOrderList = function(page)     /*/订单列表/*/{
                         '<td>'+ reg.orderShowList[i].nickName +'/'+ reg.orderShowList[i].userId +'</td>'+
                         '<td>'+ reg.orderShowList[i].adminName +'/'+ reg.orderShowList[i].machineNumber +'</td>'+
                         '<td>'+ reg.orderShowList[i].sumMoney +'</td>'+
-                        '<td>'+ reg.orderShowList[i].paymentMoney +'</td>'+
-                        '<td>'+ reg.orderShowList[i].paymentType +'</td>'+
-                        '<td>'+ reg.orderShowList[i].productName +'</td>'+
+                        '<td>'+ reg.orderShowList[i].paymentMoney +'</td>';
+                    if(reg.orderShowList[i].orderId.substr(0,3) == 168){
+                    	str +=  '<td>小程序</td>';
+                    }else{
+                    	str +=  '<td>'+ reg.orderShowList[i].paymentType +'</td>';
+                    }
+                    str += '<td>'+ reg.orderShowList[i].productName +'</td>'+
                         '<td>'+ reg.orderShowList[i].consumptionType +'</td>'+
                         '<td>'+ reg.orderShowList[i].couponInfo +'</td>'+
                         '<td>'+ reg.orderShowList[i].orderType +'</td>'+

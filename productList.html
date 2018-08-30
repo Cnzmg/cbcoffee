@@ -93,6 +93,14 @@
                             <span>添加产品</span>
                         </a>
                     </div>
+                    <div style="margin:3px 20px;" class="ui_action">
+                        <div class="block-title" style="font-size:12px;width:87px;text-align:center;margin-right:10px;">机器类型</div>
+
+                        <span class="block-title spanaction" data-unity="machineType, ,productList" style="font-size:12px;padding: 3px 12px;;">不限</span>
+                        <span class="block-title" data-unity="machineType,1,productList" style="font-size:12px;padding: 3px 12px;">大机器</span>
+                        <span class="block-title" data-unity="machineType,2,productList" style="font-size:12px;padding: 3px 12px;">小机器</span>
+                        <input type="hidden" value="" id="machineType" />
+                    </div>
                     <div style="margin:3px 20px;">
                         <span class="block-title" style="font-size:12px;width:87px;text-align:center;margin-right:10px;">产品名/ID</span>
 
@@ -108,6 +116,7 @@
                                     <th>产品名称</th>
                                     <th>产品价格</th>
                                     <th>产品图片</th>
+                                    <th>机器类型</th>
                                     <th>使用配方</th>
                                     <th>料盒ID</th>
                                     <th>创建日期</th>

@@ -137,6 +137,17 @@
                                 <a class="block-title" style="font-size:12px;text-align:center;margin-left:30px;width:112px;" href="javascript:void(0)" onclick="jzm.manageMachineRootEnit()">保存</a>
                             </div>
                         </div>
+                        <div class="form-group" >
+                                <label class="col-sm-1 control-label" style="line-height:34px;text-align:right;">场景图片</label>
+                                <div class="col-sm-8">
+                                    <div class="col-sm-4">
+                                        <img class="radio-inline" id="machineScenePicUrl_img" height="200px" src="">
+                                        <span class="btn btn-primary pbtn" style="margin:20px;" onclick="jzm.updateFile({type:10,id:['#machineScenePicUrl_img','#machineScenePicUrl_file','#machineScenePicUrl'],format:'i'})">选择图片</span>
+                                        <input type="file" class="form-control" accept="image/jpeg,image/png" id="machineScenePicUrl_file" name="machineScenePicUrl_file" style="display:none;" value="">
+                                        <input type="hidden" class="form-control" id="machineScenePicUrl" name="machineScenePicUrl" style="display:none;" value="">
+                                    </div>
+                                </div>
+                            </div>
                         <div class="col-sm-12" >
                             <div id="cityg" style="height:500px;width:100%;margin-top:10px;"></div>
                         </div>

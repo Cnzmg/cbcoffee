@@ -166,20 +166,19 @@
                 async:false,
                 dataType:"jsonp",
                 success:function(res){
-                    var arr_all = [];
                     for (var i = 0; i < res.contents.length; i++) {
                         var opts = {
                               width : 200,
                               height: 100,
                               title : res.contents[i].title,
                         };
-                        var points = new BMap.Point(res.contents[i].location[0],res.contents[i].location[1]);
-
+                    	var points = new BMap.Point(res.contents[i].location[0],res.contents[i].location[1]);
+					
                         var marker = new BMap.Marker(points);  // 创建标注
                         // map.removeOverlay(marker);
                         map.addOverlay(marker);
+                        
 
-                        arr_all.push(points);
 
                     }
                     // setZoom(mPoint,map);

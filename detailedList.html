@@ -102,6 +102,14 @@
                             <span>添加清单</span>
                         </a>
                     </div>
+                    <div style="margin:3px 20px;" class="ui_action">
+                        <div class="block-title" style="font-size:12px;width:120px;text-align:center;margin-right:10px;">机器类型</div>
+
+                        <span class="block-title spanaction" data-unity="machineType, ,detailedList" style="font-size:12px;padding: 3px 12px;;">不限</span>
+                        <span class="block-title" data-unity="machineType,1,detailedList" style="font-size:12px;padding: 3px 12px;">大机器</span>
+                        <span class="block-title" data-unity="machineType,2,detailedList" style="font-size:12px;padding: 3px 12px;">小机器</span>
+                        <input type="hidden" value="" id="machineType" />
+                    </div>
                     <div style="margin:3px 20px;">
                         <span class="block-title" style="font-size:12px;width:120px;text-align:center;margin-right:10px;">清单ID/清单名称</span>
 
@@ -113,10 +121,14 @@
 
                     <div class="table-responsive overflow">
                         <style type="text/css">
-                            #tbodyhtml span{width:33.33%;display: inline-block;background: rgba(0,0,0,0.3);border-bottom: 1px solid #ddd;border-right:1px solid #ddd;padding: 5px 8px 6px;border-color: rgba(255,255,255,0.05) !important;}
-                            #tbodyhtml div:nth-of-type(1) span{width:33.33%;display: inline-block;background: rgba(0,0,0,0.5);border-bottom: 1px solid #ddd;border-right:1px solid #ddd;padding: 5px 8px 6px;border-color: rgba(255,255,255,0.05) !important;}
+                        	ul{list-style: none;padding: 0;}
+                            #tbodyhtml span{width:25%;display: inline-block;background: rgba(0,0,0,0.3);border-bottom: 1px solid #ddd;border-right:1px solid #ddd;padding: 5px 8px 6px;border-color: rgba(255,255,255,0.05) !important;}
+                            #tbodyhtml div:nth-of-type(1) span{width:25%;display: inline-block;background: rgba(0,0,0,0.5);border-bottom: 1px solid #ddd;border-right:1px solid #ddd;padding: 5px 8px 6px;border-color: rgba(255,255,255,0.05) !important;}
                             #tbodyhtml p{width:14.28%;display: inline-block;background: rgba(0,0,0,0.8);border-bottom: 1px solid #ddd;border-right:1px solid #ddd;padding: 5px 8px 6px;border-color: rgba(255,255,255,0.05) !important;text-overflow:ellipsis;white-space: nowrap;margin-bottom: 0;}
+                            
                             #tbodyhtml .ledShow div:nth-of-type(1) p,#equForm .show1 p{width:14.28%;display: inline-block;background: rgba(0,0,0,1);border-bottom: 1px solid #ddd;border-right:1px solid #ddd;padding: 5px 8px 6px;border-color: rgba(255,255,255,0.05) !important;margin-bottom: 0 ;text-overflow:ellipsis;white-space: nowrap;}
+                            #equForm .show1 p{width: 12.28%;}
+                            #equForm .show1 p:nth-of-type(2){width: 26.28%;}
                             #equForm .show p{overflow: hidden;}
                             #tbodyhtml .show{margin-left: 30px;margin-right: 30px;}
                         </style>
@@ -135,11 +147,20 @@
             </section>
             <br/><br/>
         </section>
-        <div class="editBox" id="editBoxAdd" style="position: fixed; top: 50%; left: 50%; background-color: #5b1e26; z-index: 1500; margin-left: -100px;margin-top: -100px; box-shadow: rgb(138, 138, 138) 1px 1px 20px; padding: 10px 20px; box-sizing: border-box; width: 200px; height:200px;display:none;">
-            <div style="text-align:center;margin:20px 0 6px 0;">
+        <div class="editBox" id="editBoxAdd" style="position: fixed; top: 50%; left: 50%; background-color: #28707e; z-index: 1500; margin-left: -100px;margin-top: -100px; padding: 10px 20px; box-sizing: border-box; width: 208px; height:268px;display:none;">
+            <div>
+                <div class="block-title" style="font-size:12px;width:100%;text-align:center;margin-bottom:20px;">机器类型</div>
+                <label style="width: 50%;">
+                	<input type="radio" name="machineType" checked="checked" id="" value="1" />大机器
+                </label>
+                <label>
+                	<input type="radio" name="machineType" id="" value="2" />小机器
+                </label>
+            </div>
+            <div class="block-title" style="font-size:12px;width:100%;text-align:center;margin:20px 0;"> 
                 请输入清单名称
             </div>
-            <input type="text" id="detaName" value="" style="background:#41100f;border:none;width:100%;height:30px;font-size:14px;" />
+            <input type="text" id="detaName" value="" style="background:none;border:1px solid #F2F2F2;width:100%;height:30px;font-size:14px;" />
             <div class="form-group">
                 <div class="col-sm-12" style="text-align:center;margin-top:40px;">
                     <button class="btn btn-primary" type="button" onclick="jzm.AddDetaile('add');return false;">提交</button>
@@ -153,9 +174,9 @@
                 编辑清单
             </div>
             <form id="equForm" method="post" role="form">
-                <div class="show1" id="showlog">
+                <ul class="show1" id="showlog">
 
-                </div>
+                </ul>
                 <div class="form-group">
                     <div class="col-sm-12" style="text-align:center;margin-top:40px;">
                         <input type="hidden" id="listId" name="listId" />
@@ -175,7 +196,6 @@
 
         <!-- UX -->
         <script src="js/scroll.min.js"></script> <!-- Custom Scrollbar -->
-
         <!-- Other -->
         <script src="js/calendar.min.js"></script> <!-- Calendar -->
 
@@ -189,5 +209,13 @@
         <!-- page all -->
         <script type="text/javascript" src="page/query.js"></script>
         <script type="text/javascript" src="page/paging.js"></script>
+        <!--  Form Related -->
+        <script src="js/icheck.js"></script> <!-- Custom Checkbox + Radio -->
+        <script type="text/javascript">
+        	$('.showBox').click(function(){
+        		$(this).hide();
+        		$(this).siblings('div.editBox').hide()
+        	})
+        </script>
     </body>
 </html>

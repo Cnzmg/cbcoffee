@@ -93,6 +93,14 @@
                             <span>添加配方</span>
                         </a>
                     </div>
+                    <div style="margin:3px 20px;" class="ui_action">
+                        <div class="block-title" style="font-size:12px;width:87px;text-align:center;margin-right:10px;">机器类型</div>
+
+                        <span class="block-title spanaction" data-unity="machineType, ,formulaList" style="font-size:12px;padding: 3px 12px;;">不限</span>
+                        <span class="block-title" data-unity="machineType,1,formulaList" style="font-size:12px;padding: 3px 12px;">大机器</span>
+                        <span class="block-title" data-unity="machineType,2,formulaList" style="font-size:12px;padding: 3px 12px;">小机器</span>
+                        <input type="hidden" value="" id="machineType" />
+                    </div>
                     <div style="margin:3px 20px;">
                         <span class="block-title" style="font-size:12px;width:87px;text-align:center;margin-right:10px;">配方名/ID</span>
 
@@ -115,7 +123,7 @@
                             </tbody>
                         </table>
                         <!-- page -->
-                        <div class="col-sm-6"></div>
+                        <div class="col-sm-6" id="page"></div>
                         <div id="pageTool" class="col-sm-6"></div>
                         <input type="hidden" id="pageNums" value="" />
                     </div>

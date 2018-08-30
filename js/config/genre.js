@@ -226,7 +226,7 @@ jzm.JournalList = function (page)  /*/日志列表/*/{
 //系统管理者
 jzm.productList = function(page) /*/产品列表/*/{
     location.hash && $("#productName").val() != '' ? page = location.hash.split('=')[1] : null;
-    jzm.paraMessage('loadAjaxdata',{url:"find_product_list",xmldata:"&page=" + (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1)) + "&name=" + $("#productName").val(),callbackfn:function(reg){
+    jzm.paraMessage('loadAjaxdata',{url:"find_product_list",xmldata:"&page=" + (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1)) + "&name=" + $("#productName").val() + "&machineType=" + $('#machineType').val(),callbackfn:function(reg){
         var str = "";
         RegCode(statusCode).test(reg.statusCode.status) ? void function(){
           for(var i = 0; i < reg.productShowList.length; i++){
@@ -235,6 +235,7 @@ jzm.productList = function(page) /*/产品列表/*/{
                           '<td>'+ reg.productShowList[i].productName +'</td>'+
                           '<td>'+ parseFloat((reg.productShowList[i].productPrice != null ? reg.productShowList[i].productPrice : 0) / 100).toFixed(2) +' </td>'+
                           '<td style="position:relative;cursor:poionter;"><img style="width:50px;height:25px" src="'+ reg.productShowList[i].productPicurl +'" alt="" data-img="'+ reg.productShowList[i].productPicurl +'" /></td>'+
+                          '<td class=' + (reg.productShowList[i].machineType == 1 ? "machine-big-tip" : "machine-small-tip") +'>'+ ( reg.productShowList[i].machineType == 1 ? "大型柜式机" : "小型桌面机") +'</td>'+
                           '<td>'+ reg.productShowList[i].formulaName +'</td>'+
                           '<td>'+ reg.productShowList[i].bunkerNumber +'</td>'+
                           '<td>'+ jzm.getDateTime(reg.productShowList[i].createTime) +'</td>'+
@@ -253,7 +254,7 @@ jzm.productList = function(page) /*/产品列表/*/{
         );
     },type:"POST",trcny:false});
     $("img[data-img]").bind('mouseover',function(){
-      $(this).before('<div style="position:absolute;top:-125px;right:-100%;width:250px;height:250px;background:url('+$(this).attr('src')+') no-repeat;background-size:100%;z-index:9;"></div>');
+      $(this).before('<div style="position:absolute;bottom:42px;left:78px;width:100%;height:300%;background:url('+$(this).attr('src')+') no-repeat center center;background-size:100%;z-index:9;"></div>');
       $(this).mouseout(function(){
         $(this).siblings('div').remove();
       })
@@ -268,25 +269,33 @@ jzm.productListAdd = function(e)  /*/产品添加/*/{
           };
       if(!$("input[name='productTemperature']").is(":checked")){alert("请选择口味冷/热!");return false};
       if(!$('#productRank').val()) {$('#productRank').css('borderColor','red'); return false;};
-      $("#formulaId option[data-select='true']").length > 0 ? $("input[name='formulaId']").val($("#formulaId option[data-select='true']").val()) : $("input[name='formulaId']").val();
+      
       $("input[name='productPrice']").val($("#productPrice").val() * 100);
-      jzm.paraMessage('loadAjaxdata',{url:"manage_product",xmldata:"&type=4&"+ $("#AddProduct").serialize(),callbackfn:function(reg){
+      jzm.paraMessage('loadAjaxdata',{url:"manage_product",xmldata:"&type=4&"+ $("#AddProduct").serialize() + $(".newSelectTitle span").attr('data-machine'),callbackfn:function(reg){
         RegCode(statusCode).test(reg.statusCode.status) ? window.location.href = "./productList.html" : /*/jzm.Error(reg)/*/console.log(reg);
       },type:"POST",trcny:true});
       }
   else{
       jzm.paraMessage('loadAjaxdata',{url:"manage_product",xmldata:"&type=2",callbackfn:function(reg){
           RegCode(statusCode).test(reg.statusCode.status) ? void function(){
-            var str = "";
+            var str = "",_type = [];
             for(var i = 0; i< reg.formulaInfoList.length; i++){
-                str += '<option value ="'+ reg.formulaInfoList[i].formulaId +'" >'+ reg.formulaInfoList[i].formulaName +'</option>';
+                str += '<option value ="&formulaId='+ reg.formulaInfoList[i].formulaId +'&machineType='+ reg.formulaInfoList[i].machineType +'" >'+ reg.formulaInfoList[i].formulaName +'</option>';
+                _type.push(reg.formulaInfoList[i].machineType);
               };
             $("#formulaId").html(str);
             $('#formulaId').multiselect({
               setMaxStrLength:100,
               setWidth:'100%',
               multiple:false,
-              selectedHtmlValue:'请选择配方'
+              selectedHtmlValue:'请选择配方',
+              __type:_type,
+              callbackfn:function(e){
+              	//回调函数
+              	e = $(".newSelectTitle span").attr('data-machine');
+              	e.substr(e.lastIndexOf('=') + 1, e.length) == 1 ? $('.machine-small').fadeOut() : $('.machine-small').fadeIn();
+              	
+              }
             });
           }() : jzm.Error(reg);
         },type:"POST",trcny:true});
@@ -296,8 +305,7 @@ jzm.productListEnit = function(e)  /*/产品编辑/*/{
     if (e){
         $("input[name='productPrice']").val($("#productPrice").val() * 100);
         if(!$("input[name='productTemperature']").is(":checked")){alert("请选择口味冷/热!");return false};
-        $("#formulaId option[data-select='true']").length > 0 ? $("input[name='formulaId']").val($("#formulaId option[data-select='true']").val()) : $("input[name='formulaId']").val();
-        jzm.paraMessage('loadAjaxdata',{url:"manage_product",xmldata:"&type=5&"+$("#AddProduct").serialize(),callbackfn:function(reg){
+        jzm.paraMessage('loadAjaxdata',{url:"manage_product",xmldata:"&type=5&"+$("#AddProduct").serialize() + $(".newSelectTitle span").attr('data-machine'),callbackfn:function(reg){
             RegCode(statusCode).test(reg.statusCode.status) ? void function(){
             	jzm.delOldFile('false');
             	window.location.href = jzm.getQueryString('uri') + location.hash;
@@ -343,23 +351,28 @@ jzm.productListEnit = function(e)  /*/产品编辑/*/{
                         $("input[name='operateType']").removeAttr('checked');
                         $("input[name='operateType']").eq(0).prop("checked",true);
                     };
-                var str = "",name;
+                var str = "",name,_type=[];
                 for(var i = 0; i< reg.formulaInfoList.length; i++){
-                    if (reg.formulaInfoList[i].formulaId == reg.productInfo.formulaId)
-                        {
-                            name = reg.formulaInfoList[i].formulaName;
-                            $("input[name='formulaId']").val(reg.formulaInfoList[i].formulaId);
+                    if (reg.formulaInfoList[i].formulaId == reg.productInfo.formulaId){
+                            name = reg.formulaInfoList[i].formulaName + "," + reg.formulaInfoList[i].formulaId;
                         };
-                      str += '<option value ="'+ reg.formulaInfoList[i].formulaId +'" >'+ reg.formulaInfoList[i].formulaName +'</option>';
+                      str += '<option value =&formulaId='+ reg.formulaInfoList[i].formulaId +'&machineType=' + reg.formulaInfoList[i].machineType +'>'+ reg.formulaInfoList[i].formulaName +'</option>';
+                      _type.push(reg.formulaInfoList[i].machineType);
                   };
                 $("#formulaId").html(str);
                 $('#formulaId').multiselect({
                   setMaxStrLength:100,
                   setWidth:'100%',
                   multiple:false,
-                  selectedHtmlValue:name
+                  selectedHtmlValue:name.split(',')[0],
+                  __type:_type,
+                  callbackfn:function(e){
+                  	e = $('.newSelectTitle span').attr('data-machine');
+                  	e.substr(e.lastIndexOf('=') + 1,e.length) == 1 ? $('.machine-small').fadeOut() : $('.machine-small').fadeIn();
+                  	
+                  }
                 });
-                jzm.formulaIds(reg.productInfo.formulaId,reg.flavorInfoList);  //获取对应的配方
+                //jzm.formulaIds(reg.productInfo.formulaId,reg.flavorInfoList);  //获取对应的配方
                 //productStatus是否上架状态
                 if(reg.productInfo.productStatus == 1){
                         $("#productStatus").attr("checked",true);
@@ -369,12 +382,21 @@ jzm.productListEnit = function(e)  /*/产品编辑/*/{
                         $("#productStatus1").attr("checked",true);
                         $("#productStatus").removeAttr('checked');
                     };
+                if(reg.productInfo.machineType == 1){
+                	$(".newSelectTitle span").attr({class:'machine-big-tip',"data-machine":"&formulaId="+name.split(',')[1]+"&machineType=1"})
+                }else{
+                	$(".newSelectTitle span").attr({class:'machine-small-tip',"data-machine":"&formulaId="+name.split(',')[1]+"&machineType=2"})
+                	$(".machine-small").fadeIn();
+                	$("#productMachineDetailPicurl_img").attr("src",reg.productInfo.productMachineDetailPicurl);
+                	$("#productMachineDetailPicurl").val(reg.productInfo.productMachineDetailPicurl);
+                }
                 jzm.delOldFile({f:["&type=2&oldName="+$("#productPicurl").val().substring($("#productPicurl").val().lastIndexOf('\/') + 1, $("#productPicurl").val().length),"&type=3&oldName=" + $("#productMachinePicurl").val().substring($("#productMachinePicurl").val().lastIndexOf('\/') + 1, $("#productMachinePicurl").val().length)],id:['productPicurl','productMachinePicurl']});
                 },type:"POST",trcny:false});
         };
 
 };
 
+//*****************************************************废弃
 jzm.formulaIds = function(val,arr)    /*/查询产品口味信息/*/{
     var checkedAction = ''; //checked
       $("input[name='productTemperature']").not('.hot').parents('label.tempera').hide(); //初始化对应
@@ -435,16 +457,17 @@ jzm.enitBox = function(id)  /*/提交修改口味名称/*/{
         $("#flId").val(id);
     };
 };
+//*****************************************************废弃
 
 jzm.formulaList = function(page)   /*/配方列表/*/{
-    jzm.paraMessage('loadAjaxdata',{url:"find_formula_list",xmldata:"&page=" + (page ? page : page =1 ) + "&name=" + $('#formulaLi').val(),callbackfn:function(reg){
+    jzm.paraMessage('loadAjaxdata',{url:"find_formula_list",xmldata:"&page=" + (page ? page : page =1 ) + "&name=" + $('#formulaLi').val() +"&machineType=" +$("#machineType").val(),callbackfn:function(reg){
       var str = "";
       RegCode(statusCode).test(reg.statusCode.status) ? void function(){
         for(var i = 0; i < reg.formulaInfoList.length; i++)
             {
                 str += '<tr>'+
                             '<td>'+ reg.formulaInfoList[i].formulaId +'</td>'+
-                            '<td>'+ reg.formulaInfoList[i].formulaName +' </td>'+
+                            '<td class="'+( reg.formulaInfoList[i].machineType == 1 ? "machine-big-tip" : "machine-small-tip" )+'">'+ reg.formulaInfoList[i].formulaName +' </td>'+
                             '<td>'+ jzm.getDateTime(reg.formulaInfoList[i].createTime) +'</td>'+
                             '<td><a href="EnitFormula.html?uri=/manage/formulaList.html&v='+ jzm.randomNum() +'&formulaId='+ reg.formulaInfoList[i].formulaId +'">编辑</a></td>'+
                         '</tr>';
@@ -461,8 +484,8 @@ jzm.formulaList = function(page)   /*/配方列表/*/{
     },type:"POST",trcny:false});
 };
 
-jzm.Addformula = function ()       /*/配方添加/*/{
-    var m = document.getElementsByTagName("input");
+jzm.Addformula = function (e)       /*/配方添加/*/{
+	var m = document.getElementsByTagName("input"),d;
     for(var j = 0; j < m.length; j++)
         {
             if (m[j].getAttribute("placeholder"))
@@ -483,14 +506,15 @@ jzm.Addformula = function ()       /*/配方添加/*/{
                     };
                 };
         };
-    jzm.paraMessage('loadAjaxdata',{url:"manage_formula",xmldata:"&type=2&" + $("#AddProduct").serialize(),callbackfn:function(reg){
+    e ? ~function(){d = "2&"+$("#formulaMakeList").serialize();return}() : ~function(){d = "1&" + $("#AddProduct").serialize()}();
+    jzm.paraMessage('loadAjaxdata',{url:"manage_formula",xmldata:"&type=2&machineType="+ d,callbackfn:function(reg){
       RegCode(statusCode).test(reg.statusCode.status) ? window.location.href = './formulaList.html' : jzm.Error(reg);
     },type:"POST",trcny:true});
 };
 
 jzm.Enitformula = function (e)       /*/配方编辑/*/{
     if (e){
-        var m = document.getElementsByTagName("input");
+        var m = document.getElementsByTagName("input"),d;
         for(var j = 0; j < m.length; j++)
             {
                 if (m[j].getAttribute("placeholder"))
@@ -511,53 +535,103 @@ jzm.Enitformula = function (e)       /*/配方编辑/*/{
                             }
                     };
             };
-            jzm.paraMessage('loadAjaxdata',{url:"manage_formula",xmldata:"&type=3&" + $("#EnitProduct").serialize(),callbackfn:function(reg){
+			e === "formulaMakeList" ? ~function(){d = "2&formulaId="+ jzm.getQueryString('formulaId') +"&"+$("#formulaMakeList").serialize();return}() : ~function(){d = "1&formulaId="+ jzm.getQueryString('formulaId') +"&" + $("#EnitProduct").serialize()}();
+            jzm.paraMessage('loadAjaxdata',{url:"manage_formula",xmldata:"&type=3&machineType=" + d,callbackfn:function(reg){
               RegCode(statusCode).test(reg.statusCode.status) ? window.location.href = './formulaList.html' : jzm.Error(reg);
             },type:"POST",trcny:true});
         }
     else{
             jzm.paraMessage('loadAjaxdata',{url:"manage_formula",xmldata:"&type=1&formulaId=" + jzm.getQueryString("formulaId"),callbackfn:function(reg){
                 RegCode(statusCode).test(reg.statusCode.status) ? void function(){
-                  $("#formulaName").val(reg.formulaInfo.formulaName);
-                  $("#formulaId").val(reg.formulaInfo.formulaId);
-                  for(var i = 0; i < reg.formulaInfo.formulaMakeList.length; i++){
+                  $("input[name='formulaName']").val(reg.formulaInfo.formulaName);
+                  $("#machineType").val(reg.formulaInfo.machineType);
+                  if(reg.formulaInfo.formulaMakeList != null){
+                  	for(var i = 0; i < reg.formulaInfo.formulaMakeList.length; i++){
                           if (reg.formulaInfo.formulaMakeList[i].canisterId == 170){
-                                  $("input[name='formulaMakeList["+ parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 164) +"].waterVolume']").val(reg.formulaInfo.formulaMakeList[i].waterVolume);
-                                  $("input[name='formulaMakeList["+ parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 164) +"].gradientWeight']").val(reg.formulaInfo.formulaMakeList[i].gradientWeight);
-                                  $("input[name='formulaMakeList["+ parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 164) +"].mixSpeed']").val(reg.formulaInfo.formulaMakeList[i].mixSpeed);
-                                  $("#recipeOutOrder" + parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 164) ).val(reg.formulaInfo.formulaMakeList[i].recipeOutOrder);
-                                  $("input[name='formulaMakeList["+ parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 164) +"].delayTime']").val(reg.formulaInfo.formulaMakeList[i].delayTime);
+                                $("input[name='formulaMakeList["+ parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 164) +"].waterVolume']").val(reg.formulaInfo.formulaMakeList[i].waterVolume);
+                                $("input[name='formulaMakeList["+ parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 164) +"].gradientWeight']").val(reg.formulaInfo.formulaMakeList[i].gradientWeight);
+                                $("input[name='formulaMakeList["+ parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 164) +"].mixSpeed']").val(reg.formulaInfo.formulaMakeList[i].mixSpeed);
+                                $("select[name='formulaMakeList[" + parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 164) +"].recipeOutOrder']" ).val(reg.formulaInfo.formulaMakeList[i].recipeOutOrder);
+                                $("input[name='formulaMakeList[" + parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 164) +"].recipeOutSpeed']" ).val(reg.formulaInfo.formulaMakeList[i].recipeOutSpeed);
+                                $("input[name='formulaMakeList["+ parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 164) +"].delayTime']").val(reg.formulaInfo.formulaMakeList[i].delayTime);
+                                $("input[name='formulaMakeList["+ parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 164) +"].flavorName']").val(reg.formulaInfo.formulaMakeList[i].flavorName);
+                                  
+	                            if(reg.formulaInfo.formulaMakeList[i].flavorCanChange == 1){
+	                                $("input[name='formulaMakeList["+ parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 164) +"].flavorCanChange']").eq(0).prop('checked',true);
+	                            }else{
+	                            	$("input[name='formulaMakeList["+ parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 164) +"].flavorCanChange']").eq(1).prop('checked',true);
+	                            }
+	                            if(reg.formulaInfo.formulaMakeList[i].flavorTemperature == 0){
+	                                $("input[name='formulaMakeList["+ parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 164) +"].flavorTemperature']").eq(0).prop('checked',true);
+	                            }else{
+	                            	$("input[name='formulaMakeList["+ parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 164) +"].flavorTemperature']").eq(1).prop('checked',true);
+	                            }
+                                  
                               }
                           else{
                                   $("input[name='formulaMakeList["+ parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 1) +"].waterVolume']").val(reg.formulaInfo.formulaMakeList[i].waterVolume);
                                   $("input[name='formulaMakeList["+ parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 1) +"].gradientWeight']").val(reg.formulaInfo.formulaMakeList[i].gradientWeight);
                                   $("input[name='formulaMakeList["+ parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 1) +"].mixSpeed']").val(reg.formulaInfo.formulaMakeList[i].mixSpeed);
-                                  $("#recipeOutOrder" + parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 1) ).val(reg.formulaInfo.formulaMakeList[i].recipeOutOrder);
+                                  $("select[name='formulaMakeList[" + parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 1) +"].recipeOutOrder']" ).val(reg.formulaInfo.formulaMakeList[i].recipeOutOrder);
+                                $("input[name='formulaMakeList[" + parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 1) +"].recipeOutSpeed']" ).val(reg.formulaInfo.formulaMakeList[i].recipeOutSpeed);
+                                
+                                $("input[name='formulaMakeList["+ parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 1) +"].flavorName']").val(reg.formulaInfo.formulaMakeList[i].flavorName);
                                   if(reg.formulaInfo.formulaMakeList[i].canisterId == 6)
                                   {
                                       $("input[name='formulaMakeList["+ parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 1) +"].delayTime']").val(reg.formulaInfo.formulaMakeList[i].delayTime);
                                   }
+                                  if(reg.formulaInfo.formulaMakeList[i].flavorCanChange == 1){
+		                                $("input[name='formulaMakeList["+ parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 1) +"].flavorCanChange']").eq(0).prop('checked',true);
+		                            }else{
+		                            	$("input[name='formulaMakeList["+ parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 1) +"].flavorCanChange']").eq(1).prop('checked',true);
+		                            }
+		                            if(reg.formulaInfo.formulaMakeList[i].flavorTemperature == 0){
+		                                $("input[name='formulaMakeList["+ parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 1) +"].flavorTemperature']").eq(0).prop('checked',true);
+		                            }else{
+		                            	$("input[name='formulaMakeList["+ parseInt(reg.formulaInfo.formulaMakeList[i].canisterId - 1) +"].flavorTemperature']").eq(1).prop('checked',true);
+		                            }
                               };
+                              
                       };
+                  }else{
+                  	for(var i = 0; i < reg.formulaInfo.officeFormulaMakeList.length; i++){
+                  		$("#coffeeFlow").val(reg.formulaInfo.officeFormulaMakeList[i].coffeeFlow);
+                  		$("#coffeeTemporature").val(reg.formulaInfo.officeFormulaMakeList[i].coffeeTemporature);
+                  		$("#coffeeWeight").val(reg.formulaInfo.officeFormulaMakeList[i].coffeeWeight);
+                  		$("#playMilkTime").val(reg.formulaInfo.officeFormulaMakeList[i].playMilkTime);
+                  		if(reg.formulaInfo.officeFormulaMakeList[i].pumpPressure == -1){
+                  			$("input[name='officeFormulaMakeList[0].pumpPressure']").eq(0).prop('checked',true);
+                  		}else if(reg.formulaInfo.officeFormulaMakeList[i].pumpPressure == 0){
+                  			$("input[name='officeFormulaMakeList[0].pumpPressure']").eq(2).prop('checked',true);
+                  		}else{
+                  			$("input[name='officeFormulaMakeList[0].pumpPressure']").eq(1).prop('checked',true);
+                  		}
+                  		$("#americanHotWaterWeight").val(reg.formulaInfo.officeFormulaMakeList[i].americanHotWaterWeight);
+                  	}
+                  }
+                   jzm.machine_btn();
                 }() : jzm.Error(reg);
-            },type:"POST",trcny:true});
+            },type:"POST",trcny:false});
         };
 
 };
+
 // ********************************清单列表***************************************************
 jzm.detailedList = function(page)     /*/清单列表/*/{
-    jzm.paraMessage('loadAjaxdata',{url:"manage_prodcut_list_list",xmldata:"&type=1&page=" + (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1)) + "&name=" + $("#name").val(),callbackfn:function(reg){
+    jzm.paraMessage('loadAjaxdata',{url:"manage_prodcut_list_list",xmldata:"&type=1&page=" + (page ? page : (location.hash.match('page') ? page = location.hash.substring(location.hash.lastIndexOf('=') + 1,location.hash.length) : page = 1)) + "&name=" + $("#name").val() + "&machineType=" + $('#machineType').val(),callbackfn:function(reg){
         var str = "";
-        RegCode(statusCode).test(reg.statusCode.status) ? void function(){
-          str += '<div>'+
+        str += '<div>'+
                       '<span>清单ID</span>'+
                       '<span>清单名称</span>'+
+                      '<span>机器类型</span>'+
                       '<span>操作</span>'+
                   '</div>';
+        RegCode(statusCode).test(reg.statusCode.status) ? void function(){
           for(var i = 0; i < reg.productListList.length; i ++)
               {
                   str += '<div class="ledShow" id="led'+ reg.productListList[i].listId +'"><span>'+ reg.productListList[i].listId +'</span>'+
-                          '<span>'+ reg.productListList[i].listName +'</span>'+
+                          '<span >'+ reg.productListList[i].listName +'</span>'+
+                          '<span class='+ (reg.productListList[i].machineType == 1 ? "machine-big-tip" : "machine-small-tip") +'>'+ (reg.productListList[i].machineType == 1 ? "大型柜式机" : "小型桌面机") +'</span>'+
                           '<span>'+
                               '<a href="javascript:void(0);" onclick="jzm.msgDetailedList('+ reg.productListList[i].listId +')">清单详情  |</a>'+
                               '<a href="javascript:void(0)" onclick="jzm.detailedEnit('+ reg.productListList[i].listId +')">编辑  |</a>';
@@ -612,7 +686,7 @@ jzm.msgDetailedList = function(id,page,pnum)  /*/清单详情/*/{
           for(var i = 0; i < reg.productShowList.length; i ++){
                   str += '<div class="show">'+
                               '<p>'+ reg.productShowList[i].productId +'</p>'+
-                              '<p>'+ reg.productShowList[i].productName +'</p>'+
+                              '<p class='+ (reg.productShowList[i].machineType == 1 ? "machine-big-tip" : "machine-small-tip") +'>'+ reg.productShowList[i].productName +'</p>'+
                               '<p>'+ parseFloat((reg.productShowList[i].productPrice != null ? reg.productShowList[i].productPrice : 0) / 100).toFixed(2) +'</p>'+
                               '<p>'+ reg.productShowList[i].formulaName +'</p>'+
                               '<p>'+ reg.productShowList[i].bunkerNumber +'</p>'+
@@ -634,14 +708,14 @@ jzm.msgDetailedList = function(id,page,pnum)  /*/清单详情/*/{
 };
 jzm.AddDetaile = function (add)/*/清单名称添加/*/{
     if(!add){
-            $("#editBoxAdd").show(100);
+            $("#editBoxAdd").fadeIn();
         }
     else{
-            jzm.paraMessage('loadAjaxdata',{url:"manage_prodcut_list_list",xmldata:"&type=6&name=" + $("#detaName").val(),callbackfn:function(reg){
+            jzm.paraMessage('loadAjaxdata',{url:"manage_prodcut_list_list",xmldata:"&type=6&name=" + $("#detaName").val() +"&machineType=" +$('input[name="machineType"]:checked').val(),callbackfn:function(reg){
               RegCode(statusCode).test(reg.statusCode.status) ? void function(){
-                alert(reg.statusCode.msg);
-                $("#editBoxAdd").hide(100);
-                window.location.reload();
+                $("#editBoxAdd").fadeOut(100);
+                $("#detaName").val('')
+                jzm.detailedList();
               }() : jzm.Error(reg);
             },type:"POST",trcny:true});
         };
@@ -653,9 +727,9 @@ jzm.detailedEnit = function (id)      /*/清单数据编辑/*/{
     jzm.paraMessage('loadAjaxdata',{url:"manage_prodcut_list_list",xmldata:"&type=3&listId=" + id,callbackfn:function(reg){
       RegCode(statusCode).test(reg.statusCode.status) ? void function(){
         var str = "";
-        str += '<div class="showlog"><p>产品ID</p><p>产品名称</p><p>产品价格</p><p>产品图片</p><p>使用配方</p><p>创建日期</p><p>操作</p></div>';
+        str += '<li class="showlog"><p>产品ID</p><p>产品名称</p><p>产品价格</p><p>产品图片</p><p>使用配方</p><p>创建日期</p><p>操作</p></li>';
             for(var i = 0; i < reg.productInfoList.length; i ++){
-                    str += '<div class="showlog"><p>'+ reg.productInfoList[i].productId +'</p><p>'+ reg.productInfoList[i].productName +'</p><p>'+ parseFloat((reg.productInfoList[i].productPrice != null ? reg.productInfoList[i].productPrice : 0) / 100).toFixed(2) +'</p><p><img style="width:27px;height:17px;" src="'+ reg.productInfoList[i].productPicurl +'" alt="" /></p><p>'+ reg.productInfoList[i].formulaName +'</p><p>'+ jzm.getDateTime(reg.productInfoList[i].createTime) +'</p>';
+                    str += '<li class="showlog"><p>'+ reg.productInfoList[i].productId +'</p><p class='+ (reg.productInfoList[i].machineType == 1 ? "machine-big-tip" : "machine-small-tip") +' >'+ reg.productInfoList[i].productName +'</p><p>'+ parseFloat((reg.productInfoList[i].productPrice != null ? reg.productInfoList[i].productPrice : 0) / 100).toFixed(2) +'</p><p><img style="width:27px;height:17px;" src="'+ reg.productInfoList[i].productPicurl +'" alt="" /></p><p>'+ reg.productInfoList[i].formulaName +'</p><p>'+ jzm.getDateTime(reg.productInfoList[i].createTime) +'</p>';
                     str += '<p>添加<input style="opacity:1;" type="checkbox" name="productId" id="productId'+ i +'" value="'+ reg.productInfoList[i].productId +'" /></p>';
                     str += '</div>';
                 };
@@ -674,12 +748,12 @@ jzm.detailedEnit = function (id)      /*/清单数据编辑/*/{
                   };
                 };
         str = "";
-        str += '<div class="showlog"><p>产品ID</p><p>产品名称</p><p>产品价格</p><p>产品图片</p><p>使用配方</p><p>创建日期</p><p>操作</p></div>';
+        str += '<li class="showlog"><p>产品ID</p><p>产品名称</p><p>产品价格</p><p>产品图片</p><p>使用配方</p><p>创建日期</p><p>操作</p></li>';
             for(var i = 0; i < reg.productInfoList.length; i ++)
                 {
-                    str += '<div class="showlog"><p>'+ reg.productInfoList[i].productId +'</p><p>'+ reg.productInfoList[i].productName +'</p><p>'+ parseFloat((reg.productInfoList[i].productPrice != null ? reg.productInfoList[i].productPrice : 0) / 100).toFixed(2) +'</p><p><img style="width:27px;height:17px;" src="'+ reg.productInfoList[i].productPicurl +'" alt="" /></p><p>'+ reg.productInfoList[i].formulaName +'</p><p>'+ jzm.getDateTime(reg.productInfoList[i].createTime) +'</p>';
+                    str += '<li class="showlog"><p>'+ reg.productInfoList[i].productId +'</p><p class='+ (reg.productInfoList[i].machineType == 1 ? "machine-big-tip" : "machine-small-tip") +'>'+ reg.productInfoList[i].productName +'</p><p>'+ parseFloat((reg.productInfoList[i].productPrice != null ? reg.productInfoList[i].productPrice : 0) / 100).toFixed(2) +'</p><p><img style="width:27px;height:17px;" src="'+ reg.productInfoList[i].productPicurl +'" alt="" /></p><p>'+ reg.productInfoList[i].formulaName +'</p><p>'+ jzm.getDateTime(reg.productInfoList[i].createTime) +'</p>';
                     str += '<p>添加<input style="opacity:1;" type="checkbox" name="productId" id="productId'+ i +'" value="'+ reg.productInfoList[i].productId +'" /></p>';
-                    str += '</div>';
+                    str += '</li>';
                 };
             $("#showlog").html(str);
             $("#listId").val(id);
@@ -713,50 +787,85 @@ jzm.deleDetailed = function(id)      /*/清单删除/*/{
   };
 };
 jzm.detailedBindingShop = function()      /*/清单 前商户搜索/*/{
-    jzm.paraMessage('loadAjaxdata',{url:"manage_machine_product_relation",xmldata:"&type=2&name=" + $("#usshanghu").val(),callbackfn:function(reg){
-      var str = "";
+    jzm.paraMessage('loadAjaxdata',{url:"manage_machine_product_relation",xmldata:"&type=2",callbackfn:function(reg){
+      var str = "",_type;
       RegCode(statusCode).test(reg.statusCode.status) ? void function(){
         for(var i = 0; i < reg.userList.length; i++){
-                str += '<input type="radio" style="opacity:1;" onclick="jzm.detailedBindingShebei('+ reg.userList[i].adminId +')" name="adminId" id="rio'+ i +'" value="'+ reg.userList[i].adminId +'" /><label for="rio'+ i +'" style="cursor:pointer;margin:1px 0;width:180px;" class="block-title equid_'+ reg.userList[i].adminId +'">'+ reg.userList[i].adminName +'</label> <br />';
+                str = str + '<option value=&adminId='+ reg.userList[i].adminId +'>'+ reg.userList[i].adminName +'</option>';
             };
-            $("#showhu").html(str);
+            $("select[name='detailed-shop']").html(str).multiselect({
+		          setMaxStrLength:100,
+		          setWidth:'30%',
+		          multiple:false,
+		          selectedHtmlValue:'请选择商户',
+		          callbackfn:function(e){
+		          	e = $('.shop span').attr('data-machine');
+		          	jzm.detailedBindingShebei(e);
+		          }
+		        });
       }() :(RegCode(isNullCode).test(reg.statusCode.status) ? $("#showhu").html("无") : jzm.Error(reg) );
   },type:"POST",trcny:true});
 };
-jzm.detailedBindingShebei = function(id)      /*/清单 前商户的设备搜索/*/{    //此方法未启用 ---
-    jzm.paraMessage('loadAjaxdata',{url:"manage_machine_product_relation",xmldata:"&type=3&adminId=" + id,callbackfn:function(reg){
-      var str = "";
-      RegCode(statusCode).test(reg.statusCode.status) ? void function(){
+jzm.detailedBindingShebei = function(e)      /*/清单 前商户的设备搜索/*/{
+	var type = $('.newSelectTitle span').attr('data-machine');
+	type && type.split('=')[0] != "&adminId" ? type = type.substr(type.lastIndexOf('=') + 1, type.length) : type = '';
+    jzm.paraMessage('loadAjaxdata',{url:"manage_machine_product_relation",xmldata:"&type=3&adminId=" + e.split('=')[1] +"&machineType=" + type,callbackfn:function(reg){
+      RegCode(statusCode).test(reg.statusCode.status) ? void function(_type = []){
         for(var i = 0; i < reg.machineNumberList.length; i++)
             {
-                str += '<input type="checkbox" id="mach'+i+'" style="opacity:1;" name="machineNumber" value="'+ reg.machineNumberList[i].machineNumber +'" /><label for="mach'+i+'" style="cursor:pointer;margin:1px 0;width:380px;" class="block-title">'+ reg.machineNumberList[i].machineNumber +'----------------'+reg.machineNumberList[i].listName+'</label> <br />';
+                e = e + '<option value='+ reg.machineNumberList[i].machineNumber+'>设备编号：'+ reg.machineNumberList[i].machineNumber +'---当前清单：' +reg.machineNumberList[i].listName +'</option>';
+                _type.push(reg.machineNumberList[i].machineType);
             };
-            $("#machineNumber").html(str);
-      }() : jzm.Error(reg);
+            return _type;
+      }() : (RegCode(isNullCode).test(reg.statusCode.status) ? e = '<option value=-1>暂无设备</option>' : jzm.Error(reg) );
+      $("select[name='machineNumber']").html(e).multiselect({
+          setMaxStrLength:100,
+          setWidth:'30%',
+          selectedHtmlValue:'请选择设备',
+          __type:window._type,
+          callbackfn:function(e){
+          	//待优化 正则表达式
+          }
+        });
    },type:"POST",trcny:true});
 };
 
 jzm.detailedBindingDeta = function()          /*/清单绑定 指定清单搜索/*/{
-    jzm.paraMessage('loadAjaxdata',{url:"manage_machine_product_relation",xmldata:"&type=1&name=" + $("#usshanghuDeta").val(),callbackfn:function(reg){
-      var str = "";
+    jzm.paraMessage('loadAjaxdata',{url:"manage_machine_product_relation",xmldata:"&type=1",callbackfn:function(reg){
+      var str = "",_type = [];
       RegCode(statusCode).test(reg.statusCode.status) ? void function(){
         for(var i = 0; i < reg.productListList.length; i++){
-                str += '<input type="radio" style="opacity:1;" name="listId" id="listId'+ i +'" value="'+ reg.productListList[i].listId +'" /><label for="listId'+ i +'" style="cursor:pointer;margin:1px 0;width:180px;" class="block-title equid_'+ reg.productListList[i].listId +'">'+ reg.productListList[i].listName +'</label> <br />';
+                str += '<option value=&listId='+ reg.productListList[i].listId +'&machineType='+ reg.productListList[i].machineType +'>'+ reg.productListList[i].listName +'</option>';
+                _type.push(reg.productListList[i].machineType);
             };
-        $("#showhuDeta").html(str);
+        $("select[name='detailed-list']").html(str).multiselect({
+          setMaxStrLength:100,
+          setWidth:'30%',
+          multiple:false,
+          selectedHtmlValue:'请选择清单',
+          __type:_type,
+          callbackfn:function(e){
+          	jzm.detailedBindingShop();
+          }
+        });
       }() : ( RegCode(isNullCode).test(reg.statusCode.status) ? $("#showhuDeta").html("无") : jzm.Error(reg) );
   },type:"POST",trcny:true});
 };
-jzm.detailedBinding = function()      /*/清单绑定/*/{
-    if($("input[name='machineNumber']").is(":checked") > 0){
-      $("input[name='adminId']").prop('disabled',true);
-    };
-    jzm.paraMessage('loadAjaxdata',{url:"manage_machine_product_relation",xmldata:"&type=4&" + $("#dateForm").serialize(),callbackfn:function(reg){
+jzm.detailedBinding = function(e)      /*/清单绑定/*/{
+	$(".newSelectTitle span").each(function(){
+		e = (!e ? '' : e) + $(this).attr('data-machine');
+	});
+    jzm.paraMessage('loadAjaxdata',{url:"manage_machine_product_relation",xmldata:"&type=4" + e.replace('undefined','') +"&machineNumber=" + $('.last-machinenumber').html().match(/：\d+(\d*)(?=-)/g).toString().replace(/：/g,''),callbackfn:function(reg){
       RegCode(statusCode).test(reg.statusCode.status) ? window.location.href = './detailedList.html' : jzm.Error(reg);
     },type:"POST",trcny:true});
 };
 jzm.detailedUnBinding = function()      /*/清单解绑/*/{
-    jzm.paraMessage('loadAjaxdata',{url:"manage_machine_product_relation",xmldata:"&type=5&" + $("#dateForm").serialize(),callbackfn:function(reg){
+    jzm.paraMessage('loadAjaxdata',{url:"manage_machine_product_relation",xmldata:"&type=5&machineNumber=" + $('.last-machinenumber').html().match(/：\d+(\d*)(?=-)/g).toString().replace(/：/g,'') + $('.newSelectTitle span').attr('data-machine'),callbackfn:function(reg){
       RegCode(statusCode).test(reg.statusCode.status) ? window.location.href = './detailedList.html' : jzm.Error(reg);
     },type:"POST",trcny:true});
 };
+//**************ui action*******************
+jzm.machine_btn = function(){
+	$('#machineType').val() != 1 ? ~function(){$(".offFormulaMakeList").show();$(".formulaMakeList").hide()}() : ~function(){$(".formulaMakeList").show();$(".offFormulaMakeList").hide()}();
+}
+//*********************************************
