@@ -408,19 +408,26 @@ jzm.manageClientUser = function(u)     /*/查询用户信息、编辑用户/*/{
       },type:"POST",trcny:true});
     };
 };
+
+///废弃 manage_member_level  type=1
 jzm.manageMemberLevel = function()    /*/会员等级管理列表/*/{
-  jzm.paraMessage('loadAjaxdata',{url:"manage_member_level",xmldata:"&type=1",callbackfn:function(reg){
+  jzm.paraMessage('loadAjaxdata',{url:"get_member_list",xmldata:'',callbackfn:function(reg){
     var str = "";
     RegCode(statusCode).test(reg.statusCode.status) ? void function(){
-      for(var i = 0; i < reg.memberRuleList.length; i ++){
+      for(var i = 0; i < reg.memberList.length; i ++){
           str += '<tr>'+
-                      '<td>'+ reg.memberRuleList[i].memberLevelName +'</td>'+
-                      '<td>'+ parseFloat((reg.memberRuleList[i].countMoney != null ? reg.memberRuleList[i].countMoney : 0) / 100).toFixed(2) +'</td>'+
-                      '<td>'+ parseFloat((reg.memberRuleList[i].disposableRecharge != null ? reg.memberRuleList[i].disposableRecharge : 0) / 100).toFixed(2) +'</td>'+
-                      '<td>'+ reg.memberRuleList[i].integralDouble +'</td>'+
-                      '<td>'+ reg.memberRuleList[i].memberLevel +'</td>'+
+                      '<td>'+ reg.memberList[i].memberRuleId +'</td>'+
+                      '<td>'+ reg.memberList[i].memberRuleName +'</td>'+
+                      '<td>'+ reg.memberList[i].memberLevel +'</td>'+
+                      '<td>'+ reg.memberList[i].duration +'</td>'+
+                      '<td>'+ reg.memberList[i].payMoney +'</td>'+
+                      '<td>'+ reg.memberList[i].discount +'</td>'+
+                      '<td>'+ (reg.memberList[i].discountsStartTime != null ? jzm.getDateTime(reg.memberList[i].discountsStartTime) :'无') +'</td>'+
+                      '<td>'+ (reg.memberList[i].discountsEndTime != null ? jzm.getDateTime(reg.memberList[i].discountsEndTime) : '无') +'</td>'+
+                      '<td>'+ reg.memberList[i].milliliter +'</td>'+
+                      '<td>'+ reg.memberList[i].extraMilliliter +'</td>'+
                       '<td>'+
-                          '<a href="systemUserLvEnit.html?uri=/manage/systemUserLvList.html&v='+ jzm.randomNum() +'&lvUserid='+ reg.memberRuleList[i].memberLevelId +'">编辑  </a>'+
+                          '<a href="systemUserLvEnit.html?uri=/manage/systemUserLvList.html&v='+ jzm.randomNum() +'&lvUserid='+ reg.memberList[i].memberRuleId +'">编辑  </a>'+
                       '</td>'+
                   '</tr>';
           };
@@ -428,27 +435,33 @@ jzm.manageMemberLevel = function()    /*/会员等级管理列表/*/{
    }() : ( RegCode(isNullCode).test(reg.statusCode.status) ? $("#tbodyhtml").html(str) : jzm.Error(reg) );
  },type:"POST",trcny:true});
 };
+// 废弃manage_member_level 
 jzm.EnitmanageMemberLevel = function(lv)    /*/会员等级管理查询、编辑/*/{
   if (lv){
     $("input[name='countMoney']").val($("#countMoney").val() * 100);
     $("input[name='disposableRecharge']").val($("#disposableRecharge").val() * 100);
-    jzm.paraMessage('loadAjaxdata',{url:"manage_member_level",xmldata:"&type=2&"+ $("#AddUser").serialize() +"&memberLevelId=" + jzm.getQueryString("lvUserid"),callbackfn:function(reg){
+    jzm.paraMessage('loadAjaxdata',{url:"add_or_update_member",xmldata:"&"+ $("#AddUser").serialize() +"&memberRuleId=" + jzm.getQueryString("lvUserid"),callbackfn:function(reg){
       RegCode(statusCode).test(reg.statusCode.status) ? window.location.href = jzm.getQueryString('uri') : jzm.Error(reg);
     },type:"POST",trcny:true});
-  }else{
-    jzm.paraMessage('loadAjaxdata',{url:"manage_member_level",xmldata:"&type=3&memberLevelId=" + jzm.getQueryString("lvUserid"),callbackfn:function(reg){
+  }else{  //获取单个会员类型内容
+    jzm.paraMessage('loadAjaxdata',{url:"get_member_detail",xmldata:"&memberId=" + jzm.getQueryString("lvUserid"),callbackfn:function(reg){
       var str = "";
       RegCode(statusCode).test(reg.statusCode.status) ? void function(){
-        $("#memberLevelName").val(reg.memberRule.memberLevelName);
-        $("#memberLevel").val(reg.memberRule.memberLevel);
-        $("#countMoney").val(parseFloat((reg.memberRule.countMoney != null ? reg.memberRule.countMoney : 0) / 100).toFixed(2));
-        $("#disposableRecharge").val(parseFloat((reg.memberRule.disposableRecharge != null ? reg.memberRule.disposableRecharge : 0) / 100).toFixed(2));
-        $("#integralDouble").val(reg.memberRule.integralDouble);
-        $("#integralDouble").val(reg.memberRule.integralDouble);
+        $("#memberRuleName").val(reg.member.memberRuleName);
+        $("#memberLevel").val(reg.member.memberLevel);
+        $("#duration").val(reg.member.duration);
+        $("#payMoney").val(reg.member.payMoney)
+        $("#discount").val(reg.member.discount);
+        $("#discountsStartTime").val(jzm.getDateTime(reg.member.discountsStartTime));
+        $("#discountsEndTime").val(jzm.getDateTime(reg.member.discountsEndTime));
+        $("#milliliter").val(reg.member.milliliter);
+        $("#extraMilliliter").val(reg.member.extraMilliliter);
       }() : jzm.Error(reg);
     },type:"POST",trcny:true});
   };
 };
+
+
 jzm.manageclientuser = function(id){
   var perpol = confirm("是否改变该用户状态？");
   if(perpol == true){

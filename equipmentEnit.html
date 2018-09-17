@@ -179,89 +179,67 @@
         <!-- All JS functions -->
         <script src="js/functions.js"></script>
         <!-- allr lbs -->
-        <script type="text/javascript" src="js/config/lbs_base.js"></script>
-        <!-- city linkage --><!--
-        <script type="text/javascript" src="js/citydata/cityPicker-1.1.8.js"></script>
-        <script type="text/javascript" src="js/cityData/citydata.min.js"></script> -->
-
-        <script type="text/javascript">
-            // rangelider( localURL + "equipmentList.html");
-            // var J = document.getElementById("J_menuatch");
-            // J.childNodes[2].className = 'active dropdown';
-            // window.onload = function ()
-            //     {
-            //         //原生城市-联动
-            //         var select = $('.city-picker-select').cityPicker({
-            //             dataJson: cityData,
-            //             renderMode: false,
-            //             autoSelected: true,
-            //             onChoiceEnd: function() {
-            //                 console.log(this.values)
-            //             }
-            //         });
-
-            //         // 设置城市
-            //         select.setCityVal('广东省, 广州市, 天河区');
-            //     };
-        </script>
+        <script type="text/javascript" src="js/config/lbs_base.js?v=123"></script>
         <script type="text/javascript">
             jzm.searchequEnit();
+            var ac = $("#shoemap").val();
             // 百度地图API功能
-            var map = new BMap.Map("cityg");
-            var point = new BMap.Point(113.250671,23.147271);
-            map.centerAndZoom(point,12);
-            map.enableScrollWheelZoom(true);
-            var geoc = new BMap.Geocoder();
-            map.addControl(new BMap.NavigationControl()); //添加默认缩放平移控件
-            map.addEventListener("click", function(e){
-                //通过点击百度地图，可以获取到对应的point, 由point的lng、lat属性就可以获取对应的经度纬度
-                var pt = e.point;
-                geoc.getLocation(pt, function(rs){
-                    //addressComponents对象可以获取到详细的地址信息
-                    var addComp = rs.addressComponents;
-                    var site = addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber;
-                    //将对应的HTML元素设置值
-                    // console.log(site);
-                    $("#shoemap").val(pt.lng + ", " + pt.lat);
-                    $("#detailedAddress").val(site);
-
-                    $("input[name='province']").val(addComp.province);
-                    $("input[name='city']").val(addComp.city);
-                    $("input[name='district']").val(addComp.district);
-
-                    $("#machineAddrDesc").val("");
-                    $("input[name='machineAddrDesc']").val("");
-                    $("#typtip").val(6);
-
-                });
-            });
-            $("#btnclick").click(function(event) {
-                var localshow = new BMap.LocalSearch(map, {  //本地检索
-                        renderOptions:{map: map}
-                    });
-                localshow.search($("#detailedAddress").val());
-                map.clearOverlays();  //清除原来的标点
-                 var options = {
-                    onSearchComplete: function(results){
-                        // 判断状态是否正确
-                        console.log(results);
-                        if (local.getStatus() == BMAP_STATUS_SUCCESS){
-                            var s = [];
-                            for (var i = 0; i < results.getCurrentNumPois(); i ++){
-                                s.push(results.getPoi(i).title + ", " + results.getPoi(i).address);
-                                $("#shoemap").val(results.getPoi(0).point.lng + ", " + results.getPoi(0).point.lat);
-                            }
-                        }
-                    }
-                };
-
-                var local = new BMap.LocalSearch(map, options);
-                local.search($("#detailedAddress").val());
-
-                $("input[name='machineAddrDesc']").val("");
-                $("#machineAddrDesc").val("");
-                $("#typtip").val(6);
-            });
+            	var map = new BMap.Map("cityg");
+	            var point = new BMap.Point(ac.split(',')[0],ac.split(',')[1]);
+	            map.centerAndZoom(point,12);
+	            map.enableScrollWheelZoom(true);
+	            map.addOverlay(new BMap.Marker(new BMap.Point(ac.split(',')[0],ac.split(',')[1])));
+	            var geoc = new BMap.Geocoder();
+	            map.addControl(new BMap.NavigationControl()); //添加默认缩放平移控件
+	            map.addEventListener("click", function(e){
+	                //通过点击百度地图，可以获取到对应的point, 由point的lng、lat属性就可以获取对应的经度纬度
+	                var pt = e.point;
+	                geoc.getLocation(pt, function(rs){
+	                    //addressComponents对象可以获取到详细的地址信息
+	                    var addComp = rs.addressComponents;
+	                    var site = addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber;
+	                    //将对应的HTML元素设置值
+	                    // console.log(site);
+	                    $("#shoemap").val(pt.lng + ", " + pt.lat);
+	                    $("#detailedAddress").val(site);
+	
+	                    $("input[name='province']").val(addComp.province);
+	                    $("input[name='city']").val(addComp.city);
+	                    $("input[name='district']").val(addComp.district);
+	
+	                    $("#machineAddrDesc").val("");
+	                    $("input[name='machineAddrDesc']").val("");
+	                    $("#typtip").val(6);
+	
+	                });
+	            });
+	            $("#btnclick").click(function(event) {
+	                var localshow = new BMap.LocalSearch(map, {  //本地检索
+	                        renderOptions:{map: map}
+	                    });
+	                localshow.search($("#detailedAddress").val());
+	                map.clearOverlays();  //清除原来的标点
+	                 var options = {
+	                    onSearchComplete: function(results){
+	                        // 判断状态是否正确
+	                        console.log(results);
+	                        if (local.getStatus() == BMAP_STATUS_SUCCESS){
+	                            var s = [];
+	                            for (var i = 0; i < results.getCurrentNumPois(); i ++){
+	                                s.push(results.getPoi(i).title + ", " + results.getPoi(i).address);
+	                                $("#shoemap").val(results.getPoi(0).point.lng + ", " + results.getPoi(0).point.lat);
+	                            }
+	                        }
+	                    }
+	                };
+	
+	                var local = new BMap.LocalSearch(map, options);
+	                local.search($("#detailedAddress").val());
+	
+	                $("input[name='machineAddrDesc']").val("");
+	                $("#machineAddrDesc").val("");
+	                $("#typtip").val(6);
+	            });
         </script>
     </body>
 </html>

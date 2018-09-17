@@ -93,7 +93,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">会员名称</label>
                                 <div class="col-sm-5">
-                                    <input class="form-control" id="memberLevelName" name="memberLevelName" type="text" value="">
+                                    <input class="form-control" id="memberRuleName" name="memberRuleName" type="text" value="">
                                 </div>
                             </div>
                              <div class="form-group">
@@ -103,36 +103,58 @@
                                 </div>
                             </div>
                            <div class="form-group">
-                                <label class="col-sm-2 control-label">累计消费</label>
+                                <label class="col-sm-2 control-label">持续时间/月</label>
                                 <div class="col-sm-5">
-                                    <input class="form-control" id="countMoney" type="text">
-                                    <input type="hidden" name="countMoney" />
-                                </div>
-                                <div class="col-sm-2" style="line-height:34px;">
-                                    元
+                                    <input class="form-control" id="duration" name="duration" type="text">
+                                    <!--<input type="hidden" name="payMoney" />-->
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">一次性充值</label>
+                                <label class="col-sm-2 control-label">开通金额</label>
                                 <div class="col-sm-5">
-                                    <input class="form-control" id="disposableRecharge" type="text" value="">
-                                    <input type="hidden" name="disposableRecharge" />
-                                </div>
-                                <div class="col-sm-2" style="line-height:34px;">
-                                    元
+                                    <input class="form-control" id="payMoney" name="payMoney" type="text" value="">
+                                    <!--<input type="hidden" name="disposableRecharge" />-->
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">积分翻倍</label>
+                                <label class="col-sm-2 control-label">折扣金额</label>
                                 <div class="col-sm-5">
-                                    <input class="form-control" id="integralDouble" name="integralDouble" type="text" value="" >
-                                </div>
-                                <div class="col-sm-2" style="line-height:34px;">
-                                    倍
+                                    <input class="form-control" id="discount" name="discount" maxlength="2" type="text" value="" >
                                 </div>
                             </div>
-
+							
+							
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">开始时间</label>
+                                <div class="col-sm-5">
+                                    <input class="form-control" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd H:m:s'})" placeholder="选择日期" id="discountsStartTime" name="discountsStartTime" type="text" value="" >
+                                </div>
+                            </div>
+							
+							<div class="form-group">
+                                <label class="col-sm-2 control-label">结束时间</label>
+                                <div class="col-sm-5">
+                                    <input class="form-control" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd H:m:s'})" placeholder="选择日期"  id="discountsEndTime" name="discountsEndTime" type="text" value="" >
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">发放流量ML</label>
+                                <div class="col-sm-5">
+                                    <input class="form-control" id="milliliter" name="milliliter" type="text" value="" >
+                                </div>
+                            </div>
+                            
+                            
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">额外流量ML</label>
+                                <div class="col-sm-5">
+                                    <input class="form-control" id="extraMilliliter" name="extraMilliliter" type="text" value="" >
+                                </div>
+                            </div>
+							
+							
                             <div class="form-group" style="margin-top:40px;">
                                 <div class="col-sm-1 col-sm-offset-1">
 
@@ -151,7 +173,7 @@
         <!-- Javascript Libraries -->
         <!-- jQuery -->
         <script src="js/jquery.min.js"></script> <!-- jQuery Library -->
-
+        <script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
         <!-- Bootstrap -->
         <script src="js/bootstrap.min.js"></script>
 

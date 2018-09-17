@@ -240,6 +240,7 @@ jzm.productList = function(page) /*/产品列表/*/{
                           '<td>'+ reg.productShowList[i].bunkerNumber +'</td>'+
                           '<td>'+ jzm.getDateTime(reg.productShowList[i].createTime) +'</td>'+
                           '<td>'+ reg.productShowList[i].productRank +'</td>'+
+                          '<td>'+ (reg.productShowList[i].productComment ? reg.productShowList[i].productComment : "无") +'</td>'+
                           '<td><a href="userEnitProduct.html?uri=/manage/productList.html&hstimer='+ new Date().getHours() +'&v='+jzm.randomNum()+'&productId='+ reg.productShowList[i].productId + location.hash+'">编辑</a></td>'+
                       '</tr>';
               };
@@ -323,6 +324,8 @@ jzm.productListEnit = function(e)  /*/产品编辑/*/{
 
                 $("#productMachine_picurl_img").attr("src",reg.productInfo.productMachinePicurl);
                 $("#productPicurl_img").attr("src",reg.productInfo.productPicurl);
+                
+                $("#productComment").val(reg.productInfo.productComment);
 
                 $("#productRank").val(reg.productInfo.productRank);
                 $("#productCreateTime").val(jzm.getDateTime(reg.productInfo.productCreateTime));
@@ -430,34 +433,112 @@ jzm.formulaIds = function(val,arr)    /*/查询产品口味信息/*/{
       },type:"POST",trcny:true});
 };
 
-jzm.mangFlavor = function()       /*/口味的管理/*/{
-    jzm.paraMessage('loadAjaxdata',{url:"manage_flavor",xmldata:"&page=1&type=1",callbackfn:function(reg){
+jzm.mangFlavor = function()       /*/产品类型管理/*/{
+    jzm.paraMessage('loadAjaxdata',{url:"product_type_list",xmldata:"&page=1",callbackfn:function(reg){
         RegCode(statusCode).test(reg.statusCode.status) ? void function(){
           var str = "";
-          for(var i = 0; i < reg.flavorInfoList.length; i++){
+          for(var i = 0; i < reg.productTypeList.length; i++){
                 str += '<tr>'+
-                            '<td>'+ reg.flavorInfoList[i].flavorId +'</td>'+
-                            '<td>'+ reg.flavorInfoList[i].flavorName +'</td>'+
-                            '<td><a href="javascript:void(0);" onclick="jzm.enitBox('+ reg.flavorInfoList[i].flavorId +')">编辑</a></td>'+
+                            '<td>'+ reg.productTypeList[i].productTypeId +'</td>'+
+                            '<td>'+ reg.productTypeList[i].productTypeName +'</td>'+
+                            '<td>'+ (reg.productTypeList[i].allowConvert == 1 ? "可兑换" : "不可兑换") +'</td>'+
+                            '<td><a href="javascript:void(0);" onclick=jzm.enitBox("type",{name:'+ reg.productTypeList[i].productTypeId +',bool:false})>查看详情 |</a><a href="javascript:void(0);" onclick=jzm.enitBox("type",{name:'+ reg.productTypeList[i].productTypeId +',bool:true})>编辑 |</a><a href="javascript:void(0);" onclick="jzm.deltype('+ reg.productTypeList[i].productTypeId +')">删除</a></td>'+
                         '</tr>';
               };
-          document.getElementById("tbodyhtml").innerHTML = str;
+          $("#tbodyhtml").html(str);
           jzm.moduleBox();
         }() : jzm.Error(reg);
     },type:"POST",trcny:false});
+    jzm.deltype = function(e){
+    	jzm.paraMessage('loadAjaxdata',{url:"delete_product_type",xmldata:"&productTypeId=" + e,callbackfn:function(reg){
+        RegCode(statusCode).test(reg.statusCode.status) ? void function(){
+          jzm.mangFlavor();
+          sessionStorage.removeItem('e');
+        }() : jzm.Error(reg);
+    },type:"POST",trcny:true});
+    }
 };
 
-jzm.enitBox = function(id)  /*/提交修改口味名称/*/{
+jzm.enitBox = function(id,e){/*/提交新增类型，编辑类型，查询所有产品，查询单类型产品详情*/
+	var arr = [];   //产品的ID
     if (!id){
-      jzm.paraMessage('loadAjaxdata',{url:"manage_flavor",xmldata:"&type=2&flavorId=" + $("#flId").val() + "&flavorName=" + $("#editBoxs").val(),callbackfn:function(reg){
-        RegCode(statusCode).test(reg.statusCode.status) ? jzm.mangFlavor() : jzm.Error(reg);
-      },type:"POST",trcny:true});
+    	$('#productIds').text().match(/\d/g) == null ? id = "" : id = "&productIds=" + $('#productIds').text();  //产品ID 数组是否存在与div框
+    	if(sessionStorage.getItem('e')){
+    		id += sessionStorage.getItem('e'); // 编辑操作时的  productTypeId
+    	};
+	    jzm.paraMessage('loadAjaxdata',{url:"manage_product_type",xmldata:"&" + $("#producttype").serialize() + id,callbackfn:function(reg){
+	        RegCode(statusCode).test(reg.statusCode.status) ? void function(){
+	        	jzm.mangFlavor();
+	        	$("#productTypeName").val('');
+	        	sessionStorage.removeItem('e');
+	        }() : jzm.Error(reg);
+	    },type:"POST",trcny:true});
     }else{
-        jzm.moduleBox('show');
-        $("#flId").val(id);
+        e ? (e.bool == false ? e = "&productTypeId=" + e.name : jzm.moduleBox('show')) : ~function(){jzm.moduleBox('show');e=""}();  //判断当前执行的操作为打开新建/编辑框、直接显示类型详情产品
+        if(id === "type"){
+        	e.bool == true ? ~function(){  //操作为编辑
+        		jzm.moduleBox('show');	//执行盒子显示方法
+        		e = "&productTypeId=" + e.name; //重置追加传参
+        		sessionStorage.setItem('e',e);  //存储 当前操作的typeID
+        		return false; 
+        	}() : $(".actionbox").fadeIn().siblings('div.showBox').fadeIn().siblings('div.btnaction').fadeIn();  //执行显示类型产品详情
+        	jzm.paraMessage('loadAjaxdata',{url:"find_producr_before_bind",xmldata:"&page=1" + e,callbackfn:function(reg){
+		        RegCode(statusCode).test(reg.statusCode.status) ? ~function(e){
+		        	var op = reg.productShowList ? reg.productShowList : reg.productType.productList;
+		        	for(let i = 0; i < op.length; i++){
+		        		e += '<tr>'+ 
+		        				'<td>'+ op[i].productId +'</td>'+
+		        				'<td> '+ op[i].productName +'</td>'+
+		        				'<td>'+ parseFloat(op[i].productPrice / 100).toFixed(2) +'</td>'+
+		        				'<td><img style="width:3.2rem;height:auto;" src='+ op[i].productPicurl +' lat='+ op[i].productName +'></td>'+
+		        				'<td>'+ jzm.getDateTime(op[i].createTime).split(' ')[0] +'</td>'+
+		        				'<td class='+ (op[i].machineType == 1 ? 'machine-big-tip' : 'machine-small-tip') +'>'+ (op[i].machineType == 1 ? "大型共享机" : "小型桌面机") +'</td>'+
+		        				'<td>'+ op[i].productTypeId +'</td>'+	
+		        				'<td>'+ op[i].productTypeName +'</td>'+
+		        				'<td> <input id='+ op[i].productId +' value='+ op[i].productId +' type="checkbox" style="opacity:1" /><label for='+ op[i].productId +' >添加绑定</label></td>'+
+		        			'</tr>';
+		        			arr.push(op[i].productId); //产品id数组
+		        	};
+		        	if(reg.productType){ //操作为编辑显示名称相关
+		        		$("#productTypeName").val(reg.productType.productTypeName);
+		        		$("#c-input").val(arr);
+		        		reg.productType.allowConvert == 1 ? ~function(){
+		        			$("#allowConvertone").parent('div').addClass('checked').children('input').prop('checked',true);
+		        			$("#allowConverttwo").parent('div').removeClass('checked').children('input').prop('checked',false);
+		        		}() : ~function(){
+		        			$("#allowConvertone").parent('div').removeClass('checked').children('input').prop('checked',false);
+		        			$("#allowConverttwo").parent('div').addClass('checked').children('input').prop('checked',true);
+		        		}();
+		        		$("#productIds").text(arr);
+		        	}
+		        	$('#c-tbodyhtml').html(e);
+		        	for(let k = 0; k < $("#c-input").val().split(',').length; k++){
+	        			if($("#c-input").val().split(',')[k] == $("#"+$("#c-input").val().split(',')[k]).val()){
+	        				$("#"+$("#c-input").val().split(',')[k]).attr('checked','checked');
+	        			}
+	        		}
+		        	
+		        }() : (RegCode(isNullCode).test(reg.statusCode.status) ? ~function(){
+		        	$('#c-tbodyhtml').html("暂无数据");
+		        	$("#productTypeName").val(reg.productType.productTypeName);
+		        	$("#c-input").val(arr);
+	        		reg.productType.allowConvert == 1 ? ~function(){
+	        			$("#allowConvertone").parent('div').addClass('checked').children('input').prop('checked',true);
+	        			$("#allowConverttwo").parent('div').removeClass('checked').children('input').prop('checked',false);
+	        		}() : ~function(){
+	        			$("#allowConvertone").parent('div').removeClass('checked').children('input').prop('checked',false);
+	        			$("#allowConverttwo").parent('div').addClass('checked').children('input').prop('checked',true);
+	        		}();
+		        }() : jzm.Error(reg));//无数据/异常跳出
+	      },type:"POST",trcny:false});
+        }
+        $('div.showBox').bind('click',function(){  //注册移除窗口事件
+	      $(this).fadeOut().siblings('div.actionbox').fadeOut().siblings('div.btnaction').fadeOut();
+	      sessionStorage.removeItem('e');
+	    })
     };
 };
-//*****************************************************废弃
+//*****************************************************
 
 jzm.formulaList = function(page)   /*/配方列表/*/{
     jzm.paraMessage('loadAjaxdata',{url:"find_formula_list",xmldata:"&page=" + (page ? page : page =1 ) + "&name=" + $('#formulaLi').val() +"&machineType=" +$("#machineType").val(),callbackfn:function(reg){

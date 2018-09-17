@@ -86,14 +86,20 @@
 
                 <!-- Table Striped -->
                 <div class="block-area" id="tableStriped">
-                    <h3 class="block-title" style="font-size:14px;">口味管理</h3>
-
+                    <h3 class="block-title" style="font-size:14px;">产品类型</h3>
+					<div style="margin:10px 20px;">
+                        <a class="block-title" style="font-size:12px;width:112px;text-align:center;" onclick='jzm.enitBox("show")' href="javascript:void(0)" style="position: relative; z-index: 1;" target="_self">
+                            <i class="fa fa-plus"></i>
+                            <span>添加类型</span>
+                        </a>
+                    </div>
                     <div class="table-responsive overflow">
                         <table class="tile table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>口味ID</th>
-                                    <th>口味名称</th>
+                                    <th>类型ID</th>
+                                    <th>类型名称</th>
+                                    <th>可兑换</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
@@ -102,9 +108,9 @@
                             </tbody>
                         </table>
 
-                        <!-- page -->
-                        <div class="col-sm-6"></div>
-                        <div id="pageTool" class="col-sm-6"></div>
+                         <!-- page -->
+                        <div class="col-sm-6" id="page"></div>
+                        <div id="pageTool" class="col-sm-6" ></div>
                         <input type="hidden" id="pageNums" value="" />
                     </div>
                 </div>
@@ -112,18 +118,69 @@
             <br/><br/>
         </section>
 
-        <div class="editBox" id="RejectInfo" style="position: fixed; top: 50%; left: 50%; background-color: #5b1e26; z-index: 1500; margin-left: -100px;margin-top: -100px; box-shadow: rgb(138, 138, 138) 1px 1px 20px; padding: 10px 20px; box-sizing: border-box; width: 200px; height:200px;display:none;">
-            <div style="text-align:center;margin:20px 0 6px 0;">
-                口味名称修改
-            </div>
-            <input type="text" id="editBoxs" value="" style="background:#41100f;border:none;width:100%;height:30px;font-size:16px;" />
-            <input type="hidden" id="flId" />
-            <div class="form-group">
-                <div class="col-sm-12" style="text-align:center;margin-top:40px;">
-                    <button class="btn btn-primary" type="button" onclick="jzm.enitBox();return false;">提交</button>
-                    <button class="btn btn-primary" type="button" onclick="jzm.moduleBox();return false;">关闭</button>
-                </div>
-            </div>
+        <div class="editBox container" id="RejectInfo" style="position: fixed; top: 50%; left: 50%;width: 450px; background-color: #5b1e26; z-index: 1500; margin-left: -225px;margin-top: -225px; box-shadow: rgb(138, 138, 138) 1px 1px 20px; padding: 10px 20px; box-sizing: border-box; width: ; height:auto; display:none;">
+            <form class="form-horizontal m-t" method="post" role="form" id="producttype">
+	            <div class="form-group" style="margin-bottom:18px;">
+		            <label class="col-sm-3 control-label">类型名称</label>
+		            <div class="col-sm-8">
+		                <input class="form-control" id="productTypeName" name="productTypeName" type="text" value="">
+		            </div>
+		        </div>
+	            <div class="form-group" style="margin-bottom:18px;">
+	                <label class="col-sm-3 control-label">是否允许兑换</label>
+	                <div class="col-xs-8">
+	                    <label class="radio-inline" >
+	                        <input type="radio" name="allowConvert" id="allowConvertone" value="1">是
+	                    </label>
+	                    <label class="radio-inline">
+	                        <input type="radio" name="allowConvert" id="allowConverttwo" value="0">否
+	                    </label>
+	                </div>
+	            </div>
+	            <div class="form-group" style="margin-bottom:18px;">
+	                <label class="col-sm-3 control-label">绑定产品</label>
+	                <div class="col-sm-8" >
+	                    <div id="productIds" onclick='jzm.enitBox("type")' class="col-sm-12" value=""  style="line-height:34px;color:#ccc;cursor:pointer;border:1px solid rgba(255, 255, 255, 0.3);">
+							选择产品
+	                    </div>
+	                </div>
+	            </div>
+	            <div class="form-group" style="text-align:center;margin-top:30px;">
+	                <div class="col-sm-12" >
+	                    <button class="btn btn-primary" type="button" onclick="jzm.enitBox();return false;">提交</button>
+	                    <button class="btn btn-primary" type="button" onclick="jzm.moduleBox();return false;">关闭</button>
+	                </div>
+	            </div>
+            </form>
+        </div>
+        
+        <!--//sission-->
+        <div class="showBox" style="width:100%;height:100%;z-index:9;background:rgba(0,0,0,0.5);position:absolute;top:0;left:0;display:none;"></div>
+        <div class="actionbox" id="editBoxEnit" style="position: fixed; top: 35%; left: 26%; background-color: rgba(0,0,0,0.7); z-index: 1500; margin-left: -100px;margin-top: -200px; box-shadow: rgb(138, 138, 138) 1px 1px 20px; padding: 10px 20px; box-sizing: border-box; width: 60%; max-height:500px;overflow-y:auto;display:none;">
+            <div class="table-responsive overflow">
+	            <table class="tile table table-bordered table-striped">
+	                <thead>
+	                    <tr>
+	                        <th>产品ID</th>
+	                        <th>产品名称</th>
+	                        <th>产品价格</th>
+	                        <th>产品图片</th>
+	                        <th>创建日期</th>
+	                        <th>设备类型</th>
+	                        <th>产品类型ID</th>
+	                        <th>产品类型名称</th>
+	                        <th>操作</th>
+	                    </tr>
+	                </thead>
+	                <tbody id="c-tbodyhtml">
+	
+	                </tbody>
+	            </table>
+	        </div>
+        </div>
+        <input type="hidden" id="c-input" />
+        <div class="btn btn-default btnaction" style="position: fixed;bottom: 25%;left: 50%;z-index: 9999;display: none;" onclick="jzm.forcheckbox()">
+        	确定
         </div>
         <!-- Javascript Libraries -->
         <!-- jQuery -->
@@ -140,5 +197,18 @@
         <!-- page all -->
         <script type="text/javascript" src="page/query.js"></script>
         <script type="text/javascript" src="page/paging.js"></script>
+        <!--  Form Related -->
+        <script src="js/icheck.js"></script>
+        <script type="text/javascript">
+        	jzm.forcheckbox = function(e = []){
+        		for(let i = 0; i < $("#editBoxEnit input").length; i++){
+        			if($("#editBoxEnit input").eq(i).is(":checked")){
+        				e.push($("#editBoxEnit input").eq(i).val())
+        			}
+        		}
+        		$('#productIds').text(e);
+        		$('.showBox').fadeOut().siblings('div.actionbox').fadeOut().siblings('div.btnaction').fadeOut();
+        	}
+        </script>
     </body>
 </html>
